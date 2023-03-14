@@ -4,6 +4,7 @@ import styles from "./CustomerSignUp.module.scss";
 import upload from "./assets/upload.svg";
 
 import Button from "../../components/Button/index";
+import Nav from "../../components/Nav";
 
 const CustomerSignup = () => {
   // input states
@@ -277,127 +278,132 @@ const CustomerSignup = () => {
   };
 
   return (
-    <div className={styles.container}>
-      <h3>Sign Up</h3>
-      <form onSubmit={handleSubmit}>
-        <div className={styles.form_container}>
-          <div className={styles.left_form}>
-            <div className={styles.input_container}>
-              <div className={styles.inputs}>
-                <label htmlFor="firstname">First Name</label>
-                <input
-                  type="text"
-                  name="firstname"
-                  onChange={handleChange}
-                  onBlur={handleBlur}
-                />
-                {firstnameError && <p>{firstnameError}</p>}
+    <>
+      <Nav />
+      <div className={styles.container}>
+        <h3>Sign Up</h3>
+        <form onSubmit={handleSubmit}>
+          <div className={styles.form_container}>
+            <div className={styles.left_form}>
+              <div className={styles.input_container}>
+                <div className={styles.inputs}>
+                  <label htmlFor="firstname">First Name</label>
+                  <input
+                    type="text"
+                    name="firstname"
+                    onChange={handleChange}
+                    onBlur={handleBlur}
+                  />
+                  {firstnameError && <p>{firstnameError}</p>}
+                </div>
+
+                <div className={styles.inputs}>
+                  <label htmlFor="lastname">Last Name</label>
+                  <input
+                    type="text"
+                    name="lastname"
+                    onChange={handleChange}
+                    onBlur={handleBlur}
+                  />
+                  {lastnameError && <p>{lastnameError}</p>}
+                </div>
               </div>
 
               <div className={styles.inputs}>
-                <label htmlFor="lastname">Last Name</label>
+                <label htmlFor="lastname">Address</label>
                 <input
                   type="text"
-                  name="lastname"
+                  name="address"
                   onChange={handleChange}
                   onBlur={handleBlur}
                 />
-                {lastnameError && <p>{lastnameError}</p>}
+                {addressError && <p>{addressError}</p>}
               </div>
-            </div>
 
-            <div className={styles.inputs}>
-              <label htmlFor="lastname">Address</label>
-              <input
-                type="text"
-                name="address"
-                onChange={handleChange}
-                onBlur={handleBlur}
-              />
-              {addressError && <p>{addressError}</p>}
-            </div>
+              <div className={styles.input_container}>
+                <div className={styles.inputs}>
+                  <label htmlFor="city">City</label>
+                  <input
+                    type="text"
+                    name="city"
+                    onChange={handleChange}
+                    onBlur={handleBlur}
+                  />
+                  {cityError && <p>{cityError}</p>}
+                </div>
+                <div className={styles.inputs}>
+                  <label htmlFor="state">State</label>
+                  <input
+                    type="text"
+                    name="state"
+                    onChange={handleChange}
+                    onBlur={handleBlur}
+                  />
+                  {stateError && <p>{stateError}</p>}
+                </div>
+              </div>
 
-            <div className={styles.input_container}>
               <div className={styles.inputs}>
-                <label htmlFor="city">City</label>
+                <label htmlFor="email">Email</label>
                 <input
-                  type="text"
-                  name="city"
+                  type="email"
+                  name="email"
                   onChange={handleChange}
                   onBlur={handleBlur}
                 />
-                {cityError && <p>{cityError}</p>}
+                {emailError && <p>{emailError}</p>}
               </div>
+
               <div className={styles.inputs}>
-                <label htmlFor="state">State</label>
+                <label htmlFor="phoneNumber">Phone Number</label>
                 <input
-                  type="text"
-                  name="state"
+                  type="number"
+                  name="phoneNumber"
                   onChange={handleChange}
                   onBlur={handleBlur}
                 />
-                {stateError && <p>{stateError}</p>}
+                {phoneNumberError && <p>{phoneNumberError}</p>}
+              </div>
+
+              <div className={styles.inputs}>
+                <label htmlFor="password">Password</label>
+                <input
+                  type="password"
+                  name="password"
+                  onChange={handleChange}
+                  onBlur={handleBlur}
+                />
+                {passwordError && <p>{passwordError}</p>}
               </div>
             </div>
 
-            <div className={styles.inputs}>
-              <label htmlFor="email">Email</label>
-              <input
-                type="email"
-                name="email"
-                onChange={handleChange}
-                onBlur={handleBlur}
-              />
-              {emailError && <p>{emailError}</p>}
-            </div>
-
-            <div className={styles.inputs}>
-              <label htmlFor="phoneNumber">Phone Number</label>
-              <input
-                type="number"
-                name="phoneNumber"
-                onChange={handleChange}
-                onBlur={handleBlur}
-              />
-              {phoneNumberError && <p>{phoneNumberError}</p>}
-            </div>
-
-            <div className={styles.inputs}>
-              <label htmlFor="password">Password</label>
-              <input
-                type="password"
-                name="password"
-                onChange={handleChange}
-                onBlur={handleBlur}
-              />
-              {passwordError && <p>{passwordError}</p>}
+            <div className={styles.right_form}>
+              <div className={styles.identification}>
+                <label htmlFor="identification">Identification</label>
+                <p>
+                  Upload a photo of your NIN or other government approved ID
+                </p>
+                <input
+                  onChange={handleChange}
+                  onBlur={handleBlur}
+                  type="file"
+                  name="identification"
+                  accept="image/*"
+                  ref={selectFile}
+                  hidden
+                />
+                <div className={styles.upload} onClick={handleSelectFile}>
+                  <img src={upload} alt="upload" />
+                  Upload your ID
+                </div>
+                {uploadIDError && <p>{uploadIDError}</p>}
+              </div>
             </div>
           </div>
-
-          <div className={styles.right_form}>
-            <div className={styles.identification}>
-              <label htmlFor="identification">Identification</label>
-              <p>Upload a photo of your NIN or other government approved ID</p>
-              <input
-                onChange={handleChange}
-                onBlur={handleBlur}
-                type="file"
-                name="identification"
-                accept="image/*"
-                ref={selectFile}
-                hidden
-              />
-              <div className={styles.upload} onClick={handleSelectFile}>
-                <img src={upload} alt="upload" />
-                Upload your ID
-              </div>
-              {uploadIDError && <p>{uploadIDError}</p>}
-            </div>
-          </div>
-        </div>
-        <Button type="submit" text="Sign Up" />
-      </form>
-    </div>
+          <Button type="submit" text="Sign Up" />
+        </form>
+      </div>
+    </>
   );
 };
 

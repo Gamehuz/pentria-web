@@ -2,6 +2,7 @@ import { React, useRef, useState } from "react";
 import styles from "./VendorSignup.module.scss";
 
 import Button from "../../components/Button";
+import Nav from "../../components/Nav";
 
 import upload from "./assets/upload.svg";
 
@@ -322,166 +323,171 @@ const VendorSignup = () => {
   };
 
   return (
-    <div className={styles.container}>
-      <h3>Sign Up</h3>
-      <form onSubmit={handleSubmit}>
-        <div className={styles.form_container}>
-          <div className={styles.left_form}>
-            <div className={styles.input_container}>
+    <>
+      <Nav />
+      <div className={styles.container}>
+        <h3>Sign Up</h3>
+        <form onSubmit={handleSubmit}>
+          <div className={styles.form_container}>
+            <div className={styles.left_form}>
+              <div className={styles.input_container}>
+                <div className={styles.inputs}>
+                  <label htmlFor="firstname">First Name</label>
+                  <input
+                    type="text"
+                    name="firstname"
+                    onChange={handleChange}
+                    onBlur={handleBlur}
+                  />
+                  {firstnameError && <p>{firstnameError}</p>}
+                </div>
+                <div className={styles.inputs}>
+                  <label htmlFor="lastname">Last Name</label>
+                  <input
+                    type="text"
+                    name="lastname"
+                    onChange={handleChange}
+                    onBlur={handleBlur}
+                  />
+                  {lastnameError && <p>{lastnameError}</p>}
+                </div>
+              </div>
+
               <div className={styles.inputs}>
-                <label htmlFor="firstname">First Name</label>
+                <label htmlFor="address">Address</label>
                 <input
                   type="text"
-                  name="firstname"
+                  name="address"
                   onChange={handleChange}
                   onBlur={handleBlur}
                 />
-                {firstnameError && <p>{firstnameError}</p>}
+                {addressError && <p>{addressError}</p>}
               </div>
+
+              <div className={styles.input_container}>
+                <div className={styles.inputs}>
+                  <label htmlFor="city">City</label>
+                  <input
+                    type="text"
+                    name="city"
+                    onChange={handleChange}
+                    onBlur={handleBlur}
+                  />
+                  {cityError && <p>{cityError}</p>}
+                </div>
+                <div className={styles.inputs}>
+                  <label htmlFor="state">State</label>
+                  <input
+                    type="text"
+                    name="state"
+                    onChange={handleChange}
+                    onBlur={handleBlur}
+                  />
+                  {stateError && <p>{stateError}</p>}
+                </div>
+              </div>
+
               <div className={styles.inputs}>
-                <label htmlFor="lastname">Last Name</label>
+                <label htmlFor="email">Email</label>
                 <input
-                  type="text"
-                  name="lastname"
+                  type="email"
+                  name="email"
                   onChange={handleChange}
                   onBlur={handleBlur}
                 />
-                {lastnameError && <p>{lastnameError}</p>}
+                {emailError && <p>{emailError}</p>}
               </div>
-            </div>
 
-            <div className={styles.inputs}>
-              <label htmlFor="address">Address</label>
-              <input
-                type="text"
-                name="address"
-                onChange={handleChange}
-                onBlur={handleBlur}
-              />
-              {addressError && <p>{addressError}</p>}
-            </div>
-
-            <div className={styles.input_container}>
               <div className={styles.inputs}>
-                <label htmlFor="city">City</label>
+                <label htmlFor="phoneNumber">Phone Number</label>
                 <input
-                  type="text"
-                  name="city"
+                  type="number"
+                  name="phoneNumber"
                   onChange={handleChange}
                   onBlur={handleBlur}
                 />
-                {cityError && <p>{cityError}</p>}
+                {phoneNumberError && <p>{phoneNumberError}</p>}
               </div>
+
               <div className={styles.inputs}>
-                <label htmlFor="state">State</label>
+                <label htmlFor="password">Password</label>
                 <input
-                  type="text"
-                  name="state"
+                  type="password"
+                  name="password"
                   onChange={handleChange}
                   onBlur={handleBlur}
                 />
-                {stateError && <p>{stateError}</p>}
+                {passwordError && <p>{passwordError}</p>}
               </div>
             </div>
 
-            <div className={styles.inputs}>
-              <label htmlFor="email">Email</label>
-              <input
-                type="email"
-                name="email"
-                onChange={handleChange}
-                onBlur={handleBlur}
-              />
-              {emailError && <p>{emailError}</p>}
-            </div>
+            <div className={styles.right_form}>
+              <div className={styles.inputs}>
+                <label htmlFor="businessName">Business Name</label>
+                <input
+                  type="text"
+                  name="businessName"
+                  onChange={handleChange}
+                  onBlur={handleBlur}
+                />
+                {businessnameError && <p>{businessnameError}</p>}
+              </div>
 
-            <div className={styles.inputs}>
-              <label htmlFor="phoneNumber">Phone Number</label>
-              <input
-                type="number"
-                name="phoneNumber"
-                onChange={handleChange}
-                onBlur={handleBlur}
-              />
-              {phoneNumberError && <p>{phoneNumberError}</p>}
-            </div>
+              <div className={styles.banking}>
+                <label htmlFor="bank">Banking Information</label>
+                <select name="bank" id="">
+                  <option value="select">Select</option>
+                  <option value="bank"></option>
+                </select>
+                <p>
+                  Banking information should tally with the details on your ID
+                </p>
 
-            <div className={styles.inputs}>
-              <label htmlFor="password">Password</label>
-              <input
-                type="password"
-                name="password"
-                onChange={handleChange}
-                onBlur={handleBlur}
-              />
-              {passwordError && <p>{passwordError}</p>}
+                <input
+                  type="number"
+                  name="bankNumber"
+                  onChange={handleChange}
+                  onBlur={handleBlur}
+                />
+              </div>
+
+              <div className={styles.inputs}>
+                <label htmlFor="occupation">Occupation</label>
+                <input
+                  type="text"
+                  name="occupation"
+                  onChange={handleChange}
+                  onBlur={handleBlur}
+                />
+                {occupationError && <p>{occupationError}</p>}
+              </div>
+
+              <div className={styles.identification}>
+                <label htmlFor="identification">Identification</label>
+                <p>
+                  Upload a photo of your NIN or other government approved ID
+                </p>
+                <input
+                  type="file"
+                  name="identification"
+                  accept="image/*"
+                  ref={selectFile}
+                  onBlur={handleBlur}
+                  onChange={handleChange}
+                  hidden
+                />
+                <div className={styles.upload} onClick={handleSelectFile}>
+                  <img src={upload} alt="upload" />
+                  Upload your ID
+                </div>
+                {uploadIDError && <p>{uploadIDError}</p>}
+              </div>
             </div>
           </div>
-
-          <div className={styles.right_form}>
-            <div className={styles.inputs}>
-              <label htmlFor="businessName">Business Name</label>
-              <input
-                type="text"
-                name="businessName"
-                onChange={handleChange}
-                onBlur={handleBlur}
-              />
-              {businessnameError && <p>{businessnameError}</p>}
-            </div>
-
-            <div className={styles.banking}>
-              <label htmlFor="bank">Banking Information</label>
-              <select name="bank" id="">
-                <option value="select">Select</option>
-                <option value="bank"></option>
-              </select>
-              <p>
-                Banking information should tally with the details on your ID
-              </p>
-
-              <input
-                type="number"
-                name="bankNumber"
-                onChange={handleChange}
-                onBlur={handleBlur}
-              />
-            </div>
-
-            <div className={styles.inputs}>
-              <label htmlFor="occupation">Occupation</label>
-              <input
-                type="text"
-                name="occupation"
-                onChange={handleChange}
-                onBlur={handleBlur}
-              />
-              {occupationError && <p>{occupationError}</p>}
-            </div>
-
-            <div className={styles.identification}>
-              <label htmlFor="identification">Identification</label>
-              <p>Upload a photo of your NIN or other government approved ID</p>
-              <input
-                type="file"
-                name="identification"
-                accept="image/*"
-                ref={selectFile}
-                onBlur={handleBlur}
-                onChange={handleChange}
-                hidden
-              />
-              <div className={styles.upload} onClick={handleSelectFile}>
-                <img src={upload} alt="upload" />
-                Upload your ID
-              </div>
-              {uploadIDError && <p>{uploadIDError}</p>}
-            </div>
-          </div>
-        </div>
-        <Button type="submit" text="Sign Up" />
-      </form>
-    </div>
+          <Button type="submit" text="Sign Up" />
+        </form>
+      </div>
+    </>
   );
 };
 
