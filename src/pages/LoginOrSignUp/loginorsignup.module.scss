@@ -1,0 +1,66 @@
+.loginOrSignUp {
+    background-color: var(--secondary-color);
+    padding-top: 180px;
+    padding-bottom: 70px;
+
+    article {
+        width: 60vw;
+        margin-left: auto;
+        margin-right: auto;
+        background-color: white;
+        padding-bottom: 20px;
+
+        h1 {
+            color: var(--secondary-color);
+            font-size: 36px;
+            text-align: center;
+            padding-top: 20px;
+            padding-bottom: 70px;
+        }
+
+        div {
+            margin-left: auto;
+            margin-right: auto;
+            width: 40vw;
+        }
+
+        .login {
+            background-color: var(--tertiary-color);
+            color: white;
+            margin: 0;
+
+        }
+
+        .signup {
+            background-color: var(--secondary-color);
+            color: white;
+            margin: 0;
+        }
+
+        p {
+            padding-top: 250px;
+            padding-bottom: 50px;
+            text-align: center;
+            font-weight: 500;
+        }
+
+        .continue {
+            background-color: var(--secondary-color);
+            color: white;
+            margin: 0;
+        }
+    }
+}
+
+@media (max-width: 700px) {
+
+    .loginOrSignUp {
+        article {
+            width: 85vw;
+
+            div {
+                width: 60vw
+            }
+        }
+    }
+}

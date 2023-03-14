@@ -1,4 +1,5 @@
 import React from "react";
+import { Link } from "react-router-dom";
 import mobileMenu from "./assets/menu-hamburger.svg";
 import styles from "./homenav.module.scss";
 
@@ -10,7 +11,9 @@ const HomeNavbar = ({ bg }) => {
         styles.homeNavbar
       } ${bg ? bg : styles.defaultBg}`}
     >
-      <h1 className={styles.homeNavbarLogo}>Pentria</h1>
+      <h1 className={styles.homeNavbarLogo}>
+        <Link to="/">Pentria</Link>
+      </h1>
       <div className={`${styles.HomeNavbar_container} }`}>
         <ul className={styles.homeNavbarLinks}>
           <li className={styles.homeNavbarLink}>

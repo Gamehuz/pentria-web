@@ -23,6 +23,7 @@ function UserSidebar({ children }) {
   const handleCloseSidebar = () => {
     dispatch(setToggleSidebar(false));
   };
+
   return (
     <div
       className={`${styles.userSidebar}
@@ -36,35 +37,74 @@ function UserSidebar({ children }) {
 
           <div className={styles.navLinks}>
             <NavLink
-              to="/user/history"
-              className={({ isActive }) =>
-                isActive
-                  ? `${styles.active} ${styles.navLink}`
-                  : `${styles.inactive} ${styles.navLink}`
-              }
+              to="/user/dashboard?checkpoint=listings"
+              className={`${styles.navLink} ${
+                window.location.pathname === "/user/dashboard" &&
+                window.location.search === "?checkpoint=listings"
+                  ? styles.active
+                  : ""
+              }`}
               onClick={handleCloseSidebar}
             >
-              <p>History</p>
+              <p>Listing</p>
             </NavLink>
             <NavLink
-              to="/user/favorites"
-              className={({ isActive }) =>
-                isActive
-                  ? `${styles.active} ${styles.navLink}`
-                  : `${styles.inactive} ${styles.navLink}`
-              }
+              to="/user/dashboard?checkpoint=earnings"
+              className={`${styles.navLink} ${
+                window.location.pathname === "/user/dashboard" &&
+                window.location.search === "?checkpoint=earnings"
+                  ? styles.active
+                  : ""
+              }`}
+              onClick={handleCloseSidebar}
+            >
+              <p>Earnings</p>
+            </NavLink>
+            <NavLink
+              to="/user/dashboard?checkpoint=withdrawals"
+              className={`${styles.navLink} ${
+                window.location.pathname === "/user/dashboard" &&
+                window.location.search === "?checkpoint=withdrawals"
+                  ? styles.active
+                  : ""
+              }`}
+              onClick={handleCloseSidebar}
+            >
+              <p>Withdrawals</p>
+            </NavLink>
+            <NavLink
+              to="/user/dashboard?checkpoint=favorites"
+              className={`${styles.navLink} ${
+                window.location.pathname === "/user/dashboard" &&
+                window.location.search === "?checkpoint=favorites"
+                  ? styles.active
+                  : ""
+              }`}
               onClick={handleCloseSidebar}
             >
               <p>Favorites</p>
             </NavLink>
+            <NavLink
+              to="/user/dashboard?checkpoint=history"
+              className={`${styles.navLink} ${
+                window.location.pathname === "/user/dashboard" &&
+                window.location.search === "?checkpoint=history"
+                  ? styles.active
+                  : ""
+              }`}
+              onClick={handleCloseSidebar}
+            >
+              <p>History</p>
+            </NavLink>
 
             <NavLink
-              to="/user/settings"
-              className={({ isActive }) =>
-                isActive
-                  ? `${styles.active} ${styles.navLink} `
-                  : `${styles.inactive} ${styles.navLink}`
-              }
+              to="/user/dashboard?checkpoint=settings"
+              className={`${styles.navLink} ${
+                window.location.pathname === "/user/dashboard" &&
+                window.location.search === "?checkpoint=settings"
+                  ? styles.active
+                  : ""
+              }`}
               onClick={handleCloseSidebar}
             >
               <p>Settings</p>

@@ -1,0 +1,95 @@
+.loginPage {
+    background-color: var(--primary-color);
+
+    .login {
+        width: 85vw;
+        margin-left: auto;
+        margin-right: auto;
+
+        h2 {
+            color: var(--secondary-color);
+            margin-top: 80px;
+            margin-bottom: 60px;
+            font-size: 32px;
+            font-weight: 700;
+        }
+
+        .email,
+        .password {
+            display: block;
+            color: var(--dim-color);
+            font-weight: 400;
+            font-size: 20px;
+            height: 120px;
+
+            div {
+                margin-left: 0;
+                padding: 0 0 0 25px;
+
+                input {
+                    padding: 0;
+                }
+            }
+        }
+
+        .password {
+            margin-top: 30px;
+        }
+
+        .forgotPassword {
+            display: block;
+            font-weight: 500;
+            color: var(--tertiary-color);
+            font-size: 16px;
+            word-spacing: 1px;
+            margin-bottom: 45px;
+        }
+
+        .signin {
+            margin: 0;
+            color: white;
+            background-color: var(--secondary-color);
+        }
+
+        span {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            margin-left: 1rem;
+
+            div {
+                width: 100px;
+                border-top: 1px solid var(--dim-color)
+            }
+
+            p {
+                font-size: 20px;
+                font-weight: 700;
+            }
+        }
+
+        .othersignin {
+            display: flex;
+            align-items: center;
+            flex-wrap: wrap;
+            padding-bottom: 100px;
+
+            .button {
+                margin: 0;
+                background-color: var(--tertiary-color);
+                color: white;
+            }
+        }
+    }
+
+    @media (max-width: 700px) {
+
+        .email,
+        .password {
+            div {
+                width: 80vw;
+                padding: 0;
+            }
+        }
+    }
+}

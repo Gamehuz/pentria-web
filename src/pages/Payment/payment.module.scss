@@ -1,0 +1,165 @@
+.payment {
+    padding-bottom: 100px;
+
+    .paymentDetails {
+        width: 85vw;
+        margin-left: auto;
+        margin-right: auto;
+
+        h1 {
+            margin-top: 60px;
+            margin-bottom: 60px;
+            font-size: 26px;
+            word-spacing: -1px;
+        }
+
+        h2 {
+            font-size: 36px;
+            color: var(--tertiary-color);
+            font-weight: 600;
+        }
+
+        .address {
+            display: flex;
+            align-items: center;
+            gap: 20px;
+            margin-top: 10px;
+            padding-bottom: 70px;
+
+            p {
+                font-size: 26px;
+                font-weight: 600;
+            }
+        }
+
+        .detailsheader {
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            padding-bottom: 30px;
+
+            div {
+                width: 70px;
+                border-top: 1px solid var(--dim-color);
+            }
+
+            h3 {
+                font-weight: 600;
+                font-size: 20px;
+                word-spacing: -2px;
+            }
+        }
+
+        .details {
+            display: flex;
+            gap: 50px;
+
+            .nameandPhone {
+                display: grid;
+                gap: 10px;
+
+                div {
+                    display: flex;
+                    align-items: center;
+                    gap: 30px;
+
+                    p {
+                        color: var(--secondary-color);
+                        font-weight: 600;
+                        font-size: 26px;
+                    }
+
+                    span {
+                        color: var(--tertiary-color);
+                        font-size: 22px;
+                        font-weight: 600;
+                    }
+                }
+            }
+
+            .specialrequest {
+                display: grid;
+                gap: 10px;
+
+                p {
+                    color: var(--secondary-color);
+                    font-weight: 600;
+                    font-size: 26px;
+                }
+
+                span {
+                    color: var(--tertiary-color);
+                    font-size: 22px;
+                    font-weight: 600;
+                }
+            }
+        }
+
+        .eventDetails {
+            margin-top: 80px;
+
+            div {
+                display: flex;
+                justify-content: space-around;
+                align-items: center;
+                height: 60px;
+                background-color: black;
+                margin-bottom: 20px;
+
+                p {
+                    color: white;
+                    font-weight: 500;
+                    font-size: 12px;
+                }
+            }
+        }
+
+        .totalanddiscount {
+            display: grid;
+            gap: 10px;
+            margin-top: 50px;
+
+            .subtotal,
+            .discount {
+                color: var(--tertiary-color);
+                font-weight: 600;
+                font-size: 24px;
+            }
+        }
+
+        .total {
+            height: 60px;
+            background-color: black;
+            display: flex;
+            width: 300px;
+            align-items: center;
+            justify-content: space-around;
+            margin-top: 30px;
+
+            p {
+                color: white;
+                font-weight: 500;
+            }
+        }
+
+        div {
+            margin-left: 0;
+        }
+
+        .button {
+            background-color: var(--secondary-color);
+            color: white;
+            width: 300px;
+            margin: 0;
+        }
+    }
+}
+
+@media (max-width: 600px) {
+    .payment {
+        .details {
+            flex-wrap: wrap;
+        }
+    }
+
+}

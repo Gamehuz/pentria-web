@@ -1,0 +1,169 @@
+.partnersAndFAQ {
+    width: 85vw;
+    margin-left: auto;
+    margin-right: auto;
+    margin-top: 150px;
+
+    .FAQ {
+        padding-bottom: 100px;
+        margin-top: 130px;
+    }
+
+    div {
+        div {
+            details {
+                position: relative;
+                max-width: 400px;
+                padding-bottom: 30px;
+
+                summary {
+                    list-style: none;
+                    display: flex;
+                    align-items: center;
+                    height: 48px;
+
+                    &:focus {
+                        outline: none;
+                    }
+
+                    span {
+                        -webkit-user-select: none;
+                        user-select: none;
+                        color: white;
+                    }
+                }
+
+                &:hover {
+                    cursor: pointer;
+                }
+
+                span {
+                    cursor: default;
+                    color: white;
+
+                }
+
+                summary::-webkit-details-marker {
+                    display: none;
+                }
+
+                .chevronright,
+                .chevronleft {
+                    pointer-events: none;
+                    position: absolute;
+                    right: -30px;
+                    top: 0.75em;
+                    background: var(--secondary-color);
+
+                    svg {
+                        display: block;
+                        width: 25px;
+                        height: 25px;
+                    }
+
+                }
+            }
+        }
+    }
+}
+
+
+.partnersHeader {
+    display: flex;
+    align-items: center;
+
+    h4 {
+        font-weight: 600;
+        font-size: 18px;
+        color: white;
+    }
+
+}
+
+.partners {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+
+    :nth-child(2) {
+        align-self: start;
+    }
+
+    :nth-child(3) {
+        align-self: end;
+    }
+}
+
+.sales {
+    span:first-child {
+        display: block;
+        width: 40vw;
+        font-size: 50px;
+        font-weight: 700;
+        color: white;
+    }
+
+    :nth-child(2) {
+        display: block;
+        font-weight: 500;
+        font-size: 28px;
+        color: white;
+        width: 40vw;
+        margin-top: 43px;
+    }
+}
+
+.learnMore {
+    color: white;
+}
+
+.FAQ {
+    border-top: 1px solid white;
+
+    h5 {
+        color: white;
+        text-align: center;
+        font-weight: 700;
+        font-size: 57px;
+    }
+
+    p {
+        color: white;
+        text-align: center;
+        font-size: 28px;
+        padding-bottom: 50px;
+    }
+
+    div {
+        display: flex;
+        justify-content: space-between;
+
+        div {
+            display: grid;
+        }
+
+        img {
+            height: 44.4%;
+        }
+    }
+}
+
+@media (max-width: 1024px) {
+    .partnersAndFAQ {
+        div:first-child {
+            padding-bottom: 20px;
+        }
+
+        .sales {
+            :nth-child(2) {
+                width: 100%;
+            }
+        }
+    }
+
+    .FAQ {
+        div {
+            display: grid;
+        }
+    }
+}

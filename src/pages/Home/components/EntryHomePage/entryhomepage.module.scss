@@ -1,0 +1,188 @@
+.enterPlaySection {
+    margin-top: 83px;
+    display: flex;
+    width: 85vw;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+.getTickets {
+    width: 50vw;
+    height: 650px;
+}
+
+.enterPlay {
+    width: 381px;
+    height: 151px;
+    color: var(--secondary-color);
+    text-align: center;
+    position: relative;
+
+    h1,
+    span {
+        font-weight: 700;
+        font-size: 78px;
+        width: 415px;
+    }
+
+    span {
+        display: block;
+        background-image: url("../../assets/circles.png");
+    }
+}
+
+.enterPlayp {
+    margin-top: 20px;
+    font-weight: 500;
+    font-size: 28px;
+    margin-top: 8rem;
+    width: 415px;
+    text-align: center;
+}
+
+.tickets {
+    display: flex;
+    align-items: center;
+    gap: 20px;
+    width: 550px;
+    margin-left: -32px;
+    margin-top: 4rem;
+
+    p {
+        font-weight: 700;
+        font-size: 20px;
+        font-style: italic;
+    }
+}
+
+.homepageImg {
+    display: flex;
+    align-items: center;
+    gap: 20px;
+
+
+    :nth-child(1) {
+        width: 20%;
+    }
+
+    :nth-child(2) {
+        width: 80%;
+        height: 100%;
+    }
+}
+
+.searchfield {
+    position: absolute;
+    left: 10%;
+    width: 85vw;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 12px;
+    box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
+    background-color: white;
+
+    div:first-child {
+        border-right: 1px solid #898989;
+        padding-right: 30px;
+        padding-left: 30px;
+        width: 24.75%;
+    }
+
+    div:nth-child(2) {
+        padding-left: 30px;
+        width: 58%;
+    }
+
+    div {
+        display: flex;
+        align-items: center;
+        gap: 12px;
+
+        select {
+            width: 200px;
+            height: 50px;
+            border: none;
+        }
+
+        div {
+            input {
+                width: 400px;
+                padding: 0;
+            }
+        }
+
+
+    }
+}
+
+@media (max-width: 1024px) {
+    .enterPlaySection {
+        display: grid;
+
+        div:first-child {
+            width: 85vw;
+
+            .enterPlay {
+                width: 80vw;
+
+                h1,
+                span {
+                    width: 85vw;
+                    font-size: 58px;
+
+                }
+            }
+
+            .enterPlayp,
+            .tickets {
+                width: 85vw;
+            }
+
+        }
+
+        .searchfield {
+            position: relative;
+            left: 0;
+            display: grid;
+            width: 85vw;
+            max-width: 500px;
+            margin-top: 30px;
+
+            :nth-child(1) {
+                width: 100%;
+                border-right: none;
+
+                svg {
+                    width: 20%;
+                }
+            }
+
+            :nth-child(2) {
+                width: 100%;
+
+                svg {
+                    width: 20%;
+                }
+
+                div {
+                    width: 100%
+                }
+            }
+        }
+
+        .homepageImg {
+            margin-top: 300px;
+
+            :nth-child(1) {
+                display: none;
+            }
+
+            :nth-child(2) {
+                width: 85%;
+            }
+        }
+    }
+
+
+}

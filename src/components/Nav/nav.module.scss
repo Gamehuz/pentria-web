@@ -1,0 +1,101 @@
+.header {
+    height: 140px;
+    background-color: var(--secondary-color);
+
+    .nav {
+        width: 85vw;
+        height: 100%;
+        margin-left: auto;
+        margin-right: auto;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+
+        span {
+            color: white;
+            font-weight: 700;
+            font-size: 34px;
+        }
+
+        div {
+            display: flex;
+            align-items: center;
+
+            a {
+                font-weight: 700;
+                color: white;
+                text-decoration: none;
+            }
+        }
+
+        .button {
+            background-color: var(--tertiary-color);
+            color: white;
+            font-weight: 700;
+            font-size: 14px;
+        }
+
+        svg {
+            display: none;
+        }
+    }
+
+    .mobileNav,
+    .activeMenu {
+        display: none;
+    }
+}
+
+@media (max-width: 768px) {
+    .header {
+        .nav {
+            div {
+                display: none
+            }
+
+            svg {
+                display: block;
+                cursor: pointer;
+            }
+        }
+
+        .activeMenu {
+            position: absolute;
+            top: -100px;
+        }
+
+        .mobileNav {
+            background-color: var(--secondary-color);
+            display: block;
+            transition: all 0.5s ease-in-out;
+            -webkit-transition: all 0.5s ease-in-out;
+            -moz-transition: all 0.5s ease-in-out;
+            -ms-transition: all 0.5s ease-in-out;
+            -o-transition: all 0.5s ease-in-out;
+
+            div {
+                display: flex;
+                align-items: center;
+                width: 70vw;
+                margin-left: auto;
+                margin-right: auto;
+
+                a {
+                    font-weight: 700;
+                    color: white;
+                    font-size: 14px;
+                    text-decoration: none;
+                }
+
+                .button {
+                    background-color: var(--tertiary-color);
+                    color: white;
+                    height: 40px;
+                    width: 200px
+                }
+            }
+
+        }
+
+    }
+}
