@@ -23,7 +23,7 @@ const SignupModal = ({ modal, setModal }: { modal: boolean, setModal: any }) => 
                   Sign up
                 </h4>
                 <Link href={"/auth/signup?page=vendor"}>
-                  <div className='flex cursor-pointer bg-primaryColor justify-between p-2 rounded-md my-6'>
+                  <div onClick={() => setModal()} className='flex cursor-pointer bg-primaryColor justify-between p-2 rounded-md my-6'>
                     <div className='flex'>
                       <img src="/images/user.png" className='w-5 h-5' alt="" />
                       <h3 className='text-white my-auto ml-4'>Vendor</h3>
@@ -32,7 +32,7 @@ const SignupModal = ({ modal, setModal }: { modal: boolean, setModal: any }) => 
                   </div>
                 </Link>
                 <Link href={"/auth/signup?page=guest"}>
-                  <div className='flex bg-primaryColor cursor-pointer justify-between p-2 rounded-md my-6'>
+                  <div onClick={() => setModal()} className='flex bg-primaryColor cursor-pointer justify-between p-2 rounded-md my-6'>
                     <div className='flex'>
                       <img src="/images/profile-2user.png" className='w-5 h-5' alt="" />
                       <h3 className='text-white my-auto ml-4'>Guest</h3>
