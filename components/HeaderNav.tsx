@@ -19,7 +19,7 @@ const HeaderNav = () => {
           <Link href={""}>
             <p>Partners</p>
           </Link>
-          <Link href={""}>
+          <Link href={"/enquiries"}>
             <p>Enquiries</p>
           </Link>
         </div>
@@ -51,7 +51,7 @@ const HeaderNav = () => {
           <Link href={""}>
             <p className='my-3'>Partners</p>
           </Link>
-          <Link href={""}>
+          <Link href={"/enquiries"}>
             <p className='my-3'>Enquiries</p>
           </Link>
           <Link href={""}>
