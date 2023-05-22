@@ -1,9 +1,10 @@
 import React from 'react';
 import Link from 'next/link';
 
-const HeaderNav = () => {
-  return ( 
-    <div className='py-5 fixed w-full z-10 bg-white flex justify-between lg:px-20 px-4 shadow'>
+const HeaderNav = ({ setToggle }: { setToggle: any }) => {
+  return (
+    <div className='py-5 fixed w-full z-20 bg-white flex justify-between lg:px-20 px-4 shadow'>
+      <img src="/images/hamburger.png" className='w-8 h-8 cursor-pointer lg:hidden' onClick={() => setToggle()} alt="" />
       <Link href={"/"}>
         <img src="/images/Pentria.svg" alt="" />
       </Link>
