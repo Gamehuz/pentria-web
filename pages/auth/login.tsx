@@ -77,9 +77,9 @@ const login = () => {
                   </button>
                 </form>
               </div>
-              <div className="text-center">
+              {/* <div className="text-center">
                 <a href="javascript:void(0)" className="hover:text-indigo-600">Forgot password?</a>
-              </div>
+              </div> */}
             </div>
           </div>
         </div>

@@ -1,8 +1,8 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import FrontLayout from '@/layout/FrontLayout'
-import { useRouter } from "next/router"
+import router, { useRouter } from "next/router"
 
-const signup = () => {
+const Signup = () => {
   const { query } = useRouter();
 
   return (
@@ -213,9 +213,9 @@ const signup = () => {
                   </button>
                 </form>
               </div>
-              <div className="text-center">
+              {/* <div className="text-center">
                 <a href="javascript:void(0)" className="hover:text-indigo-600">Forgot password?</a>
-              </div>
+              </div> */}
             </div>
           </div>
         </div>
@@ -224,4 +224,4 @@ const signup = () => {
   );
 };
 
-export default signup;
+export default Signup;
