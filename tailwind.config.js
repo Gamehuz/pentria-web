@@ -21,6 +21,12 @@ module.exports = {
         josefin: ['Josefin Sans', 'sans-serif'],
       }
     },
+    screens: {
+      sm: { max: "700px" },
+      md: "700px",
+      lg: "1024px",
+      xl: "1280px",
+    },
   },
   plugins: [],
 }

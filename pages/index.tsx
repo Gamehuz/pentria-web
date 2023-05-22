@@ -41,7 +41,7 @@ export default function Home() {
       <FrontLayout>
         <main>
           <Hero />
-          <div className='px-20 bg-primaryColor py-8'>
+          <div className='lg:px-20 px-4 bg-primaryColor py-8'>
             <div className='flex'>
               <div className='w-8 border-t border-white h-1 my-auto'></div>
               <p className='text-white text-sm'>EXPLORE</p>
@@ -59,7 +59,7 @@ export default function Home() {
               <Card />
             </div>
           </div>
-          <div className='px-20 py-8'>
+          <div className='lg:px-20 px-4 py-8'>
             <div className='flex justify-between'>
               <h4 className='text-xl my-1 font-bold text-primaryColor'>Upcoming Events</h4>
               <div className='flex'>
@@ -73,12 +73,12 @@ export default function Home() {
               <Card />
             </div>
           </div>
-          <div className='px-20 py-8'>
+          <div className='lg:px-20 px-4 py-8'>
             <div className='flex'>
               <div className='w-6 border-t border-primaryColor h-1 my-auto'></div>
               <p className='text-primaryColor text-sm font-bold'>PARTNER</p>
             </div>
-            <div className='flex justify-between'>
+            <div className='lg:flex justify-between'>
               <div className='w-96'>
                 <h1 className='font-bold text-4xl my-4 text-primaryColor'>More Visibility,
                   Increased Sales,
@@ -87,21 +87,21 @@ export default function Home() {
                 <p className='text-sm'>Manage time and streamline revenue better. Improve customer experience with one-click ticket reservations.</p>
               </div>
               <div className='flex'>
-                <img src="/images/Frame.png" className='w-80 h-32 my-auto' alt="" />
+                <img src="/images/Frame.png" className='w-80 h-32 my-auto sm:hidden' alt="" />
                 <img src="/images/partners.png" className='' alt="" />
               </div>
             </div>
           </div>
-          <div className='px-20 py-8'>
+          <div className='lg:px-20 px-4 py-8'>
             <div className='flex'>
               <div className='w-6 border-t border-primaryColor h-1 my-auto'></div>
               <p className='text-primaryColor text-sm font-bold'>Frequently Asked Questions (FAQs)</p>
             </div>
-            <div className='flex justify-between'>
+            <div className='lg:flex justify-between'>
               <div>
                 <img src="/images/questions.png" className='my-auto' alt="" />
               </div>
-              <div className='w-1/2'>
+              <div className='lg:w-1/2'>
                 {
                   faqsList.map((item, idx) => (
                     <FaqsCard

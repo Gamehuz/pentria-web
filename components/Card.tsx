@@ -2,7 +2,7 @@ import React from 'react';
 
 const Card = () => {
   return (
-    <div className='card rounded-md relative w-[30%] bg-[#FAFAFA] my-6'>
+    <div className='card rounded-md relative lg:w-[30%] bg-[#FAFAFA] my-6'>
       <img src="/images/pic.jpg" className='rounded-t-md' alt="" />
       <img src="/images/Featured.png" className='absolute top-20 -left-5' alt="" />
       <div className='p-4'>

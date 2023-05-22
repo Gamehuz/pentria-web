@@ -3,8 +3,8 @@ import React from 'react';
 
 const FooterNav = () => {
   return (
-    <footer className='bg-primaryColor px-20'>
-      <div className='p-20  flex text-white justify-between text-sm'>
+    <footer className='bg-primaryColor lg:px-20 '>
+      <div className='lg:p-20 p-4 lg:flex text-white justify-between text-sm'>
         <div>
           <img src="/images/Pentria.png" alt="" />
           <div className='flex justify-between w-20 mt-6'>
@@ -36,7 +36,7 @@ const FooterNav = () => {
             <p className='my-2'>Terms of Use</p>
           </Link>
         </div>
-        <div className='w-96'>
+        <div className='lg:w-96'>
           <h5 className='text-base font-bold'>Subscribe to Our Newsletter </h5>
           <div className='relative my-2'>
             <input type="text" className='w-full p-3 bg-white rounded-md' placeholder='Enter Email Address' />

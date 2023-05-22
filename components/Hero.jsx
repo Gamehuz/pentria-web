@@ -20,10 +20,10 @@ const Hero = () => {
     navigate(`/explore?${filter.recreationName}=${filter.location}`);
   }
   return (
-    <div className="m-auto px-16 pt-32 bg-[#FAFAFA] lg:h-[120vh]">
+    <div className="m-auto lg:px-16 p-4 sm:pt-10 lg:pt-32 bg-[#FAFAFA] lg:h-[120vh]">
       <div className='lg:flex justify-between'>
         <div>
-          <div className='text-primaryColor text-[48px] font-extrabold ml-10'>
+          <div className='text-primaryColor text-[48px] sm:text-center sm:uppercase font-extrabold ml-10'>
             <h1 >Enter the </h1>
             <div className="md:flex">
               <span className="circle-play h-[115px] w-[300px]  text-center"> {'PLAY >>'} </span>
@@ -34,8 +34,8 @@ const Hero = () => {
             Beat the queue with one-click playtime reservation.
           </p>
           <div className={`md:flex text-center lg:space-x-6 py-8`}>
-            <button className="bg-primaryColor text-white rounded-md w-48 ">Explore</button>
-            <button className="border border-primaryColor p-3 rounded-md text-primaryColor w-48 ">Become a Vendor</button>
+            <button className="bg-primaryColor text-white rounded-md lg:w-48 w-full sm:my-1 p-3">Explore</button>
+            <button className="border border-primaryColor p-3 rounded-md text-primaryColor sm:my-1 lg:w-48 w-full ">Become a Vendor</button>
           </div>
         </div>
         <div className={`flex`}>
@@ -48,7 +48,7 @@ const Hero = () => {
       </div>
 
       <div className={'lg:flex mx-auto lg:mt-60 bg-white px-5 py-3 justify-between lg:w-[986px] rounded-md bottom-[-20px] relative lg:bottom-10 shadow-lg'}>
-        <div className="flex items-center w-1/2">
+        <div className="flex items-center lg:w-1/2">
           <img src="/images/map-pin.png" alt="" />
           <select
             name="location"
@@ -60,7 +60,7 @@ const Hero = () => {
             <option>Port Harcourt</option>
           </select>
         </div>
-        <div className="flex items-center lg:border-l border-gray lg:pl-8 w-1/2">
+        <div className="flex items-center lg:border-l border-gray lg:pl-8 lg:w-1/2">
           <img src="/images/search.png" alt="" />
           <input
             className=" bg-transparent focus-within:outline-none p-5 lg:w-[500px]"
@@ -71,8 +71,8 @@ const Hero = () => {
             onChange={(e) => handleFilter(e)}
           />
         </div>
-        <div className="w-44 my-auto">
-          <button className="bg-primaryColor px-6 py-3 rounded-md text-sm text-white" onClick={() => explore()}>Get Tickets</button>
+        <div className="lg:w-44 my-auto">
+          <button className="bg-primaryColor px-6 py-3 rounded-md text-sm sm:w-full text-white" onClick={() => explore()}>Get Tickets</button>
         </div>
       </div>
     </div>
