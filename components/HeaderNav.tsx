@@ -10,7 +10,7 @@ const HeaderNav = () => {
       <div className='sm:hidden lg:flex justify-between px-20 p-5 text-sm'>
         <img src="/images/Pentria.svg" alt="" />
         <div className='flex w-96 my-auto justify-between text-primaryColor'>
-          <Link href={""}>
+          <Link href={"/explore"}>
             <p>Explore</p>
           </Link>
           <Link href={""}>
@@ -42,7 +42,7 @@ const HeaderNav = () => {
       </div>
       {
         toggle && <div className='bg-white p-6'>
-          <Link href={""}>
+          <Link href={"/explore"}>
             <p className='my-3'>Explore</p>
           </Link>
           <Link href={""}>
