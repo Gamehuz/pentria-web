@@ -1,10 +1,9 @@
 import React from 'react';
 import FrontLayout from '@/layout/FrontLayout'
-import { useRouter } from 'next/router';
+import { useRouter } from "next/router"
 
 const signup = () => {
-  const router = useRouter();
-  const query = router.query;
+  const { query } = useRouter();
 
   return (
     <FrontLayout footer={false}>

@@ -57,10 +57,12 @@ const enquiries = () => {
 
             {
               faqsList.map((item, idx) => (
-                <FaqsCard
-                  idx={idx}
-                  faqsList={item}
-                />
+                <div key={idx}>
+                  <FaqsCard
+                    idx={idx}
+                    faqsList={item}
+                  />
+                </div>
               ))
             }
           </div>

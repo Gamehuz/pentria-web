@@ -9,14 +9,14 @@ const about = () => {
           <div className='lg:w-[35%] lg:my-auto sm:py-10'>
             <h1 className='lg:text-5xl text-4xl font-bold text-primaryColor'>One-Click Playtime,
               Like Never Before!</h1>
-            <p className='my-3 sm:text-sm'>Pentria is Africa’s leading marketplace for all things recreation and leisure. A platform for ‘soft lifers’ and 'good vibers' to relish happy moments and create beautiful memories through leisure and play. Now you can more easily find and access your favorite hangout spots, games and events nearby, all in one place. Don't be late or left out anymore. Book funtime ahead in one click.</p>
+            <p className='my-3 sm:text-sm'>Pentria is Africa's leading marketplace for all things recreation and leisure. A platform for soft lifers and 'good vibers' to relish happy moments and create beautiful memories through leisure and play. Now you can more easily find and access your favorite hangout spots, games and events nearby, all in one place. Don't be late or left out anymore. Book funtime ahead in one click.</p>
             <p className='text-primaryColor font-bold text-lg'>App coming soon!</p>
           </div>
           <img src="/images/Wood-Hand.png" alt="" />
         </div>
         <div className='bg-primaryColor lg:px-20 px-4 py-8 sm:text-sm text-white'>
           <h2 className='font-bold text-xl'>OUR STORY</h2>
-          <p>In 2021, Chidi, a public gaming lounge business owner in Southwest Nigeria, ran into two problems. Low visibility, one. Next, keen but unsatisfied customers who couldn’t access their favorite spots/games at no extra time or cost.
+          <p>In 2021, Chidi, a public gaming lounge business owner in Southwest Nigeria, ran into two problems. Low visibility, one. Next, keen but unsatisfied customers who couldn't access their favorite spots/games at no extra time or cost.
             <br /> <br />
             He conceived an idea. Why not create a seamless experience in which public recreation facility users can easily find nearby favorite spots and eliminate waiting time with discounted one-click ticket reservation at home, while also assisting leisure service providers in increasing visibility, boosting sales and improving customer experience/retention?
             <br /> <br />

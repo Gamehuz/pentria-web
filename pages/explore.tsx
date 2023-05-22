@@ -9,7 +9,6 @@ const explore = () => {
         <input type="text" className='p-3 border rounded-full w-80 float-right' placeholder='Search' />
         <div className='flex flex-wrap justify-between'>
           <Card />
-
         </div>
       </main>
     </FrontLayout>

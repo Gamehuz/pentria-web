@@ -104,10 +104,12 @@ export default function Home() {
               <div className='lg:w-1/2'>
                 {
                   faqsList.map((item, idx) => (
-                    <FaqsCard
-                      idx={idx}
-                      faqsList={item}
-                    />
+                    <div key={idx}>
+                      <FaqsCard
+                        idx={idx}
+                        faqsList={item}
+                      />
+                    </div>
                   ))
                 }
               </div>
