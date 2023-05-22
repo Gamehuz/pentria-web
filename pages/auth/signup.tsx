@@ -1,10 +1,13 @@
 import React from 'react';
+import FrontLayout from '@/layout/FrontLayout'
 
 const signup = () => {
   return (
-    <div>
-      
-    </div>
+    <FrontLayout footer={false}>
+      <main>
+
+      </main>
+    </FrontLayout>
   );
 };
 

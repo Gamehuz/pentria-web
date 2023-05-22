@@ -75,12 +75,18 @@ const partners = () => {
           <h1 className='text-center text-primaryColor text-3xl my-8 font-bold'>Testimonials</h1>
           <div className=''>
             <Swiper
-              slidesPerView={3}
               spaceBetween={30}
               navigation={true}
               modules={[Navigation]}
               className="mySwiper"
-              
+              breakpoints={{
+                640: {
+                  slidesPerView: 1,
+                },
+                1024: {
+                  slidesPerView: 3,
+                },
+              }}
             >
               <SwiperSlide>
                 <div className='p-6 flex card m-2 rounded-md'>
