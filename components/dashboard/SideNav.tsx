@@ -42,6 +42,31 @@ const SideNav = ({ toggle }: { toggle: boolean }) => {
                 <p className='my-auto font-bold ml-6'>Settings</p>
               </div>
             </Link>
+
+            <Link href={"/guest/history"}>
+              <div className={router.pathname.includes("history") ? "bg-primaryColor mt-28 flex w-full p-4 pl-10 text-white" : 'mt-28 flex w-full p-4 pl-10'}>
+                <div className={router.pathname.includes("history") ? 'w-8 h-8 bg-white p-1 rounded-full' : 'w-8 h-8 rounded-full'}>
+                  <img src="/images/folder-open.png" className='w-6 h-6' alt="" />
+                </div>
+                <p className='my-auto font-bold ml-6'>History</p>
+              </div>
+            </Link>
+            <Link href={"/guest/favourite"} >
+              <div className={router.pathname.includes("favourite") ? "bg-primaryColor flex w-full p-4 pl-10 text-white" : ' flex w-full p-4 pl-10'}>
+                <div className={router.pathname.includes("favourite") ? 'w-8 h-8 bg-white p-1 rounded-full' : 'w-8 h-8 rounded-full'}>
+                  <img src="/images/money-recive.png" className='w-6 h-6' alt="" />
+                </div>
+                <p className='my-auto font-bold ml-6'>Favorite</p>
+              </div>
+            </Link>
+            <Link href={"/guest/settings"}>
+              <div className={router.pathname.includes("settings") ? "bg-primaryColor flex w-full p-4 pl-10 text-white" : ' flex w-full p-4 pl-10'}>
+                <div className={router.pathname.includes("settings") ? 'w-8 h-8 bg-white p-1 rounded-full' : 'w-8 h-8 rounded-full'}>
+                  <img src="/images/setting-4.png" className='w-6 h-6' alt="" />
+                </div>
+                <p className='my-auto font-bold ml-6'>Settings</p>
+              </div>
+            </Link>
             <Link href={"/auth/login"}>
               <div className="flex w-full mt-32 p-4 pl-10 ">
                 <div className="text-red-500">

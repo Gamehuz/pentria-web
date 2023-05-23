@@ -1,10 +1,13 @@
+import VendorLayout from '@/layout/VendorLayout';
 import React from 'react';
 
 const favourite = () => {
   return (
-    <div>
-      
-    </div>
+    <VendorLayout>
+      <main>
+
+      </main>
+    </VendorLayout>
   );
 };
 

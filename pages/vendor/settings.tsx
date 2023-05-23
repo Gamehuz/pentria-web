@@ -46,7 +46,7 @@ const Settings = () => {
     }
   })
 
-  const [updatePassword] = useMutation(UPDATE_PASSWORD, {
+  const [updatePassword, { loading: passwordLoading }] = useMutation(UPDATE_PASSWORD, {
     variables: {
       oldPassword: password,
       newPassword: newPassword
@@ -81,7 +81,7 @@ const Settings = () => {
 
               <input type="number" value={bvn} onChange={(e) => setBvn(e.target.value)} placeholder='BVN' className='border p-3 my-2 rounded-md w-[45%]' />
             </div>
-            <p className='text-primaryColor float-right text-sm my-6 cursor-pointer' onClick={() => updatePassword()}>Change Password</p>
+            <p className='text-primaryColor float-right text-sm my-6 cursor-pointer' onClick={() => updatePassword()}> {passwordLoading ? "Loading..." : "Change Password"}</p>
             <div className='flex justify-between mt-16 w-full'>
               <input type="password" onChange={(e) => setPassword(e.target.value)} placeholder='Old Password' className='border p-3 my-2 rounded-md w-[45%]' />
               <input type="password" onChange={(e) => setNewPassword(e.target.value)} placeholder='New Password' className='border p-3 my-2 rounded-md w-[45%]' />

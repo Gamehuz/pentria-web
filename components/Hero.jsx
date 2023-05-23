@@ -1,12 +1,12 @@
 import Link from "next/link";
 import { useState } from "react"
+import router from 'next/router'
 
 const Hero = () => {
   const [filter, setFilter] = useState({
     recreationName: "",
     location: ""
   });
-  // const navigate = useNavigate();
 
   const handleFilter = (e) => {
     const { name, value } = e.target;
@@ -18,7 +18,7 @@ const Hero = () => {
   };
 
   const explore = () => {
-    navigate(`/explore?${filter.recreationName}=${filter.location}`);
+    router.push(`/explore?${filter.recreationName}=${filter.location}`);
   }
   return (
     <div className="m-auto lg:px-16 p-4 sm:pt-10 lg:pt-32 bg-[#FAFAFA] lg:h-[120vh]">
@@ -57,7 +57,7 @@ const Hero = () => {
           <img src="/images/map-pin.png" alt="" />
           <select
             name="location"
-            className="bg-transparent pl-4"
+            className="bg-transparent pl-4 border-none"
             value={filter.location}
             onChange={(e) => handleFilter(e)}
           >
@@ -68,7 +68,7 @@ const Hero = () => {
         <div className="flex items-center lg:border-l border-gray lg:pl-8 lg:w-1/2">
           <img src="/images/search.png" alt="" />
           <input
-            className=" bg-transparent focus-within:outline-none p-5 lg:w-[500px]"
+            className=" bg-transparent focus-within:outline-none p-5 lg:w-[500px] border-none"
             placeholder={"Enter facility type or recreation space"}
             type={"text"}
             value={filter.recreationName}

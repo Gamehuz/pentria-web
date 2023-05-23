@@ -1,6 +1,6 @@
 import { GET_LISTINGS } from '@/apollo/vendor';
-import ListingCard from '@/components/vendor/ListingCard';
-import ListingModal from '@/components/vendor/ListingModal.jsx';
+import ListingCard from '@/components/dashboard/ListingCard';
+import ListingModal from '@/components/dashboard/ListingModal.jsx';
 import VendorLayout from '@/layout/VendorLayout';
 import { useQuery } from '@apollo/client';
 import React, {  useState } from 'react';

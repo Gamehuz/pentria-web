@@ -1,5 +1,5 @@
-import HeaderNav from "@/components/vendor/HeaderNav";
-import SideNav from "@/components/vendor/SideNav";
+import HeaderNav from "@/components/dashboard/HeaderNav";
+import SideNav from "@/components/dashboard/SideNav";
 import { useEffect, useState } from "react";
 
 type LayoutProps = {
