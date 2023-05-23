@@ -7,7 +7,7 @@ const SideNav = ({ toggle }: { toggle: boolean }) => {
 
   return (
     <div className={toggle ? 'lg:w-[20%] w-[80%]' : ""}>
-      { 
+      {
         toggle && <div className='sm:absolute sm:z-10 h-screen bg-white shadow'>
           <div className='lg:fixed lg:w-[20%]'>
             <Link href={"/vendor/listing"}>
@@ -40,6 +40,14 @@ const SideNav = ({ toggle }: { toggle: boolean }) => {
                   <img src="/images/setting-4.png" className='w-6 h-6' alt="" />
                 </div>
                 <p className='my-auto font-bold ml-6'>Settings</p>
+              </div>
+            </Link>
+            <Link href={"/auth/login"}>
+              <div className="flex w-full mt-32 p-4 pl-10 ">
+                <div className="text-red-500">
+                  <img src="/images/logout.png" className='w-6 h-6' alt="" />
+                </div>
+                <p className='my-auto font-bold ml-6'>Logout</p>
               </div>
             </Link>
           </div>

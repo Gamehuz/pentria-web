@@ -1,11 +1,21 @@
+import { GET_LISTINGS } from '@/apollo/vendor';
 import ListingCard from '@/components/vendor/ListingCard';
-import ListingModal from '@/components/vendor/ListingModal';
+import ListingModal from '@/components/vendor/ListingModal.jsx';
 import VendorLayout from '@/layout/VendorLayout';
+import { useQuery } from '@apollo/client';
 import React, { useState } from 'react';
 
 const Listing = () => {
-  const [lists, setList] = useState([{}])
+  const [lists, setList] = useState([])
   const [modal, setModal] = useState(false)
+
+  useQuery(GET_LISTINGS, {
+    onCompleted: (data) => {
+      console.log(data)
+      setList(data.vendorListings)
+    }
+  })
+
   return (
     <VendorLayout>
       <main className='mt-20 lg:w-[80%] p-6'>
@@ -26,7 +36,11 @@ const Listing = () => {
         </div>
         <div className='mt-6'>
           {lists.length >= 1 ? <div>
-            <ListingCard />
+            {
+              lists.map((list, i) => (
+                <ListingCard list={list} key={i} />
+              ))
+            }
           </div> : <div className='text-center text-3xl mt-28'>
             There is no Listing
             Available</div>}

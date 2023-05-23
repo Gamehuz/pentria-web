@@ -5,7 +5,6 @@ import { message } from 'antd';
 import { useMutation, useQuery } from '@apollo/client';
 import { SIGNUP_USER } from '@/apollo/auth';
 import { GET_BANKS, VERIFY_BANK } from '@/apollo/banks';
-import { error } from 'console';
 
 const Signup = () => {
   const { query } = useRouter();
@@ -313,7 +312,7 @@ const Signup = () => {
                           required
                           value={bankName}
                           className="w-full mt-2 px-3 py-2 text-gray-500 bg-transparent outline-none border focus:border-indigo-600 shadow-sm rounded-lg"
-                          onChange={(e) => setBankName(e.target.value)}
+                          onChange={() => {}}
                           onFocus={() => checkAccount()}
                         />
                       </div>
