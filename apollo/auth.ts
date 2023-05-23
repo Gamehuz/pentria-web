@@ -47,3 +47,32 @@ export const GET_USER = gql`
     }
   }
 `
+
+export const UPDATE_USER = gql`
+  mutation EditUserInfo($firstName: String, $lastName: String, $email: String, $phone: String, $address: String, $sex: String, $dob: String, $city: String, $state: String, $bName: String, $bankName: String, $bank: String, $acctNumber: String) {
+    editUserInfo(firstName: $firstName, lastName: $lastName, email: $email, phone: $phone, address: $address, sex: $sex, dob: $dob, city: $city, state: $state, bName: $bName, bankName: $bankName, bank: $bank, acctNumber: $acctNumber) {
+      _id
+      firstName
+    lastName
+    email
+    phone
+    address
+    city
+    state
+    dob
+    sex
+    isVerified
+    isActive
+    lastLoggedIn
+    accountType
+    createdAt
+    updatedAt
+    bName
+    bankName
+    bank
+    acctNumber
+    bankCode
+    occupation
+    }
+  }
+`
