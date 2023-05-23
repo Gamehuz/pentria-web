@@ -7,7 +7,7 @@ import { Spin } from 'antd';
 import Card from '@/components/Card';
 import Link from 'next/link';
 
-const space = () => {
+const Space = () => {
   const { query } = useRouter();
   const [space, setSpace] = useState<any>(null)
   const [loading, setLoading] = useState(true)
@@ -119,4 +119,4 @@ const space = () => {
   );
 };
 
-export default space;
+export default Space;

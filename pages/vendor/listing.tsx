@@ -3,7 +3,7 @@ import ListingModal from '@/components/vendor/ListingModal';
 import VendorLayout from '@/layout/VendorLayout';
 import React, { useState } from 'react';
 
-const listing = () => {
+const Listing = () => {
   const [lists, setList] = useState([{}])
   const [modal, setModal] = useState(false)
   return (
@@ -37,4 +37,4 @@ const listing = () => {
   );
 };
 
-export default listing;
+export default Listing;

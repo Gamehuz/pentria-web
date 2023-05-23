@@ -6,7 +6,7 @@ import React, { useState } from 'react';
 import { Spin } from 'antd';
 
 
-const explore = () => {
+const Explore = () => {
   const [data, setData] = useState([])
   const [loading, setLoading] = useState(true)
   useQuery(GET_SPACES, {
@@ -43,4 +43,4 @@ const explore = () => {
   );
 };
 
-export default explore;
+export default Explore;
