@@ -3,10 +3,9 @@ import React, { useEffect, useState } from 'react';
 import { selectUser } from "@/store/slices/userSlice.js"
 import { useSelector } from 'react-redux';
 import { useMutation } from '@apollo/client';
-import { UPDATE_USER } from '@/apollo/auth';
+import { UPDATE_PASSWORD, UPDATE_USER } from '@/apollo/auth';
 import { useDispatch } from 'react-redux';
 import { setUser } from '@/store/slices/userSlice';
-
 
 const Settings = () => {
   const user = useSelector(selectUser)
@@ -24,6 +23,9 @@ const Settings = () => {
   const dispatch = useDispatch();
   const [acctNumber, setAcctNumber] = useState(user.acctNumber)
 
+  const [password, setPassword] = useState('')
+  const [newPassword, setNewPassword] = useState('')
+
   const [updateUser, { loading }] = useMutation(UPDATE_USER, {
     variables: {
       firstName: firstName,
@@ -39,7 +41,18 @@ const Settings = () => {
       acctNumber
     },
     onCompleted: (data) => {
+      console.log(data)
       dispatch(setUser(data.editUserInfo))
+    }
+  })
+
+  const [updatePassword] = useMutation(UPDATE_PASSWORD, {
+    variables: {
+      oldPassword: password,
+      newPassword: newPassword
+    },
+    onCompleted: (data) => {
+      console.log(data)
     }
   })
 
@@ -63,15 +76,15 @@ const Settings = () => {
               <input type="number" value={phone} onChange={(e) => setPhone(e.target.value)} placeholder='Phone Number' className='border p-3 my-2 rounded-md w-[45%]' />
               <input type="email" value={bankName} onChange={(e) => setBankName(e.target.value)} placeholder='Bank Name' className='border p-3 my-2 rounded-md w-[45%]' />
 
-              <input type="text" value={bankAccount} placeholder='Account Name' className='border p-3 my-2 rounded-md w-[45%]' />
+              <input type="text" value={bankAccount} onChange={() => { }} placeholder='Account Name' className='border p-3 my-2 rounded-md w-[45%]' />
               <input type="number" value={acctNumber} onChange={(e) => setAcctNumber(e.target.value)} placeholder='Account Number' className='border p-3 my-2 rounded-md w-[45%]' />
 
               <input type="number" value={bvn} onChange={(e) => setBvn(e.target.value)} placeholder='BVN' className='border p-3 my-2 rounded-md w-[45%]' />
             </div>
-            <p className='text-primaryColor float-right text-sm my-6'>Change Password</p>
+            <p className='text-primaryColor float-right text-sm my-6 cursor-pointer' onClick={() => updatePassword()}>Change Password</p>
             <div className='flex justify-between mt-16 w-full'>
-              <input type="password" placeholder='Password' className='border p-3 my-2 rounded-md w-[45%]' />
-              <input type="password" placeholder='Confirm Password' className='border p-3 my-2 rounded-md w-[45%]' />
+              <input type="password" onChange={(e) => setPassword(e.target.value)} placeholder='Old Password' className='border p-3 my-2 rounded-md w-[45%]' />
+              <input type="password" onChange={(e) => setNewPassword(e.target.value)} placeholder='New Password' className='border p-3 my-2 rounded-md w-[45%]' />
             </div>
           </div>
           <div className='w-[20%] text-center'>
