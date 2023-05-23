@@ -3,6 +3,10 @@ import FrontLayout from '@/layout/FrontLayout'
 import { Josefin_Sans } from 'next/font/google'
 import FaqsCard from '@/components/FaqsCard.jsx'
 import Hero from '@/components/Hero'
+import { useState } from 'react'
+import Link from 'next/link'
+import { GET_SPACES } from '@/apollo/spaces'
+import { useQuery } from '@apollo/client'
 
 const josefin_Sans = Josefin_Sans({ subsets: ['latin'] })
 
@@ -36,6 +40,14 @@ export default function Home() {
     },
   ]
 
+  const [exploreList, setExploreList] = useState([])
+
+  useQuery(GET_SPACES, {
+    onCompleted: (data) => {
+      console.log(data);
+      setExploreList(data.spaces)
+    },
+  })
   return (
     <div>
       <FrontLayout>
@@ -48,18 +60,22 @@ export default function Home() {
             </div>
             <div className='flex justify-between'>
               <h4 className='text-xl my-1 font-bold text-white'>Spaces to Go</h4>
-              <div className='flex'>
-                <p className='text-white text-sm my-auto'>Explore All</p>
-                <img src="/images/Arrow.png" className='w-4 h-2 ml-3 my-auto' alt="" />
-              </div>
+              <Link href={"/explore"}>
+                <div className='flex'>
+                  <p className='text-white text-sm my-auto'>Explore All</p>
+                  <img src="/images/Arrow.png" className='w-4 h-2 ml-3 my-auto' alt="" />
+                </div>
+              </Link>
             </div>
             <div className='flex justify-between flex-wrap'>
-              <Card />
-              <Card />
-              <Card />
+              {
+                exploreList.slice(0, 3).map((item, idx) => (
+                  <Card space={item} key={idx} />
+                ))
+              }
             </div>
           </div>
-          <div className='lg:px-20 px-4 py-8'>
+          {/* <div className='lg:px-20 px-4 py-8'>
             <div className='flex justify-between'>
               <h4 className='text-xl my-1 font-bold text-primaryColor'>Upcoming Events</h4>
               <div className='flex'>
@@ -72,7 +88,7 @@ export default function Home() {
               <Card />
               <Card />
             </div>
-          </div>
+          </div> */}
           <div className='lg:px-20 px-4 py-8'>
             <div className='flex'>
               <div className='w-6 border-t border-primaryColor h-1 my-auto'></div>

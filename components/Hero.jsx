@@ -1,3 +1,4 @@
+import Link from "next/link";
 import { useState } from "react"
 
 const Hero = () => {
@@ -34,8 +35,12 @@ const Hero = () => {
             Beat the queue with one-click playtime reservation.
           </p>
           <div className={`md:flex text-center lg:space-x-6 py-8`}>
-            <button className="bg-primaryColor text-white rounded-md lg:w-48 w-full sm:my-1 p-3">Explore</button>
-            <button className="border border-primaryColor p-3 rounded-md text-primaryColor sm:my-1 lg:w-48 w-full ">Become a Vendor</button>
+            <Link href={"/explore"}>
+              <button className="bg-primaryColor text-white rounded-md lg:w-48 w-full sm:my-1 p-3">Explore</button>
+            </Link>
+            <Link href={"/auth/signup?page=vendor"}>
+              <button className="border border-primaryColor p-3 rounded-md text-primaryColor sm:my-1 lg:w-48 w-full ">Become a Vendor</button>
+            </Link>
           </div>
         </div>
         <div className={`flex`}>

@@ -1,9 +1,11 @@
 import ListingCard from '@/components/vendor/ListingCard';
+import ListingModal from '@/components/vendor/ListingModal';
 import VendorLayout from '@/layout/VendorLayout';
 import React, { useState } from 'react';
 
 const listing = () => {
   const [lists, setList] = useState([{}])
+  const [modal, setModal] = useState(false)
   return (
     <VendorLayout>
       <main className='mt-20 lg:w-[80%] p-6'>
@@ -18,7 +20,7 @@ const listing = () => {
               className="w-full py-3 pl-12 pr-4 text-gray-500 border rounded-md outline-none bg-gray-50 focus:bg-white focus:border-indigo-600"
             />
           </div>
-          <button className='p-3 border border-primaryColor sm:w-full sm:mt-4 text-primaryColor rounded-md'>
+          <button onClick={() => setModal(true)} className='p-3 border border-primaryColor sm:w-full sm:mt-4 text-primaryColor rounded-md'>
             + Add New Listing
           </button>
         </div>
@@ -30,6 +32,7 @@ const listing = () => {
             Available</div>}
         </div>
       </main>
+      <ListingModal modal={modal} setModal={() => setModal(!modal)} />
     </VendorLayout>
   );
 };
