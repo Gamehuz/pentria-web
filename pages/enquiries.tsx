@@ -13,19 +13,19 @@ const enquiries = () => {
       a: "From their freshly baked bread to their mouth-watering cakes and pastries, everything is just perfect. I have been a loyal customer for years, and I am never disappointed! I recently ordered a cake for my daughter's birthday, and it was the most delicious cake I have ever tasted! The frosting was so creamy and the cake was perfectly moist."
     },
     {
-      q: "How can I reserve playtime in one click?",
+      q: "Why should I pay online?",
       a: "From their freshly baked bread to their mouth-watering cakes and pastries, everything is just perfect. I have been a loyal customer for years, and I am never disappointed! I recently ordered a cake for my daughter's birthday, and it was the most delicious cake I have ever tasted! The frosting was so creamy and the cake was perfectly moist."
     },
     {
-      q: "How can I reserve playtime in one click?",
+      q: "What payment methods can I use?",
       a: "From their freshly baked bread to their mouth-watering cakes and pastries, everything is just perfect. I have been a loyal customer for years, and I am never disappointed! I recently ordered a cake for my daughter's birthday, and it was the most delicious cake I have ever tasted! The frosting was so creamy and the cake was perfectly moist."
     },
     {
-      q: "How can I reserve playtime in one click?",
+      q: "Can I cancel my bookings?",
       a: "From their freshly baked bread to their mouth-watering cakes and pastries, everything is just perfect. I have been a loyal customer for years, and I am never disappointed! I recently ordered a cake for my daughter's birthday, and it was the most delicious cake I have ever tasted! The frosting was so creamy and the cake was perfectly moist."
     },
     {
-      q: "How can I reserve playtime in one click?",
+      q: "What else can I do on Pentria?",
       a: "From their freshly baked bread to their mouth-watering cakes and pastries, everything is just perfect. I have been a loyal customer for years, and I am never disappointed! I recently ordered a cake for my daughter's birthday, and it was the most delicious cake I have ever tasted! The frosting was so creamy and the cake was perfectly moist."
     },
   ]

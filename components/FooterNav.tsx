@@ -14,13 +14,13 @@ const FooterNav = () => {
         </div>
         <div>
           <h5 className='text-base font-bold'>Product</h5>
-          <Link href={""}>
+          <Link href={"/partners"}>
             <p className='my-2' >Vendors</p>
           </Link>
-          <Link href={""}>
+          <Link href={"/about"}>
             <p className='my-2'>About</p>
           </Link>
-          <Link href={""}>
+          <Link href={"enquiries"}>
             <p className='my-2'>Enquiries</p>
           </Link>
           <Link href={""}>
@@ -38,8 +38,11 @@ const FooterNav = () => {
         </div>
         <div className='lg:w-96'>
           <h5 className='text-base font-bold'>Subscribe to Our Newsletter </h5>
-          <div className='relative my-2'>
+          <div className='relative my-2 text-black'>
             <input type="text" className='w-full p-3 bg-white rounded-md' placeholder='Enter Email Address' />
+            <button className='absolute top-1.5 right-1.5 bg-primaryColor p-1 rounded-md'>
+              <img src="/images/send.png" alt="" />
+            </button>
           </div>
         </div>
       </div>

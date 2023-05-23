@@ -1,12 +1,119 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import FrontLayout from '@/layout/FrontLayout'
 import router, { useRouter } from "next/router"
+import { message } from 'antd';
+import { useMutation, useQuery } from '@apollo/client';
+import { SIGNUP_USER } from '@/apollo/auth';
+import { GET_BANKS, VERIFY_BANK } from '@/apollo/banks';
+import { error } from 'console';
 
 const Signup = () => {
   const { query } = useRouter();
+  const [messageApi, contextHolder] = message.useMessage();
+  const [firstName, setFirstName] = useState("")
+  const [lastName, setLastName] = useState("")
+  const [email, setEmail] = useState("")
+  const [phone, setPhone] = useState("")
+  const [address, setAddress] = useState("")
+  const [city, setCity] = useState("")
+  const [state, setState] = useState("")
+  const [password, setPassword] = useState("")
+  const [confirmPassword, setConfirmPassword] = useState("")
+  const [bName, setBusinessName] = useState("")
+  const [bank, setBank] = useState<string>("")
+
+  const [bankName, setBankName] = useState("")
+  const [occupation, setOccupation] = useState("")
+  const [acctNumber, setAcctNumber] = useState("")
+  const [bankCode, setBankCode] = useState("")
+
+  const [banks, setBanks] = useState<any>([])
+
+  useQuery(GET_BANKS, {
+    onCompleted: (data) => {
+      setBanks(data.getBanks)
+    }
+  })
+
+  const [signup, { loading }] = useMutation(SIGNUP_USER, {
+    variables: {
+      input: {
+        accountType: query.page === "vendor" ? "VENDOR" : query.page === "guest" ? "GUEST" : "",
+        firstName,
+        lastName,
+        email,
+        phone,
+        address,
+        city,
+        state,
+        password,
+        ...(query.page === "vendor" && {
+          bName,
+          bank,
+          bankName,
+          occupation,
+          acctNumber,
+          bankCode
+        })
+      }
+    },
+    onCompleted: (data) => {
+      console.log(data)
+      messageApi.open({
+        type: 'success',
+        content: 'Signed up successfully!',
+      });
+      router.push("/auth/login")
+    },
+    onError: (error) => {
+      messageApi.open({
+        type: 'error',
+        content: error.message,
+      });
+    }
+  })
+  const passwordChecker = () => {
+    if (password === confirmPassword) {
+      signup()
+    } else {
+      messageApi.open({
+        type: 'error',
+        content: "Passwords must match!",
+      });
+    }
+  }
+
+  const [verify] = useMutation(VERIFY_BANK, {
+    variables: {
+      accountNumber: acctNumber,
+      code: bankCode
+    },
+    onCompleted: (data) => {
+      console.log(data)
+      setBankName(data.verifyBankAccount.account_name)
+    },
+    onError: (error) => {
+      console.log(error)
+    }
+  })
+
+  function checkAccount() {
+    if (acctNumber.length >= 9) {
+      banks.map((item: { name: any; code: React.SetStateAction<string>; }) => {
+        if (item.name === bank) {
+          setBankCode(item.code)
+          verify()
+        } else {
+          return
+        }
+      })
+      verify()
+    }
+  }
 
   return (
     <FrontLayout footer={false}>
+      {contextHolder}
       <main>
         <div className='lg:flex'>
           <div className='sm:hidden  w-1/2 p-10 bg-primaryColor text-white'>
@@ -50,172 +157,187 @@ const Signup = () => {
                   <span className="block w-full h-px bg-gray-300"></span>
                   <p className="inline-block w-fit text-sm bg-white px-2 absolute -top-2 inset-x-0 mx-auto">Or continue with</p>
                 </div>
-                <form
-                  onSubmit={(e) => e.preventDefault()}
-                  className="space-y-5"
-                >
-                  <div className='lg:flex justify-between'>
-                    <div className='lg:w-[45%]'>
-                      <label className="font-medium">
-                        First Name
-                      </label>
-                      <input
-                        type="text"
-                        required
-                        className="w-full mt-2 px-3 py-2 text-gray-500 bg-transparent outline-none border focus:border-indigo-600 shadow-sm rounded-lg"
-                      />
-                    </div>
-                    <div className='lg:w-[45%]'>
-                      <label className="font-medium">
-                        Last Name
-                      </label>
-                      <input
-                        type="text"
-                        required
-                        className="w-full mt-2 px-3 py-2 text-gray-500 bg-transparent outline-none border focus:border-indigo-600 shadow-sm rounded-lg"
-                      />
-                    </div>
-                  </div>
-                  <div className='lg:flex justify-between'>
-                    <div className='lg:w-[45%]'>
-                      <label className="font-medium">
-                        Email
-                      </label>
-                      <input
-                        type="email"
-                        required
-                        className="w-full mt-2 px-3 py-2 text-gray-500 bg-transparent outline-none border focus:border-indigo-600 shadow-sm rounded-lg"
-                      />
-                    </div>
-                    <div className='lg:w-[45%]'>
-                      <label className="font-medium">
-                        Phone Number
-                      </label>
-                      <input
-                        type="number"
-                        required
-                        className="w-full mt-2 px-3 py-2 text-gray-500 bg-transparent outline-none border focus:border-indigo-600 shadow-sm rounded-lg"
-                      />
-                    </div>
-                  </div>
-                  <div>
+                <div className='lg:flex justify-between'>
+                  <div className='lg:w-[45%]'>
                     <label className="font-medium">
-                      Address
+                      First Name
                     </label>
                     <input
                       type="text"
                       required
                       className="w-full mt-2 px-3 py-2 text-gray-500 bg-transparent outline-none border focus:border-indigo-600 shadow-sm rounded-lg"
+                      onChange={(e) => setFirstName(e.target.value)}
                     />
                   </div>
-                  <div className='lg:flex justify-between'>
-                    <div className='lg:w-[45%]'>
-                      <label className="font-medium">
-                        City
-                      </label>
-                      <input
-                        type="text"
-                        required
-                        className="w-full mt-2 px-3 py-2 text-gray-500 bg-transparent outline-none border focus:border-indigo-600 shadow-sm rounded-lg"
-                      />
-                    </div>
-                    <div className='lg:w-[45%]'>
-                      <label className="font-medium">
-                        State
-                      </label>
-                      <input
-                        type="text"
-                        required
-                        className="w-full mt-2 px-3 py-2 text-gray-500 bg-transparent outline-none border focus:border-indigo-600 shadow-sm rounded-lg"
-                      />
-                    </div>
+                  <div className='lg:w-[45%]'>
+                    <label className="font-medium">
+                      Last Name
+                    </label>
+                    <input
+                      type="text"
+                      required
+                      className="w-full mt-2 px-3 py-2 text-gray-500 bg-transparent outline-none border focus:border-indigo-600 shadow-sm rounded-lg"
+                      onChange={(e) => setLastName(e.target.value)}
+                    />
                   </div>
-                  <div className='lg:flex justify-between'>
-                    <div className='lg:w-[45%]'>
-                      <label className="font-medium">
-                        Password
-                      </label>
-                      <input
-                        type="password"
-                        required
-                        className="w-full mt-2 px-3 py-2 text-gray-500 bg-transparent outline-none border focus:border-indigo-600 shadow-sm rounded-lg"
-                      />
-                    </div>
-                    <div className='lg:w-[45%]'>
-                      <label className="font-medium">
-                        Confirm Password
-                      </label>
-                      <input
-                        type="password"
-                        required
-                        className="w-full mt-2 px-3 py-2 text-gray-500 bg-transparent outline-none border focus:border-indigo-600 shadow-sm rounded-lg"
-                      />
-                    </div>
+                </div>
+                <div className='lg:flex justify-between'>
+                  <div className='lg:w-[45%]'>
+                    <label className="font-medium">
+                      Email
+                    </label>
+                    <input
+                      type="email"
+                      required
+                      className="w-full mt-2 px-3 py-2 text-gray-500 bg-transparent outline-none border focus:border-indigo-600 shadow-sm rounded-lg"
+                      onChange={(e) => setEmail(e.target.value)}
+                    />
                   </div>
-                  {
-                    query.page === "vendor" && (
-                      <div>
-                        <div className='my-1'>
-                          <label className="font-medium">
-                            Business Name
-                          </label>
-                          <input
-                            type="text"
-                            required
-                            className="w-full mt-2 px-3 py-2 text-gray-500 bg-transparent outline-none border focus:border-indigo-600 shadow-sm rounded-lg"
-                          />
-                        </div>
-                        <div className='my-4'>
-                          <label className="font-medium">
-                            Select Bank
-                          </label>
-                          <select className="w-full mt-2 px-3 py-3 text-gray-500 bg-transparent outline-none border focus:border-indigo-600 shadow-sm rounded-lg">
-                            <option value="">Hello Bank</option>
-                          </select>
-                        </div>
-                        <div className='my-4'>
-                          <label className="font-medium">
-                            Account Number
-                          </label>
-                          <input
-                            type="number"
-                            required
-                            className="w-full mt-2 px-3 py-2 text-gray-500 bg-transparent outline-none border focus:border-indigo-600 shadow-sm rounded-lg"
-                          />
-                        </div>
-                        <div className='my-4'>
-                          <label className="font-medium">
-                            Account Name
-                          </label>
-                          <input
-                            type="text"
-                            required
-                            className="w-full mt-2 px-3 py-2 text-gray-500 bg-transparent outline-none border focus:border-indigo-600 shadow-sm rounded-lg"
-                          />
-                        </div>
-                        <div className='my-4'>
-                          <label className="font-medium">
-                            Occupation
-                          </label>
-                          <input
-                            type="text"
-                            required
-                            className="w-full mt-2 px-3 py-2 text-gray-500 bg-transparent outline-none border focus:border-indigo-600 shadow-sm rounded-lg"
-                          />
-                        </div>
+                  <div className='lg:w-[45%]'>
+                    <label className="font-medium">
+                      Phone Number
+                    </label>
+                    <input
+                      type="number"
+                      required
+                      className="w-full mt-2 px-3 py-2 text-gray-500 bg-transparent outline-none border focus:border-indigo-600 shadow-sm rounded-lg"
+                      onChange={(e) => setPhone(e.target.value)}
+                    />
+                  </div>
+                </div>
+                <div>
+                  <label className="font-medium">
+                    Address
+                  </label>
+                  <input
+                    type="text"
+                    required
+                    className="w-full mt-2 px-3 py-2 text-gray-500 bg-transparent outline-none border focus:border-indigo-600 shadow-sm rounded-lg"
+                    onChange={(e) => setAddress(e.target.value)}
+                  />
+                </div>
+                <div className='lg:flex justify-between'>
+                  <div className='lg:w-[45%]'>
+                    <label className="font-medium">
+                      City
+                    </label>
+                    <input
+                      type="text"
+                      required
+                      className="w-full mt-2 px-3 py-2 text-gray-500 bg-transparent outline-none border focus:border-indigo-600 shadow-sm rounded-lg"
+                      onChange={(e) => setCity(e.target.value)}
+                    />
+                  </div>
+                  <div className='lg:w-[45%]'>
+                    <label className="font-medium">
+                      State
+                    </label>
+                    <input
+                      type="text"
+                      required
+                      className="w-full mt-2 px-3 py-2 text-gray-500 bg-transparent outline-none border focus:border-indigo-600 shadow-sm rounded-lg"
+                      onChange={(e) => setState(e.target.value)}
+                    />
+                  </div>
+                </div>
+                <div className='lg:flex justify-between'>
+                  <div className='lg:w-[45%]'>
+                    <label className="font-medium">
+                      Password
+                    </label>
+                    <input
+                      type="password"
+                      required
+                      className="w-full mt-2 px-3 py-2 text-gray-500 bg-transparent outline-none border focus:border-indigo-600 shadow-sm rounded-lg"
+                      onChange={(e) => setPassword(e.target.value)}
+                    />
+                  </div>
+                  <div className='lg:w-[45%]'>
+                    <label className="font-medium">
+                      Confirm Password
+                    </label>
+                    <input
+                      type="password"
+                      required
+                      className="w-full mt-2 px-3 py-2 text-gray-500 bg-transparent outline-none border focus:border-indigo-600 shadow-sm rounded-lg"
+                      onChange={(e) => setConfirmPassword(e.target.value)}
+                    />
+                  </div>
+                </div>
+                {
+                  query.page === "vendor" && (
+                    <div>
+                      <div className='my-1'>
+                        <label className="font-medium">
+                          Business Name
+                        </label>
+                        <input
+                          type="text"
+                          required
+                          className="w-full mt-2 px-3 py-2 text-gray-500 bg-transparent outline-none border focus:border-indigo-600 shadow-sm rounded-lg"
+                          onChange={(e) => setBusinessName(e.target.value)}
+                        />
                       </div>
-                    )
-                  }
-                  <button
-                    className="w-full px-4 py-2 text-white font-medium bg-primaryColor rounded-lg"
-                  >
-                    Sign Up
-                  </button>
-                </form>
+                      <div className='my-4'>
+                        <label className="font-medium">
+                          Select Bank
+                        </label>
+                        <select onChange={(e) => { setBank(e.target.value) }} className="w-full mt-2 px-3 py-3 text-gray-500 bg-transparent outline-none border focus:border-indigo-600 shadow-sm rounded-lg">
+                          {
+                            banks.map((bank: any, index: React.Key | null | undefined) => (
+                              <option key={index} value={bank.name}>{bank.name}</option>
+                            ))
+                          }
+                        </select>
+                      </div>
+                      <div className='my-4'>
+                        <label className="font-medium">
+                          Account Number
+                        </label>
+                        <input
+                          type="number"
+                          required
+                          className="w-full mt-2 px-3 py-2 text-gray-500 bg-transparent outline-none border focus:border-indigo-600 shadow-sm rounded-lg"
+                          onChange={(e) => {
+                            setAcctNumber(e.target.value);
+                            checkAccount()
+                          }}
+                        />
+                      </div>
+                      <div className='my-4'>
+                        <label className="font-medium">
+                          Account Name
+                        </label>
+                        <input
+                          type="text"
+                          required
+                          value={bankName}
+                          className="w-full mt-2 px-3 py-2 text-gray-500 bg-transparent outline-none border focus:border-indigo-600 shadow-sm rounded-lg"
+                          onChange={(e) => setBankName(e.target.value)}
+                          onFocus={() => checkAccount()}
+                        />
+                      </div>
+                      <div className='my-4'>
+                        <label className="font-medium">
+                          Occupation
+                        </label>
+                        <input
+                          type="text"
+                          required
+                          className="w-full mt-2 px-3 py-2 text-gray-500 bg-transparent outline-none border focus:border-indigo-600 shadow-sm rounded-lg"
+                          onChange={(e) => setOccupation(e.target.value)}
+                        />
+                      </div>
+                    </div>
+                  )
+                }
+                <button
+                  className="w-full px-4 py-2 text-white font-medium bg-primaryColor rounded-lg"
+                  onClick={() => passwordChecker()}
+                >
+                  {loading ? "Loading..." : "Sign Up"}
+                </button>
               </div>
-              {/* <div className="text-center">
-                <a href="javascript:void(0)" className="hover:text-indigo-600">Forgot password?</a>
-              </div> */}
             </div>
           </div>
         </div>

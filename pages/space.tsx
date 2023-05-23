@@ -61,13 +61,15 @@ const Space = () => {
             <div className='flex'> <img src="/images/favourite.png" className='mr-4' alt="" /> <p className='my-auto text-[#D78D06] text-base'>Favourite</p></div>
           </div>
           <div className='flex my-3'>
-            <div className='w-[70%]'>
+            <div className='w-full'>
               <img src={space.image[0]} className='rounded-md h-[95%] w-full' alt="" />
             </div>
-            <div className='w-[30%]'>
-              <img src={space.image[1]} className='rounded-md lg:ml-4 mb-4' alt="" />
-              <img src={space.image[2]} className='rounded-md lg:ml-4' alt="" />
-            </div>
+            {
+              space.image.length > 1 && <div className='w-[30%]'>
+                <img src={space.image[1]} className='rounded-md lg:ml-4 mb-4' alt="" />
+                <img src={space.image[2]} className='rounded-md lg:ml-4' alt="" />
+              </div>
+            }
           </div>
           <div></div>
           <div className='flex justify-between text-[#150831]'>

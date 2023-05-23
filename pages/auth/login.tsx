@@ -1,9 +1,45 @@
+import { LOGIN_USER } from '@/apollo/auth';
 import FrontLayout from '@/layout/FrontLayout';
-import React from 'react';
+import { useMutation } from '@apollo/client';
+import React, { useState } from 'react';
+import { message } from 'antd';
+import router from 'next/router';
+import { setCookie } from 'cookies-next';
 
-const login = () => {
+const Login = () => {
+  const [email, setEmail] = useState("")
+  const [password, setPassword] = useState("")
+  const [messageApi, contextHolder] = message.useMessage();
+
+  const [login, { loading }] = useMutation(LOGIN_USER, {
+    variables: {
+      email,
+      password
+    },
+    onCompleted: (data) => {
+      console.log(data)
+      setCookie('token', data.login.token);
+      messageApi.open({
+        type: 'success',
+        content: 'Logged in successfully!',
+      });
+      if (data.login.accountType === "VENDOR") {
+        router.push("/vendor/listing")
+      } else if (data.login.accountType === "GUEST") {
+        router.push("/user/history")
+      }
+    },
+    onError: (error) => {
+      messageApi.open({
+        type: 'error',
+        content: error.message,
+      });
+    }
+  })
+
   return (
     <FrontLayout footer={false}>
+      {contextHolder}
       <main>
         <div className='lg:flex'>
           <div className='sm:hidden w-1/2 p-10 bg-primaryColor text-white'>
@@ -46,40 +82,35 @@ const login = () => {
                   <span className="block w-full h-px bg-gray-300"></span>
                   <p className="inline-block w-fit text-sm bg-white px-2 absolute -top-2 inset-x-0 mx-auto">Or continue with</p>
                 </div>
-                <form
-                  onSubmit={(e) => e.preventDefault()}
-                  className="space-y-5"
+                <div>
+                  <label className="font-medium">
+                    Email
+                  </label>
+                  <input
+                    type="email"
+                    required
+                    className="w-full mt-2 px-3 py-2 text-gray-500 bg-transparent outline-none border focus:border-indigo-600 shadow-sm rounded-lg"
+                    onChange={(e) => setEmail(e.target.value)}
+                  />
+                </div>
+                <div>
+                  <label className="font-medium">
+                    Password
+                  </label>
+                  <input
+                    type="password"
+                    required
+                    className="w-full mt-2 px-3 py-2 text-gray-500 bg-transparent outline-none border focus:border-indigo-600 shadow-sm rounded-lg"
+                    onChange={(e) => setPassword(e.target.value)}
+                  />
+                </div>
+                <button
+                  className="w-full px-4 py-2 text-white font-medium bg-primaryColor rounded-lg"
+                  onClick={() => login()}
                 >
-                  <div>
-                    <label className="font-medium">
-                      Email
-                    </label>
-                    <input
-                      type="email"
-                      required
-                      className="w-full mt-2 px-3 py-2 text-gray-500 bg-transparent outline-none border focus:border-indigo-600 shadow-sm rounded-lg"
-                    />
-                  </div>
-                  <div>
-                    <label className="font-medium">
-                      Password
-                    </label>
-                    <input
-                      type="password"
-                      required
-                      className="w-full mt-2 px-3 py-2 text-gray-500 bg-transparent outline-none border focus:border-indigo-600 shadow-sm rounded-lg"
-                    />
-                  </div>
-                  <button
-                    className="w-full px-4 py-2 text-white font-medium bg-primaryColor rounded-lg"
-                  >
-                    Login
-                  </button>
-                </form>
+                  {loading ? "Loading.." : "Login"}
+                </button>
               </div>
-              {/* <div className="text-center">
-                <a href="javascript:void(0)" className="hover:text-indigo-600">Forgot password?</a>
-              </div> */}
             </div>
           </div>
         </div>
@@ -88,4 +119,4 @@ const login = () => {
   );
 };
 
-export default login;
+export default Login;

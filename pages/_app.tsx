@@ -3,6 +3,7 @@ import type { AppProps } from 'next/app'
 import Head from 'next/head'
 import { ApolloClient, InMemoryCache, ApolloProvider, gql } from '@apollo/client';
 import axios from 'axios';
+import { getCookie } from 'cookies-next';
 
 
 const client = new ApolloClient({
@@ -11,7 +12,7 @@ const client = new ApolloClient({
 });
 
 axios.defaults.baseURL = 'https://pentria-apiv1-4w2bw.ondigitalocean.app/graphql';
-axios.defaults.headers.common['Authorization'] = "";
+axios.defaults.headers.common['Authorization'] = `Bearer ${getCookie('token')}`;
 
 export default function App({ Component, pageProps }: AppProps) {
   return (

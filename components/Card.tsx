@@ -6,10 +6,10 @@ const Card = ({ space }: { space: any }) => {
     <div className='card rounded-md relative lg:w-[32%] bg-[#FAFAFA] my-6'>
       <Link href={`/space?page=${space._id}`}>
         <img src={space.image[0]} className='rounded-t-md' alt="" />
-        <img src="/images/Featured.png" className='absolute top-20 -left-5' alt="" />
+        {/* <img src="/images/Featured.png" className='absolute top-20 -left-5' alt="" /> */}
         <div className='p-4'>
           <div className='flex justify-between my-3'>
-            <h5 className='font-bold text-xl text-[#D78D06] my-auto'>{space.price} {space.currency}</h5>
+            <h5 className='font-bold text-xl text-[#D78D06] my-auto'> {space.currency} {space.price}</h5>
             <img src="/images/favourite.png" alt="" />
           </div>
           <p className='font-bold text-lg'>{space.name}</p>

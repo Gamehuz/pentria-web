@@ -21,7 +21,7 @@ const HeaderNav = () => {
             <p>About</p>
           </Link>
           <Link href={"/partners"}>
-            <p>Partners</p>
+            <p>Vendors</p>
           </Link>
           <Link href={"/enquiries"}>
             <p>Enquiries</p>
@@ -53,7 +53,7 @@ const HeaderNav = () => {
             <p className='my-3'>About</p>
           </Link>
           <Link href={"/partners"}>
-            <p className='my-3'>Partners</p>
+            <p className='my-3'>Vendors</p>
           </Link>
           <Link href={"/enquiries"}>
             <p className='my-3'>Enquiries</p>
