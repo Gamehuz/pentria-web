@@ -1,15 +1,22 @@
-import { LOGIN_USER } from '@/apollo/auth';
+import { GET_USER, LOGIN_USER } from '@/apollo/auth';
 import FrontLayout from '@/layout/FrontLayout';
-import { useMutation } from '@apollo/client';
+import { useLazyQuery, useMutation } from '@apollo/client';
 import React, { useState } from 'react';
 import { message } from 'antd';
 import router from 'next/router';
 import { setCookie } from 'cookies-next';
+import { useDispatch } from 'react-redux';
+import { setUser } from '@/store/slices/userSlice';
 
 const Login = () => {
   const [email, setEmail] = useState("")
   const [password, setPassword] = useState("")
   const [messageApi, contextHolder] = message.useMessage();
+  const dispatch = useDispatch();
+
+  const [getUser] = useLazyQuery(GET_USER, {
+    onCompleted: (data) => dispatch(setUser(data.user))
+  })
 
   const [login, { loading }] = useMutation(LOGIN_USER, {
     variables: {
@@ -23,6 +30,7 @@ const Login = () => {
         type: 'success',
         content: 'Logged in successfully!',
       });
+      getUser()
       if (data.login.accountType === "VENDOR") {
         router.push("/vendor/listing")
       } else if (data.login.accountType === "GUEST") {

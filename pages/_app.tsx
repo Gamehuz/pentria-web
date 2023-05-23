@@ -4,6 +4,8 @@ import Head from 'next/head'
 import { ApolloClient, InMemoryCache, ApolloProvider, gql } from '@apollo/client';
 import axios from 'axios';
 import { getCookie } from 'cookies-next';
+import { Provider } from 'react-redux'
+import { wrapper } from '../store/store.js';
 
 const token = getCookie('token')
 
@@ -18,7 +20,10 @@ const client = new ApolloClient({
 axios.defaults.baseURL = 'https://pentria-apiv1-4w2bw.ondigitalocean.app/graphql';
 axios.defaults.headers.common['Authorization'] = "Bearer" + token;
 
-export default function App({ Component, pageProps }: AppProps) {
+export default function App({ Component, ...rest }: AppProps) {
+  const { store, props } = wrapper.useWrappedStore(rest);
+  const { pageProps } = props;
+
   return (
     <>
       <Head>
@@ -26,7 +31,9 @@ export default function App({ Component, pageProps }: AppProps) {
         <title>Pentria</title>
       </Head>
       <ApolloProvider client={client}>
-        <Component {...pageProps} />
+        <Provider store={store}>
+          <Component {...pageProps} />
+        </Provider>
       </ApolloProvider>
     </>
   )

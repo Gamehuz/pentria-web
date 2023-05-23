@@ -1,7 +1,11 @@
 import VendorLayout from '@/layout/VendorLayout';
 import React from 'react';
+import { selectUser } from "@/store/slices/userSlice.js"
+import { useSelector } from 'react-redux';
 
-const settings = () => {
+const Settings = () => {
+  const user = useSelector(selectUser)
+
   return (
     <VendorLayout>
       <main className='mt-20 lg:w-[80%] p-6'>
@@ -44,4 +48,4 @@ const settings = () => {
   );
 };
 
-export default settings;
+export default Settings;

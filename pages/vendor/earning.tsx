@@ -1,7 +1,23 @@
+import { EARNINGS } from '@/apollo/vendor';
 import VendorLayout from '@/layout/VendorLayout';
-import React from 'react';
+import { useQuery } from '@apollo/client';
+import React, { useState } from 'react';
+import { useSelector } from 'react-redux';
+import { selectUser } from "@/store/slices/userSlice.js"
 
-const earning = () => {
+const Earning = () => {
+  const [earnings, setEarnings] = useState<any>([]);
+  const user = useSelector(selectUser)
+
+  useQuery(EARNINGS, {
+    variables: {
+      vendorId: user._id
+    },
+    onCompleted: (data) => {
+      console.log(data);
+      setEarnings(data.bookingSold);
+    }
+  });
   return (
     <VendorLayout>
       <main className='mt-20 lg:w-[80%] p-6'>
@@ -25,25 +41,25 @@ const earning = () => {
             <tr>
               <td className='p-2'>S/N</td>
               <td>User</td>
-              <td>Hours</td>
-              <td>Rate</td>
               <td>Total</td>
               <td>Status</td>
               <td>Action</td>
             </tr>
           </thead>
           <tbody>
-            <tr>
-              <td className='p-2'>1</td>
-              <td>John Doe</td>
-              <td>2</td>
-              <td>NGN 2,000</td>
-              <td>NGN 6,000</td>
-              <td>Confirmed</td>
-              <td>
-                <img src="/images/trash.png" alt="" />
-              </td>
-            </tr>
+            {earnings.map((earning: {
+              customer: string; author: string | number | boolean | React.ReactElement<any, string | React.JSXElementConstructor<any>> | React.ReactFragment | React.ReactPortal | React.PromiseLikeOfReactNode | null | undefined; amount: string | number | boolean | React.ReactElement<any, string | React.JSXElementConstructor<any>> | React.ReactFragment | React.ReactPortal | React.PromiseLikeOfReactNode | null | undefined; status: string | number | boolean | React.ReactElement<any, string | React.JSXElementConstructor<any>> | React.ReactFragment | React.ReactPortal | React.PromiseLikeOfReactNode | null | undefined;
+            }, index: number) => (
+              <tr key={index}>
+                <td className='p-2'>{index + 1}</td>
+                <td>{earning.customer}</td>
+                <td>{earning.amount}</td>
+                <td>{earning.status}</td>
+                <td>
+                  <img src="/images/trash.png" alt="" />
+                </td>
+              </tr>
+            ))}
           </tbody>
         </table>
       </main>
@@ -51,4 +67,4 @@ const earning = () => {
   );
 };
 
-export default earning;
+export default Earning;

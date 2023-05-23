@@ -3,7 +3,8 @@ import ListingCard from '@/components/vendor/ListingCard';
 import ListingModal from '@/components/vendor/ListingModal.jsx';
 import VendorLayout from '@/layout/VendorLayout';
 import { useQuery } from '@apollo/client';
-import React, { useState } from 'react';
+import React, {  useState } from 'react';
+
 
 const Listing = () => {
   const [lists, setList] = useState([])

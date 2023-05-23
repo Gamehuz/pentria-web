@@ -48,3 +48,18 @@ export const DELETE_SPACE = gql`
     deleteSpace(spaceId: $spaceId)
   }
 `
+
+export const EARNINGS = gql`
+  query BookingSold($vendorId: ID) {
+    bookingSold(vendorId: $vendorId) {
+      _id
+      name
+      author
+      created
+      amount
+      bookingId
+      status
+      customer
+    }
+  }
+`
