@@ -82,6 +82,9 @@ query space($spaceId: ID!) {
       image
       price
       name
+      spaceId{
+        _id
+      }
     } 
     reviews {
       _id

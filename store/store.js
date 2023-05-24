@@ -1,5 +1,6 @@
 import { configureStore } from '@reduxjs/toolkit';
 import { userSlice } from "./slices/userSlice.js"
+import { cartSlice } from "./slices/cartSlice.js"
 import storage from 'redux-persist/lib/storage';
 import { persistReducer, persistStore } from 'redux-persist';
 import thunk from 'redux-thunk';
@@ -11,7 +12,10 @@ const persistConfig = {
 }
 
 const rootReducer = combineReducers(
-  { [userSlice.name]: userSlice.reducer }
+  {
+    [userSlice.name]: userSlice.reducer,
+    [cartSlice.name]: cartSlice.reducer
+  }
 )
 
 const persistedReducer = persistReducer(persistConfig, rootReducer)

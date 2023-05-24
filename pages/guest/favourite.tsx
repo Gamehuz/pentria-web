@@ -5,7 +5,7 @@ import { Spin } from 'antd';
 import React, { ReactNode, SetStateAction, useState } from 'react';
 import { message } from 'antd';
 
-const favourite = () => {
+const Favourite = () => {
   const [lists, setList] = useState<any>([])
   const [messageApi, contextHolder] = message.useMessage();
   const [id, setId] = useState("")
@@ -93,4 +93,4 @@ const favourite = () => {
   );
 };
 
-export default favourite;
+export default Favourite;

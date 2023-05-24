@@ -8,6 +8,8 @@ import Card from '@/components/Card';
 import Link from 'next/link';
 import { ADD_FAVOURITE } from '@/apollo/guest';
 import { message } from 'antd';
+import { useDispatch } from 'react-redux';
+import { addCart } from '@/store/slices/cartSlice';
 
 const Space = () => {
   const { query } = useRouter();
@@ -15,6 +17,7 @@ const Space = () => {
   const [loading, setLoading] = useState(true)
   const [exploreList, setExploreList] = useState<any>([])
   const [messageApi, contextHolder] = message.useMessage();
+  const dispatch = useDispatch();
 
   useQuery(SINGLE_SPACE, {
     variables: {
@@ -61,6 +64,14 @@ const Space = () => {
     return replacedStr;
   }
 
+  const addToCart = (activity: { duration: React.ReactNode; name: React.ReactNode; currency: React.ReactNode; price: React.ReactNode; image: string | undefined; }) => {
+    dispatch(addCart({ ...activity, count: 1 }))
+    messageApi.open({
+      type: 'success',
+      content: 'Added to cart',
+    });
+  }
+
   return (
     <FrontLayout>
       {contextHolder}
@@ -78,12 +89,12 @@ const Space = () => {
           </div>
           <div className='flex my-3'>
             <div className='w-full'>
-              <img src={space.image[0]} className='rounded-md h-[95%] w-full' alt="" />
+              <img src={space.image[0]} className='rounded-md h-[92%] w-full' alt="" />
             </div>
             {
               space.image.length > 1 && <div className='w-[30%]'>
-                <img src={space.image[1]} className='rounded-md lg:ml-4 mb-4' alt="" />
-                <img src={space.image[2]} className='rounded-md lg:ml-4' alt="" />
+                <img src={space.image[1]} className='rounded-md h-[45%] lg:ml-4 mb-4' alt="" />
+                <img src={space.image[2]} className='rounded-md h-[45%] lg:ml-4' alt="" />
               </div>
             }
           </div>
@@ -113,7 +124,7 @@ const Space = () => {
                     <div className='w-1/2 my-auto'>
                       <p className='text-[#D78D06] font-bold'>{activity.currency} {activity.price} / <span className='text-xs'>{activity.duration}</span></p>
                       <h4 className='font-bold my-2'>{activity.name}</h4>
-                      <button className='p-3 bg-primaryColor text-white rounded-md'>Add to cart</button>
+                      <button onClick={() => addToCart(activity)} className='p-3 bg-primaryColor text-white rounded-md'>Add to cart</button>
                     </div>
                   </div>
                 ))

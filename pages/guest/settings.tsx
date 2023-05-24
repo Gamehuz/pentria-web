@@ -8,7 +8,7 @@ import { useDispatch } from 'react-redux';
 import { setUser } from '@/store/slices/userSlice';
 import { message } from 'antd';
 
-const settings = () => {
+const Settings = () => {
   const [messageApi, contextHolder] = message.useMessage();
   const user = useSelector(selectUser)
   const [firstName, setFirstName] = useState(user.firstName)
@@ -103,4 +103,4 @@ const settings = () => {
   );
 };
 
-export default settings;
+export default Settings;
