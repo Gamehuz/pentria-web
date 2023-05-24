@@ -17,10 +17,10 @@ export const HISTORY = gql`
       payment
       currency
       spaceId {
-      image
-      name
-      createdAt
-      description  
+        image
+        name
+        createdAt
+        description  
       }
     }
   }

@@ -1,8 +1,11 @@
 import Link from "next/link";
 import { useState } from "react"
 import router from 'next/router'
+import { message } from 'antd';
 
 const Hero = () => {
+  const [messageApi, contextHolder] = message.useMessage();
+
   const [filter, setFilter] = useState({
     recreationName: "",
     location: ""
@@ -18,10 +21,16 @@ const Hero = () => {
   };
 
   const explore = () => {
+    if (filter.recreationName === "" || filter.location === "") return messageApi.open({
+      type: 'warning',
+      content: "Please fill all fields",
+    });
+
     router.push(`/explore?${filter.recreationName}=${filter.location}`);
   }
   return (
     <div className="m-auto lg:px-16 p-4 sm:pt-10 lg:pt-32 bg-[#FAFAFA] lg:h-[120vh]">
+      {contextHolder}
       <div className='lg:flex justify-between'>
         <div>
           <div className='text-primaryColor text-[48px] sm:text-center sm:uppercase font-extrabold ml-10'>
