@@ -1,5 +1,5 @@
 import FrontLayout from '@/layout/FrontLayout';
-import React, { useState } from 'react';
+import React, { ReactNode, useState } from 'react';
 import router, { useRouter } from "next/router"
 import { useMutation, useQuery } from '@apollo/client';
 import { GET_SPACES, SINGLE_SPACE } from '@/apollo/spaces';
@@ -100,7 +100,24 @@ const Space = () => {
               </div>
             </div>
             <div className='w-[30%]'>
-              <h3 className='font-bold text-2xl'>Menu</h3>
+              <h3 className='font-bold mb-4 text-2xl'>Menu</h3>
+              {
+                space.activities.map((activity: {
+                  duration: ReactNode;
+                  name: ReactNode;
+                  currency: ReactNode;
+                  price: ReactNode; image: string | undefined;
+                }, index: React.Key | null | undefined,) => (
+                  <div key={index} className='flex justify-between'>
+                    <img className='w-[40%] h-32' src={activity.image} alt="" />
+                    <div className='w-1/2 my-auto'>
+                      <p className='text-[#D78D06] font-bold'>{activity.currency} {activity.price} / <span className='text-xs'>{activity.duration}</span></p>
+                      <h4 className='font-bold my-2'>{activity.name}</h4>
+                      <button className='p-3 bg-primaryColor text-white rounded-md'>Add to cart</button>
+                    </div>
+                  </div>
+                ))
+              }
             </div>
           </div>
           {/* <div>

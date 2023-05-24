@@ -5,10 +5,14 @@ import React, { useState } from 'react';
 import { useSelector } from 'react-redux';
 import { selectUser } from "@/store/slices/userSlice.js"
 import { Spin } from 'antd';
+import { useDispatch } from 'react-redux';
+import { setUser } from '@/store/slices/userSlice';
+import { GET_USER } from '@/apollo/auth';
 
 const History = () => {
   const [lists, setList] = useState([])
   const user = useSelector(selectUser)
+  const dispatch = useDispatch();
 
   const { loading } = useQuery(GET_HISTORY, {
     variables: {
@@ -17,6 +21,13 @@ const History = () => {
     onCompleted: (data) => {
       console.log(data)
       setList(data.customerBookings)
+    }
+  })
+
+  useQuery(GET_USER, {
+    onCompleted: (data) => {
+      console.log(data)
+      dispatch(setUser(data.user))
     }
   })
 

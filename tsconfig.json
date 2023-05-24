@@ -18,6 +18,6 @@
       "@/*": ["./*"]
     }
   },
-  "include": ["next-env.d.ts", "**/*.ts", "**/*.tsx", "components/FaqsCard.jsx", "components/Hero.jsx", "components/dashboard/ListingModal.jsx", "store/store.js"],
+  "include": ["next-env.d.ts", "**/*.ts", "**/*.tsx", "components/FaqsCard.jsx", "components/Hero.jsx", "components/dashboard/ListingModal.jsx", "store/store.js", "components/dashboard/ListingCard.jsx"],
   "exclude": ["node_modules"]
 }

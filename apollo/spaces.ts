@@ -75,6 +75,14 @@ query space($spaceId: ID!) {
     videoGames
     updatedAt
     __typename
+    activities {
+      _id
+      currency
+      duration
+      image
+      price
+      name
+    } 
     reviews {
       _id
       comment

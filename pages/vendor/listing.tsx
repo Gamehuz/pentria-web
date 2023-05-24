@@ -1,19 +1,29 @@
 import { GET_LISTINGS } from '@/apollo/vendor';
-import ListingCard from '@/components/dashboard/ListingCard';
+import ListingCard from '@/components/dashboard/ListingCard.jsx';
 import ListingModal from '@/components/dashboard/ListingModal.jsx';
 import VendorLayout from '@/layout/VendorLayout';
-import { useQuery } from '@apollo/client';
-import React, {  useState } from 'react';
-
+import { useLazyQuery, useQuery } from '@apollo/client';
+import React, { useState } from 'react';
+import { useDispatch } from 'react-redux';
+import { setUser } from '@/store/slices/userSlice';
+import { GET_USER } from '@/apollo/auth';
 
 const Listing = () => {
   const [lists, setList] = useState([])
   const [modal, setModal] = useState(false)
+  const dispatch = useDispatch();
 
   useQuery(GET_LISTINGS, {
     onCompleted: (data) => {
       console.log(data)
       setList(data.vendorListings)
+    }
+  })
+
+  useQuery(GET_USER, {
+    onCompleted: (data) => {
+      console.log(data)
+      dispatch(setUser(data.user))
     }
   })
 

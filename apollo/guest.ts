@@ -68,3 +68,16 @@ export const ADD_FAVOURITE = gql`
     addToFavourite(spaceId: $spaceId)
   }
 `
+
+export const ADD_MENU = gql`
+  mutation AddActivity($spaceId: ID!, $image: String!, $name: String!, $currency: String!, $price: Float!, $duration: String!) {
+    addActivity(spaceId: $spaceId, image: $image, name: $name, currency: $currency, price: $price, duration: $duration) {
+      _id
+      image
+      name
+      currency
+      price
+      duration
+    }
+  }
+`

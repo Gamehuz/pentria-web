@@ -5,29 +5,17 @@ import React, { useEffect, useState } from 'react';
 import { message } from 'antd';
 import router from 'next/router';
 import { setCookie } from 'cookies-next';
-import { useDispatch } from 'react-redux';
-import { setUser } from '@/store/slices/userSlice';
 import { deleteCookie } from 'cookies-next';
 
 const Login = () => {
   const [email, setEmail] = useState("")
   const [password, setPassword] = useState("")
   const [messageApi, contextHolder] = message.useMessage();
-  const dispatch = useDispatch();
 
-  useEffect(() => {
-    dispatch(setUser([]))
-  }, [])
-
-  const [getUser] = useLazyQuery(GET_USER, {
-    onCompleted: (data) => {
-      console.log(data)
-      dispatch(setUser(data.user))
-    }
-  })
 
   useEffect(() => {
     deleteCookie("token")
+    window.localStorage.clear()
   }, [])
 
   const [login, { loading }] = useMutation(LOGIN_USER, {
@@ -42,11 +30,13 @@ const Login = () => {
         type: 'success',
         content: 'Logged in successfully!',
       });
-      getUser()
       if (data.login.accountType === "VENDOR") {
-        router.push("/vendor/listing")
+        window.location.href = "/vendor/listing"
+        // router.push("/vendor/listing")
       } else if (data.login.accountType === "GUEST") {
-        router.push("/guest/history")
+        // router.push("/guest/history")
+        window.location.href = "/guest/history"
+
       }
     },
     onError: (error) => {
