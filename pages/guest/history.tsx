@@ -1,7 +1,7 @@
 import VendorLayout from '@/layout/VendorLayout';
 import React, { useState } from 'react';
 
-const history = () => {
+const History = () => {
   const [lists, setList] = useState([])
   return (
     <VendorLayout>
@@ -43,4 +43,4 @@ const history = () => {
   );
 };
 
-export default history;
+export default History;
