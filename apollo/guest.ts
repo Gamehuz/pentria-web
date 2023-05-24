@@ -1,6 +1,6 @@
 import { gql } from '@apollo/client';
 
-export const HISTORY = gql`
+export const GET_HISTORY = gql`
   query CustomerBookings($customerId: ID) {
     customerBookings(customerId: $customerId) {
       _id
@@ -23,5 +23,53 @@ export const HISTORY = gql`
         description  
       }
     }
+  }
+`
+
+export const GET_FAVOURITES = gql`
+  query FavouriteSpace {
+    user {
+      favouriteSpace {
+        _id
+        name
+        image
+        location
+        facilityType
+        category
+        approved
+        currency
+        price
+        beds
+        restRoome
+        pool
+        outdoorSpace
+        kitchen
+        ac
+        videoGames
+        petFriendly
+        cleaningSupplies
+        kidFriendly
+        workspace
+        wifi
+        parking
+        description
+        policies
+        createdAt
+        updatedAt
+        author {
+          firstName
+          lastName
+        }
+        reviews {
+          rating
+        }
+      }
+    }
+  }
+`
+
+export const ADD_FAVOURITE = gql`
+  mutation AddToFavourite($spaceId: String!) {
+    addToFavourite(spaceId: $spaceId)
   }
 `

@@ -1,8 +1,25 @@
+import { GET_HISTORY } from '@/apollo/guest';
 import VendorLayout from '@/layout/VendorLayout';
+import { useQuery } from '@apollo/client';
 import React, { useState } from 'react';
+import { useSelector } from 'react-redux';
+import { selectUser } from "@/store/slices/userSlice.js"
+import { Spin } from 'antd';
 
 const History = () => {
   const [lists, setList] = useState([])
+  const user = useSelector(selectUser)
+
+  const { loading } = useQuery(GET_HISTORY, {
+    variables: {
+      customerId: user._id
+    },
+    onCompleted: (data) => {
+      console.log(data)
+      setList(data.customerBookings)
+    }
+  })
+
   return (
     <VendorLayout>
       <main className='mt-20 lg:w-[80%] p-6'>
@@ -21,7 +38,9 @@ const History = () => {
             Explore
           </button>
         </div>
-        <div className='mt-6'>
+        {loading ? <div className='text-center p-32'>
+          <Spin size="large" />
+        </div> : <div className='mt-6'>
           {lists.length >= 1 ? <div>
             <table>
               <thead>
@@ -47,7 +66,7 @@ const History = () => {
             </table>
           </div> : <div className='text-center text-3xl mt-28'>
             There is no History</div>}
-        </div>
+        </div>}
       </main>
     </VendorLayout>
   );

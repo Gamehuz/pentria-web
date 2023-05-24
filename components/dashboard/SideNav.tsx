@@ -8,9 +8,9 @@ const SideNav = ({ toggle }: { toggle: boolean }) => {
   const router = useRouter()
   const user = useSelector(selectUser)
 
-  useEffect(() => {
-    console.log(user)
-  }, [])
+  // useEffect(() => {
+  //   console.log(user)
+  // }, [])
 
   return (
     <div className={toggle ? 'lg:w-[20%] w-[80%]' : ""}>

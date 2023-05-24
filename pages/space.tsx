@@ -1,17 +1,20 @@
 import FrontLayout from '@/layout/FrontLayout';
 import React, { useState } from 'react';
 import router, { useRouter } from "next/router"
-import { useQuery } from '@apollo/client';
+import { useMutation, useQuery } from '@apollo/client';
 import { GET_SPACES, SINGLE_SPACE } from '@/apollo/spaces';
 import { Spin } from 'antd';
 import Card from '@/components/Card';
 import Link from 'next/link';
+import { ADD_FAVOURITE } from '@/apollo/guest';
+import { message } from 'antd';
 
 const Space = () => {
   const { query } = useRouter();
   const [space, setSpace] = useState<any>(null)
   const [loading, setLoading] = useState(true)
   const [exploreList, setExploreList] = useState<any>([])
+  const [messageApi, contextHolder] = message.useMessage();
 
   useQuery(SINGLE_SPACE, {
     variables: {
@@ -24,6 +27,18 @@ const Space = () => {
     }
   })
 
+  const [favourite] = useMutation(ADD_FAVOURITE, {
+    variables: {
+      spaceId: query.page
+    },
+    onCompleted: data => {
+      console.log(data)
+      messageApi.open({
+        type: 'success',
+        content: data.addToFavourite,
+      });
+    }
+  })
 
   useQuery(GET_SPACES, {
     onCompleted: (data) => {
@@ -48,6 +63,7 @@ const Space = () => {
 
   return (
     <FrontLayout>
+      {contextHolder}
       {
         loading ? (
           <div className='text-center p-32'>
@@ -58,7 +74,7 @@ const Space = () => {
           <h3 className='font-bold text-2xl my-4'>{space.name}</h3>
           <div className='flex justify-between'>
             <div className='flex w-full'> <img src="/images/map-pin.png" className='mr-4 w-8 h-8 my-auto' alt="" /> <p className='my-auto text-lg'>{space.location}</p></div>
-            <div className='flex'> <img src="/images/favourite.png" className='mr-4' alt="" /> <p className='my-auto text-[#D78D06] text-base'>Favourite</p></div>
+            <div className='flex cursor-pointer' onClick={() => favourite()}> <img src="/images/favourite.png" className='mr-4' alt="" /> <p className='my-auto text-[#D78D06] text-base'>Favourite</p></div>
           </div>
           <div className='flex my-3'>
             <div className='w-full'>
