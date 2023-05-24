@@ -34,6 +34,16 @@ const History = () => {
                   <td></td>
                 </tr>
               </thead>
+              <tbody>
+                <tr>
+                  <td></td>
+                  <td></td>
+                  <td></td>
+                  <td></td>
+                  <td></td>
+                  <td></td>
+                </tr>
+              </tbody>
             </table>
           </div> : <div className='text-center text-3xl mt-28'>
             There is no History</div>}

@@ -5,6 +5,7 @@ import { message } from 'antd';
 import { useMutation, useQuery } from '@apollo/client';
 import { SIGNUP_USER } from '@/apollo/auth';
 import { GET_BANKS, VERIFY_BANK } from '@/apollo/banks';
+import { deleteCookie } from 'cookies-next';
 
 const Signup = () => {
   const { query } = useRouter();
@@ -25,6 +26,10 @@ const Signup = () => {
   const [occupation, setOccupation] = useState("")
   const [acctNumber, setAcctNumber] = useState("")
   const [bankCode, setBankCode] = useState("")
+
+  useEffect(() => {
+    deleteCookie("token")
+  }, [])
 
   const [banks, setBanks] = useState<any>([])
 

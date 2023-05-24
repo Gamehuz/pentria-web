@@ -1,12 +1,13 @@
 import { GET_USER, LOGIN_USER } from '@/apollo/auth';
 import FrontLayout from '@/layout/FrontLayout';
 import { useLazyQuery, useMutation } from '@apollo/client';
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { message } from 'antd';
 import router from 'next/router';
 import { setCookie } from 'cookies-next';
 import { useDispatch } from 'react-redux';
 import { setUser } from '@/store/slices/userSlice';
+import { deleteCookie } from 'cookies-next';
 
 const Login = () => {
   const [email, setEmail] = useState("")
@@ -17,6 +18,10 @@ const Login = () => {
   const [getUser] = useLazyQuery(GET_USER, {
     onCompleted: (data) => dispatch(setUser(data.user))
   })
+
+  useEffect(() => {
+    deleteCookie("token")
+  }, [])
 
   const [login, { loading }] = useMutation(LOGIN_USER, {
     variables: {
@@ -81,7 +86,7 @@ const Login = () => {
                     </svg>
                   </button>
                   <button className="flex items-center justify-center py-2.5 border rounded-lg hover:bg-gray-50 duration-150 active:bg-gray-100">
-                   <img src="/images/facebook.png" className='w-6 h-6' alt="" />
+                    <img src="/images/facebook.png" className='w-6 h-6' alt="" />
                   </button>
                 </div>
                 <div className="relative">
