@@ -40,7 +40,6 @@ export const GET_FAVOURITES = gql`
         currency
         price
         beds
-        restRoome
         pool
         outdoorSpace
         kitchen
@@ -56,10 +55,6 @@ export const GET_FAVOURITES = gql`
         policies
         createdAt
         updatedAt
-        author {
-          firstName
-          lastName
-        }
         reviews {
           rating
         }

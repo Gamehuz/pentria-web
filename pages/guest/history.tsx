@@ -42,7 +42,7 @@ const History = () => {
           <Spin size="large" />
         </div> : <div className='mt-6'>
           {lists.length >= 1 ? <div>
-            <table>
+            <table className='w-full'>
               <thead>
                 <tr>
                   <td>Space</td>

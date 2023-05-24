@@ -1,21 +1,38 @@
-import { GET_FAVOURITES } from '@/apollo/guest';
+import { ADD_FAVOURITE, GET_FAVOURITES } from '@/apollo/guest';
 import VendorLayout from '@/layout/VendorLayout';
-import { useQuery } from '@apollo/client';
+import { useMutation, useQuery } from '@apollo/client';
 import { Spin } from 'antd';
-import React, { useState } from 'react';
+import React, { ReactNode, SetStateAction, useState } from 'react';
+import { message } from 'antd';
 
 const favourite = () => {
-  const [lists, setList] = useState([])
+  const [lists, setList] = useState<any>([])
+  const [messageApi, contextHolder] = message.useMessage();
+  const [id, setId] = useState("")
 
   const { loading } = useQuery(GET_FAVOURITES, {
-    onCompleted: data => {
+    onCompleted: (data) => {
       console.log(data)
       setList(data.user.favouriteSpace)
     }
   })
 
+  const [favourite] = useMutation(ADD_FAVOURITE, {
+    variables: {
+      spaceId: id
+    },
+    onCompleted: data => {
+      console.log(data)
+      messageApi.open({
+        type: 'success',
+        content: data.addToFavourite,
+      });
+    }
+  })
+
   return (
     <VendorLayout>
+      {contextHolder}
       <main className='mt-20 lg:w-[80%] p-6'>
         <div className='lg:flex justify-between'>
           <div className="relative">
@@ -37,26 +54,34 @@ const favourite = () => {
             <Spin size="large" />
           </div> : <div className='mt-6'>
             {lists.length >= 1 ? <div>
-              <table>
+              <table className='w-full'>
                 <thead>
                   <tr>
-                    <td>Space</td>
-                    <td>Ticket</td>
-                    <td>Total</td>
-                    <td>Ticket Code</td>
-                    <td>Status</td>
+                    <td className='p-2'>Space</td>
+                    <td>Image</td>
+                    <td>Description</td>
+                    <td>Price</td>
                     <td></td>
                   </tr>
                 </thead>
                 <tbody>
-                  <tr>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                  </tr>
+                  {lists.map((list: {
+                    _id: SetStateAction<string>;
+                    description: ReactNode;
+                    image: any;
+                    currency: ReactNode;
+                    price: ReactNode; name: string | number | boolean | React.ReactElement<any, string | React.JSXElementConstructor<any>> | React.ReactFragment | React.ReactPortal | React.PromiseLikeOfReactNode | null | undefined;
+                  }, index: React.Key | null | undefined) => <tr key={index}>
+                      <td className='p-2'>{list.name}</td>
+                      <td className='p-2'><img src={list.image[0]} className='w-10 h-10' alt="" /></td>
+                      <td>{list.description}</td>
+                      <td>{list.currency} {list.price}</td>
+                      <td className='w-20'>
+                        <div className='flex justify-between'>
+                          <img onClick={() => { setId(list._id), favourite }} src="/images/favourite.png" className='cursor-pointer w-8 h-8 mx-2' alt="" />
+                        </div>
+                      </td>
+                    </tr>)}
                 </tbody>
               </table>
             </div> : <div className='text-center text-3xl mt-28'>
