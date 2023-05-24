@@ -1,13 +1,17 @@
 import { EARNINGS } from '@/apollo/vendor';
 import VendorLayout from '@/layout/VendorLayout';
 import { useQuery } from '@apollo/client';
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { useSelector } from 'react-redux';
 import { selectUser } from "@/store/slices/userSlice.js"
 
 const Earning = () => {
   const [earnings, setEarnings] = useState<any>([]);
   const user = useSelector(selectUser)
+
+  // useEffect(() => {
+  //   console.log(user);
+  // }, [user])
 
   useQuery(EARNINGS, {
     variables: {

@@ -1,13 +1,25 @@
 import { configureStore } from '@reduxjs/toolkit';
-import { createWrapper } from 'next-redux-wrapper';
 import { userSlice } from "./slices/userSlice.js"
+import storage from 'redux-persist/lib/storage';
+import { persistReducer, persistStore } from 'redux-persist';
+import thunk from 'redux-thunk';
+import { combineReducers } from '@reduxjs/toolkit';
 
-const makeStore = () =>
-  configureStore({
-    reducer: {
-      [userSlice.name]: userSlice.reducer
-    },
-    devTools: true,
-  });
+const persistConfig = {
+  key: 'root',
+  storage,
+}
 
-export const wrapper = createWrapper(makeStore);
+const rootReducer = combineReducers(
+  { [userSlice.name]: userSlice.reducer }
+)
+
+const persistedReducer = persistReducer(persistConfig, rootReducer)
+
+export const store = configureStore({
+  reducer: persistedReducer,
+  devTools: process.env.NODE_ENV !== 'production',
+  middleware: [thunk]
+});
+
+export const persistor = persistStore(store)

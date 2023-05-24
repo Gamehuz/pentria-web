@@ -5,7 +5,8 @@ import { ApolloClient, InMemoryCache, ApolloProvider, gql } from '@apollo/client
 import axios from 'axios';
 import { getCookie } from 'cookies-next';
 import { Provider } from 'react-redux'
-import { wrapper } from '../store/store.js';
+import { persistor, store } from '../store/store.js';
+import { PersistGate } from 'redux-persist/integration/react';
 
 const token = getCookie('token')
 
@@ -13,16 +14,14 @@ const client = new ApolloClient({
   uri: 'https://pentria-apiv1-4w2bw.ondigitalocean.app/graphql',
   cache: new InMemoryCache(),
   headers: {
-    Authorization: "Bearer " + token || "",
+    ...(token !== undefined ? { Authorization: `Bearer ${token}` } : {})
   },
 });
 
 axios.defaults.baseURL = 'https://pentria-apiv1-4w2bw.ondigitalocean.app/graphql';
 axios.defaults.headers.common['Authorization'] = "Bearer" + token;
 
-export default function App({ Component, ...rest }: AppProps) {
-  const { store, props } = wrapper.useWrappedStore(rest);
-  const { pageProps } = props;
+export default function App({ Component, pageProps }: AppProps) {
 
   return (
     <>
@@ -32,7 +31,9 @@ export default function App({ Component, ...rest }: AppProps) {
       </Head>
       <ApolloProvider client={client}>
         <Provider store={store}>
-          <Component {...pageProps} />
+          <PersistGate loading={null} persistor={persistor}>
+            <Component {...pageProps} />
+          </PersistGate>
         </Provider>
       </ApolloProvider>
     </>

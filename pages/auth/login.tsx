@@ -15,8 +15,15 @@ const Login = () => {
   const [messageApi, contextHolder] = message.useMessage();
   const dispatch = useDispatch();
 
+  useEffect(() => {
+    dispatch(setUser([]))
+  }, [])
+
   const [getUser] = useLazyQuery(GET_USER, {
-    onCompleted: (data) => dispatch(setUser(data.user))
+    onCompleted: (data) => {
+      console.log(data)
+      dispatch(setUser(data.user))
+    }
   })
 
   useEffect(() => {

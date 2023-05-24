@@ -2,10 +2,13 @@ import Link from 'next/link';
 import React from 'react';
 import { useState } from "react"
 import SignupModal from './SignupModal';
+import { useSelector } from 'react-redux';
+import { selectUser } from "@/store/slices/userSlice.js"
 
 const HeaderNav = () => {
   const [toggle, setToggle] = useState(false)
   const [modal, setModal] = useState(false)
+  const user = useSelector(selectUser)
 
   return (
     <div className='shadow'>
@@ -27,16 +30,26 @@ const HeaderNav = () => {
             <p>Enquiries</p>
           </Link>
         </div>
-        <div className='flex justify-between w-52'>
-          <button onClick={() => setModal(true)} className='bg-white border text-sm border-primaryColor p-3 px-4 text-primaryColor rounded-md'>
-            Sign Up
-          </button>
-          <Link href={"/auth/login"}>
-            <button className='bg-primaryColor text-white text-sm p-3 rounded-md px-6'>
-              Login
+        {
+          !user && <div className='flex justify-between w-52'>
+            <button onClick={() => setModal(true)} className='bg-white border text-sm border-primaryColor p-3 px-4 text-primaryColor rounded-md'>
+              Sign Up
             </button>
-          </Link>
-        </div>
+            <Link href={"/auth/login"}>
+              <button className='bg-primaryColor text-white text-sm p-3 rounded-md px-6'>
+                Login
+              </button>
+            </Link>
+          </div>
+        }
+        {
+          user.accountType === "GUEST" ? <Link href={"/guest/history"}>
+            <img src="/images/team.png" className='w-10 h-10' alt="" />
+          </Link> :
+            <Link href={"/vendor/listing"}>
+              <img src="/images/team.png" className='w-10 h-10' alt="" />
+            </Link>
+        }
       </div>
       <div className='sm:flex justify-between lg:hidden p-3'>
         <Link href={"/"}>
@@ -58,15 +71,25 @@ const HeaderNav = () => {
           <Link href={"/enquiries"}>
             <p className='my-3'>Enquiries</p>
           </Link>
-          <button onClick={() => setModal(true)} className='bg-white border text-sm my-3 border-primaryColor p-3 w-full px-4 text-primaryColor rounded-md'>
-            Sign Up
-          </button>
-          <br />
-          <Link href={"/auth/login"}>
-            <button className='bg-primaryColor w-full my-3 text-white text-sm p-3 rounded-md px-6'>
-              Login
+          {!user && <div>
+            <button onClick={() => setModal(true)} className='bg-white border text-sm my-3 border-primaryColor p-3 w-full px-4 text-primaryColor rounded-md'>
+              Sign Up
             </button>
-          </Link>
+            <br />
+            <Link href={"/auth/login"}>
+              <button className='bg-primaryColor w-full my-3 text-white text-sm p-3 rounded-md px-6'>
+                Login
+              </button>
+            </Link>
+          </div>}
+          {
+            user.accountType === "GUEST" ? <Link href={"/guest/history"}>
+              <img src="/images/team.png" className='w-10 h-10' alt="" />
+            </Link> :
+              <Link href={"/vendor/listing"}>
+                <img src="/images/team.png" className='w-10 h-10' alt="" />
+              </Link>
+          }
         </div>
       }
       <SignupModal modal={modal} setModal={() => setModal(!modal)} />
