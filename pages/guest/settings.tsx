@@ -75,7 +75,7 @@ const Settings = () => {
               <input type="text" value={city} onChange={(e) => setCity(e.target.value)} placeholder='City' className='border p-3 my-2 rounded-md w-[45%]' />
               <input type="text" value={state} onChange={(e) => setState(e.target.value)} placeholder='State' className='border p-3 my-2 rounded-md w-[45%]' />
 
-              <input type="text" value={email} onChange={(e) => setEmail(e.target.value)} placeholder='Email' className='border p-3 my-2 rounded-md w-[45%]' />
+              <input type="email" value={email} onChange={(e) => setEmail(e.target.value)} placeholder='Email' className='border p-3 my-2 rounded-md w-[45%]' />
 
               <input type="number" value={phone} onChange={(e) => setPhone(e.target.value)} placeholder='Phone Number' className='border p-3 my-2 rounded-md w-[45%]' />
               <input type="date" value={dob} onChange={(e) => setDob(e.target.value)} placeholder='Dirth of Birth' className='border p-3 my-2 rounded-md w-[45%]' />
