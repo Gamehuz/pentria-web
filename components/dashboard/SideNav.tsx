@@ -3,6 +3,7 @@ import React, { useEffect, useState } from 'react';
 import { useRouter } from "next/router"
 import { useSelector } from 'react-redux';
 import { selectUser } from "@/store/slices/userSlice.js"
+import { deleteCookie } from 'cookies-next';
 
 const SideNav = ({ toggle }: { toggle: boolean }) => {
   const router = useRouter()
@@ -11,6 +12,12 @@ const SideNav = ({ toggle }: { toggle: boolean }) => {
   // useEffect(() => {
   //   console.log(user)
   // }, [])
+
+  const logout = () => {
+    deleteCookie("token")
+    window.localStorage.clear()
+    window.location.href = "/auth/login"
+  }
 
   return (
     <div className={toggle ? 'lg:w-[20%] w-[80%]' : ""}>
@@ -83,14 +90,12 @@ const SideNav = ({ toggle }: { toggle: boolean }) => {
               )
             }
 
-            <Link href={"/auth/login"}>
-              <div className="flex w-full mt-32 p-4 pl-10 ">
-                <div className="text-red-500">
-                  <img src="/images/logout.png" className='w-6 h-6' alt="" />
-                </div>
-                <p className='my-auto font-bold ml-6'>Logout</p>
+            <div onClick={() => logout()} className="flex w-full mt-32 p-4 pl-10 ">
+              <div className="text-red-500">
+                <img src="/images/logout.png" className='w-6 h-6' alt="" />
               </div>
-            </Link>
+              <p className='my-auto font-bold ml-6'>Logout</p>
+            </div>
           </div>
         </div>
       }
