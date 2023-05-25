@@ -90,7 +90,7 @@ const SideNav = ({ toggle }: { toggle: boolean }) => {
               )
             }
 
-            <div onClick={() => logout()} className="flex w-full mt-32 p-4 pl-10 ">
+            <div onClick={() => logout()} className="flex w-full cursor-pointer mt-32 p-4 pl-10 ">
               <div className="text-red-500">
                 <img src="/images/logout.png" className='w-6 h-6' alt="" />
               </div>

@@ -6,6 +6,7 @@ import { useMutation, useQuery } from '@apollo/client';
 import { SIGNUP_USER } from '@/apollo/auth';
 import { GET_BANKS, VERIFY_BANK } from '@/apollo/banks';
 import { deleteCookie } from 'cookies-next';
+import Link from 'next/link';
 
 const Signup = () => {
   const { query } = useRouter();
@@ -116,7 +117,7 @@ const Signup = () => {
   }
 
   return (
-    <FrontLayout footer={false}>
+    <>
       {contextHolder}
       <main>
         <div className='lg:flex'>
@@ -339,12 +340,13 @@ const Signup = () => {
                 >
                   {loading ? "Loading..." : "Sign Up"}
                 </button>
+                <p className='text-sm'>Already have an account? <Link className='text-primaryColor' href={"/auth/login"}>Login</Link> </p>
               </div>
             </div>
           </div>
         </div>
       </main>
-    </FrontLayout>
+    </>
   );
 };
 

@@ -6,6 +6,7 @@ import { message } from 'antd';
 import router from 'next/router';
 import { setCookie } from 'cookies-next';
 import { deleteCookie } from 'cookies-next';
+import Link from 'next/link';
 
 const Login = () => {
   const [email, setEmail] = useState("")
@@ -48,11 +49,11 @@ const Login = () => {
   })
 
   return (
-    <FrontLayout footer={false}>
+    <>
       {contextHolder}
       <main>
         <div className='lg:flex'>
-          <div className='sm:hidden w-1/2 p-10 bg-primaryColor text-white'>
+          <div className='sm:hidden h-screen w-1/2 p-10 bg-primaryColor text-white'>
             <h1 className=' text-4xl my-4'>Hello, Welcome Back </h1>
             <p>Login with your correct details to enjoy
               our premium services</p>
@@ -118,12 +119,16 @@ const Login = () => {
                 >
                   {loading ? "Loading.." : "Login"}
                 </button>
+                <div className='flex justify-between text-sm'>
+                  <p>Don't have an account? <Link className='text-primaryColor' href={"/auth/signup?page=vendor"}>Signup as Vendor</Link></p>
+                  <Link className='text-primaryColor' href={"/auth/signup?page=vendor"}>Signup as Guest</Link>
+                </div>
               </div>
             </div>
           </div>
         </div>
       </main>
-    </FrontLayout>
+    </>
   );
 };
 
