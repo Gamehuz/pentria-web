@@ -30,25 +30,25 @@ const HeaderNav = () => {
             <p>Enquiries</p>
           </Link>
         </div>
-        {
-          !user && <div className='flex justify-between w-52'>
-            <button onClick={() => setModal(true)} className='bg-white border text-sm border-primaryColor p-3 px-4 text-primaryColor rounded-md'>
-              Sign Up
-            </button>
-            <Link href={"/auth/login"}>
-              <button className='bg-primaryColor text-white text-sm p-3 rounded-md px-6'>
-                Login
-              </button>
-            </Link>
-          </div>
-        }
+
         {
           user.accountType === "GUEST" ? <Link href={"/guest/history"}>
             <img src="/images/team.png" className='w-10 h-10' alt="" />
-          </Link> :
-            <Link href={"/vendor/listing"}>
-              <img src="/images/team.png" className='w-10 h-10' alt="" />
-            </Link>
+          </Link>
+            : user.accountType === "VENDOR" ?
+              <Link href={"/vendor/listing"}>
+                <img src="/images/team.png" className='w-10 h-10' alt="" />
+              </Link>
+              : <div className='flex justify-between w-52'>
+                <button onClick={() => setModal(true)} className='bg-white border text-sm border-primaryColor p-3 px-4 text-primaryColor rounded-md'>
+                  Sign Up
+                </button>
+                <Link href={"/auth/login"}>
+                  <button className='bg-primaryColor text-white text-sm p-3 rounded-md px-6'>
+                    Login
+                  </button>
+                </Link>
+              </div>
         }
       </div>
       <div className='sm:flex justify-between lg:hidden p-3'>

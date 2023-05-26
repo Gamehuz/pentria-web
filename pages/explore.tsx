@@ -38,7 +38,7 @@ const Explore = () => {
   useEffect(() => {
     setType(query[0])
     setLocation(query[1])
-    setData(locationFilter())
+    // setData(locationFilter())
   }, [location, type])
 
   return (
