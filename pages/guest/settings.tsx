@@ -92,11 +92,11 @@ const Settings = () => {
               <input type="password" onChange={(e) => setNewPassword(e.target.value)} placeholder='New Password' className='border p-3 my-2 rounded-md w-[45%]' />
             </div>
           </div>
-          <div className='w-[20%] text-center'>
-            <img src="/images/team.png" className='w-32 h-32 mx-auto' alt="" />
+          {/* <div className='w-[20%] text-center'>
+            <img src="https://cdn-icons-png.flaticon.com/512/1946/1946429.png" className='w-32 h-32 mx-auto' alt="" />
             <button onClick={() => updateUser()} className='bg-primaryColor p-3 px-6 text-white mx-auto w-40 my-4 rounded-md'>{loading ? "Loading..." : "Update"}</button>
             <p className='cursor-pointer text-red-500'>Delete Account</p>
-          </div>
+          </div> */}
         </div>
       </main>
     </VendorLayout>

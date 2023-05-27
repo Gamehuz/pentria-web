@@ -33,11 +33,11 @@ const HeaderNav = () => {
 
         {
           user.accountType === "GUEST" ? <Link href={"/guest/history"}>
-            <img src="/images/team.png" className='w-10 h-10' alt="" />
+            <img src="https://cdn-icons-png.flaticon.com/512/1946/1946429.png" className='w-10 h-10' alt="" />
           </Link>
             : user.accountType === "VENDOR" ?
               <Link href={"/vendor/listing"}>
-                <img src="/images/team.png" className='w-10 h-10' alt="" />
+                <img src="https://cdn-icons-png.flaticon.com/512/1946/1946429.png" className='w-10 h-10' alt="" />
               </Link>
               : <div className='flex justify-between w-52'>
                 <button onClick={() => setModal(true)} className='bg-white border text-sm border-primaryColor p-3 px-4 text-primaryColor rounded-md'>
@@ -84,10 +84,10 @@ const HeaderNav = () => {
           </div>}
           {
             user.accountType === "GUEST" ? <Link href={"/guest/history"}>
-              <img src="/images/team.png" className='w-10 h-10' alt="" />
+              <img src="https://cdn-icons-png.flaticon.com/512/1946/1946429.png" className='w-10 h-10' alt="" />
             </Link> :
               <Link href={"/vendor/listing"}>
-                <img src="/images/team.png" className='w-10 h-10' alt="" />
+                <img src="https://cdn-icons-png.flaticon.com/512/1946/1946429.png" className='w-10 h-10' alt="" />
               </Link>
           }
         </div>
