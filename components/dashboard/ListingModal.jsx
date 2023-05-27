@@ -1,9 +1,10 @@
-import React, { useState, useRef } from 'react';
+import React, { useState, useRef, useEffect } from 'react';
 import { message } from 'antd';
 import { useMutation } from '@apollo/client';
-import { CREATING_LISTING } from '@/apollo/vendor';
+import { CREATING_LISTING, EDIT_LISTING } from '@/apollo/vendor';
+import { facilityList } from "@/util/facility";
 
-const ListingModal = ({ modal, setModal }) => {
+const ListingModal = ({ modal, setModal, space }) => {
   const selectFile = useRef();
   const [previewImages, setPreviewImages] = useState([]);
   const [messageApi, contextHolder] = message.useMessage();
@@ -73,7 +74,7 @@ const ListingModal = ({ modal, setModal }) => {
       outdoorSpace: outdoor,
       kitchen: kitchen,
       kidFriendly: kidFriendly,
-      restRoome: restroom,
+      restRoom: restroom,
       videoGames: games,
       petFriendly: petFriendly,
       parking: parking,
@@ -97,6 +98,101 @@ const ListingModal = ({ modal, setModal }) => {
     }
   })
 
+  const checkInput = () => {
+    console.log({
+      ac: ac,
+      beds: beds,
+      category: category,
+      cleaningSupplies: cleaning,
+      description: description,
+      facilityType: type,
+      image: previewImages,
+      kidFriendly: kidFriendly,
+      kitchen: kitchen,
+      location: location,
+      name: name,
+      outdoorSpace: outdoor,
+      parking: parking,
+      petFriendly: petFriendly,
+      policies: policy,
+      pool: pool,
+      restRoom: restroom,
+      spaceId: space?._id,
+      videoGames: games,
+      wifi: wifi,
+      workspace: workspace
+    })
+  }
+
+  const [editSpace, {error }] = useMutation(EDIT_LISTING, {
+    variables: {
+      input: {
+        ac: ac,
+        beds: beds,
+        category: category,
+        cleaningSupplies: cleaning,
+        description: description,
+        facilityType: type,
+        image: previewImages,
+        kidFriendly: kidFriendly,
+        kitchen: kitchen,
+        location: location,
+        name: name,
+        outdoorSpace: outdoor,
+        parking: parking,
+        petFriendly: petFriendly,
+        policies: policy,
+        pool: pool,
+        restRoom: restroom,
+        spaceId: space?._id,
+        videoGames: games,
+        wifi: wifi,
+        workspace: workspace
+      }
+    },
+    onCompleted: (data) => {
+      console.log(data)
+      setModal()
+      messageApi.open({
+        type: 'success',
+        content: 'Listing update successfully!',
+      });
+    },
+    onError: (error) => {
+      console.log(error.message)
+      messageApi.open({
+        type: 'error',
+        content: error.message,
+      });
+    }
+  })
+
+  useEffect(() => {
+    if (space?.name) {
+      setName(space?.name)
+      setAc(space?.ac)
+      setBeds(space?.beds)
+      setCategory(space?.category)
+      setCleaningSupplies(space?.cleaningSupplies)
+      setCurrency(space?.currency)
+      setDescription(space?.description)
+      setGames(space?.videoGames)
+      setKidFriendly(space?.kidFriendly)
+      setKitchen(space?.kitchen)
+      setLoaction(space?.location)
+      setOutdoor(space?.outdoorSpace)
+      setParking(space?.parking)
+      setPolicy(space?.policies)
+      setPreviewImages(space?.image)
+      setPrice(space?.price)
+      setType(space?.facilityType)
+      setPool(space?.pool)
+      setRestroom(space?.restRoom)
+      setWifi(space?.wifi)
+      setWorkspace(space?.workspace)
+    }
+  }, [])
+
   return (
     <div>
       {contextHolder}
@@ -117,14 +213,16 @@ const ListingModal = ({ modal, setModal }) => {
                 </div>
                 <div className=" mx-auto py-3 ">
                   <h4 className="text-lg font-medium text-center text-gray-800">
-                    Create Listing
+                    {
+                      space? 'Edit Listing' : 'Create Listing'
+                    }
                   </h4>
                   <div className='flex justify-between my-4'>
-                    <input type="text" onChange={(e) => setName(e.target.value)} placeholder='Name' className='p-3 rounded-lg border w-[48%]' />
-                    <input type="text" onChange={(e) => setLoaction(e.target.value)} placeholder='Location' className='p-3 rounded-lg border w-[48%]' />
+                    <input type="text" onChange={(e) => setName(e.target.value)} placeholder='Name' value={name} className='p-3 rounded-lg border w-[48%]' />
+                    <input type="text" onChange={(e) => setLoaction(e.target.value)} placeholder='Location' value={location} className='p-3 rounded-lg border w-[48%]' />
                   </div>
                   <div className='my-4'>
-                    <select onChange={(e) => setCategory(e.target.value)} className='p-4 rounded-lg border w-full'>
+                    <select onChange={(e) => setCategory(e.target.value)} value={category} className='p-4 rounded-lg border w-full'>
                       <option value="">Category</option>
                       <option value="Indoor">Indoor</option>
                       <option value="Outdoor">Outdoor</option>
@@ -132,85 +230,84 @@ const ListingModal = ({ modal, setModal }) => {
                     </select>
                   </div>
                   <div className='my-4'>
-                    <select onChange={(e) => setType(e.target.value)} className='p-4 rounded-lg border w-full'>
-                      <option value="">Facility Type</option>
-                      <option value="Indoor">Arcade/Video Games</option>
-                      <option value="Outdoor">Park/Playground</option>
-                      <option value="Mixed">Gym/Spa</option>
-                      <option value="Mixed">Bar/Restaurant</option>
-                      <option value="Mixed">Sports Field</option>
-                      <option value="Mixed">Lodging</option>
-                      <option value="Mixed">Arts/Music  </option>
+                    <select onChange={(e) => setType(e.target.value)} value={type} className='p-4 rounded-lg border w-full'>
+                      <option value="">Select type</option>
+                    { facilityList.map(item => 
+                      <option key={item} value={item}>
+                        {item}
+                      </option>
+                      )}
                     </select>
                   </div>
                   <div className='flex justify-between my-4'>
-                    <textarea onChange={(e) => setDescription(e.target.value)} className='p-3 h-32 rounded-lg border w-[48%]' placeholder='Description'></textarea>
-                    <textarea onChange={(e) => setPolicy(e.target.value)} className='p-3 h-32 rounded-lg border w-[48%]' placeholder='Policy'></textarea>
+                    <textarea onChange={(e) => setDescription(e.target.value)}  value={description} className='p-3 h-32 rounded-lg border w-[48%]' placeholder='Description'></textarea>
+                    <textarea onChange={(e) => setPolicy(e.target.value)}  value={policy} className='p-3 h-32 rounded-lg border w-[48%]' placeholder='Policy'></textarea>
                   </div>
                   <div>
                     <p>Featured</p>
                     <div className='flex flex-wrap justify-between'>
                       <div className='flex'>
-                        <input type="checkbox" onChange={(e) => setPool(e.target.checked)} className='my-auto border-2 border-primaryColor checked:bg-primaryColor p-3' />
+                        <input type="checkbox" onChange={(e) => setPool(e.target.checked)} value={pool} className='my-auto border-2 border-primaryColor checked:bg-primaryColor p-3' />
                         <p className='p-3 my-auto'>Pool</p>
                       </div>
                       <div className='flex'>
-                        <input type="checkbox" onChange={(e) => setBeds(e.target.checked)} className='my-auto border-2 border-primaryColor checked:bg-primaryColor p-3' />
+                        <input type="checkbox" onChange={(e) => setBeds(e.target.checked)} value={beds} className='my-auto border-2 border-primaryColor checked:bg-primaryColor p-3' />
                         <p className='p-3 my-auto'>Beds</p>
                       </div>
                       <div className='flex'>
-                        <input type="checkbox" onChange={(e) => setRestroom(e.target.checked)} className='my-auto border-2 border-primaryColor checked:bg-primaryColor p-3' />
+                        <input type="checkbox" onChange={(e) => setRestroom(e.target.checked)} value={restroom} className='my-auto border-2 border-primaryColor checked:bg-primaryColor p-3' />
                         <p className='p-3 my-auto'>Restroom</p>
                       </div>
                       <div className='flex'>
-                        <input type="checkbox" onChange={(e) => setOutdoor(e.target.checked)} className='my-auto border-2 border-primaryColor checked:bg-primaryColor p-3' />
+                        <input type="checkbox" onChange={(e) => setOutdoor(e.target.checked)} value={outdoor} className='my-auto border-2 border-primaryColor checked:bg-primaryColor p-3' />
                         <p className='p-3 my-auto'>Outdoor Space</p>
                       </div>
                       <div className='flex'>
-                        <input type="checkbox" onChange={(e) => setKitchen(e.target.checked)} className='my-auto border-2 border-primaryColor checked:bg-primaryColor p-3' />
+                        <input type="checkbox" onChange={(e) => setKitchen(e.target.checked)}  value={kitchen} className='my-auto border-2 border-primaryColor checked:bg-primaryColor p-3' />
                         <p className='p-3 my-auto'>Kitchen</p>
                       </div>
                       <div className='flex'>
-                        <input type="checkbox" onChange={(e) => setAc(e.target.checked)} className='my-auto border-2 border-primaryColor checked:bg-primaryColor p-3' />
+                        <input type="checkbox" onChange={(e) => setAc(e.target.checked)}  value={ac} className='my-auto border-2 border-primaryColor checked:bg-primaryColor p-3' />
                         <p className='p-3 my-auto'>AC</p>
                       </div>
                       <div className='flex'>
-                        <input type="checkbox" onChange={(e) => setGames(e.target.checked)} className='my-auto border-2 border-primaryColor checked:bg-primaryColor p-3' />
+                        <input type="checkbox" onChange={(e) => setGames(e.target.checked)}  value={games} className='my-auto border-2 border-primaryColor checked:bg-primaryColor p-3' />
                         <p className='p-3 my-auto'>Video Games</p>
                       </div>
                       <div className='flex'>
-                        <input type="checkbox" onChange={(e) => setPetFriendly(e.target.checked)} className='my-auto border-2 border-primaryColor checked:bg-primaryColor p-3' />
+                        <input type="checkbox" onChange={(e) => setPetFriendly(e.target.checked)}  value={petFriendly} className='my-auto border-2 border-primaryColor checked:bg-primaryColor p-3' />
                         <p className='p-3 my-auto'>Pet Friendly</p>
                       </div>
                       <div className='flex'>
-                        <input type="checkbox" onChange={(e) => setCleaningSupplies(e.target.checked)} className='my-auto border-2 border-primaryColor checked:bg-primaryColor p-3' />
+                        <input type="checkbox" onChange={(e) => setCleaningSupplies(e.target.checked)}  value={cleaning} className='my-auto border-2 border-primaryColor checked:bg-primaryColor p-3' />
                         <p className='p-3 my-auto'>Cleaning Supplies</p>
                       </div>
                       <div className='flex'>
-                        <input type="checkbox" onChange={(e) => setKidFriendly(e.target.checked)} className='my-auto border-2 border-primaryColor checked:bg-primaryColor p-3' />
+                        <input type="checkbox" onChange={(e) => setKidFriendly(e.target.checked)}  value={kidFriendly} className='my-auto border-2 border-primaryColor checked:bg-primaryColor p-3' />
                         <p className='p-3 my-auto'>Kid Friendly</p>
                       </div>
                       <div className='flex'>
-                        <input type="checkbox" onChange={(e) => setWorkspace(e.target.checked)} className='my-auto border-2 border-primaryColor checked:bg-primaryColor p-3' />
+                        <input type="checkbox" onChange={(e) => setWorkspace(e.target.checked)}  value={workspace} className='my-auto border-2 border-primaryColor checked:bg-primaryColor p-3' />
                         <p className='p-3 my-auto'>Workspace</p>
                       </div>
                       <div className='flex'>
-                        <input type="checkbox" onChange={(e) => setWifi(e.target.checked)} className='my-auto border-2 border-primaryColor checked:bg-primaryColor p-3' />
+                        <input type="checkbox" onChange={(e) => setWifi(e.target.checked)}  value={wifi} className='my-auto border-2 border-primaryColor checked:bg-primaryColor p-3' />
                         <p className='p-3 my-auto'>WIFI</p>
                       </div>
                       <div className='flex'>
-                        <input type="checkbox" onChange={(e) => setParking(e.target.checked)} className='my-auto border-2 border-primaryColor checked:bg-primaryColor p-3' />
+                        <input type="checkbox" onChange={(e) => setParking(e.target.checked)}  value={parking} className='my-auto border-2 border-primaryColor checked:bg-primaryColor p-3' />
                         <p className='p-3 my-auto'>Parking</p>
                       </div>
                     </div>
                   </div>
                   <div className='lg:flex justify-between my-4'>
-                    <select onChange={(e) => setCurrency(e.target.value)} className='p-4 rounded-lg border lg:w-[48%] w-full sm:mb-4'>
+                    <select onChange={(e) => setCurrency(e.target.value)}  value={currency} className='p-4 rounded-lg border lg:w-[48%] w-full sm:mb-4'>
+                      <option value="">Select Currency</option>
                       <option value="NGN">NGN</option>
                       <option value="USD">USD</option>
                     </select>
                     <div className='flex justify-between lg:w-[48%]'>
-                      <input onChange={(e) => setPrice(e.target.value)} className='p-3 rounded-lg border w-full' type="number" placeholder='Price' />
+                      <input onChange={(e) => setPrice(e.target.value)}  value={price} className='p-3 rounded-lg border w-full' type="number" placeholder='Price' />
                       {/* <button className='p-3 bg-[#D8D1E9] rounded-md'>hrs</button>
                       <button className='p-3 bg-[#D8D1E9] rounded-md'>min</button> */}
                     </div>
@@ -255,9 +352,21 @@ const ListingModal = ({ modal, setModal }) => {
                       </div>
                     )}
                   </div>
-                  <button onClick={() => creatListing()} className="border border-primaryColor text-primaryColor p-3 rounded-md w-44 float-right">
-                    {loading ? "Loading..." : "Upload List"}
-                  </button>
+                 {space ? (
+                  <>
+                     <button onClick={() => editSpace()} className="border border-primaryColor text-primaryColor p-3 rounded-md w-44 float-right">
+                      {loading ? "Loading..." : "Edit Listing"}
+                    </button>
+                  </>
+                 ) :(
+                  <>
+                     <button onClick={() => creatListing()} className="border border-primaryColor text-primaryColor p-3 rounded-md w-44 float-right">
+                        {loading ? "Loading..." : "Upload Listing"}
+                      </button>
+                  </>
+                 )
+
+                 }
                 </div>
               </div>
             </div>

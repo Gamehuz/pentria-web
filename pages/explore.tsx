@@ -5,41 +5,44 @@ import { useQuery } from '@apollo/client';
 import React, { useEffect, useState } from 'react';
 import { Spin } from 'antd';
 import { useRouter } from 'next/router';
+import { Space } from '@/types';
+import { statesList } from "@/util/state";
+import { facilityList } from "@/util/facility"; 
 
 const Explore = () => {
   const [data, setData] = useState<any>([])
-  const [list, setList] = useState<any>([])
+  const [listing, setListing] = useState<Space[]>([])
+  const [backuplisting, setBackupListing] = useState<Space[]>([])
   const [loading, setLoading] = useState(true)
   const { query } = useRouter()
-  const [location, setLocation] = useState<any>("")
-  const [type, setType] = useState<any>("")
+  const [location, setLocation] = useState<string>("")
+  const [filterType, setFilterType] = useState<any>("")
+  const [priceRange, setRange] = useState<number>(0)
 
   useQuery(GET_SPACES, {
     onCompleted: (data) => {
-      console.log(data);
       setData(data.spaces)
-      setList(data.spaces)
+      setListing(data.spaces)
+      setBackupListing(data.spaces)
       setLoading(false)
     },
   })
 
-  const locationFilter = () => {
-    if (location === "") {
-      return list;
+
+  const filterSpaces = () => {
+    const listingFiltered = listing.filter(item => item.location.includes(location) && item.facilityType === filterType && item.price >= priceRange )
+
+    console.log(location, filterType)
+    console.log(listingFiltered)
+
+    if (!listingFiltered.length) {
+      setListing(backuplisting)
     }
-
-    const matchLocationFilters = list.filter((space: { location: string; }) => {
-      space.location.toLowerCase().includes(location?.toLowerCase())
-    });
-
-    return matchLocationFilters;
-  };
+  }
 
   useEffect(() => {
-    setType(query[0])
-    setLocation(query[1])
-    // setData(locationFilter())
-  }, [location, type])
+    filterSpaces()
+  }, [location, filterType, priceRange])
 
   return (
     <FrontLayout>
@@ -56,13 +59,21 @@ const Explore = () => {
                 <img src="/images/map-pin.png" alt="" />
                 <select
                   name="location"
-                  className="bg-transparent pl-4 border-none"
+                  className="bg-transparent pl-4 border-none focus:shadow"
                   value={location}
-                  onChange={(e) => { }}
+                  onChange={(e) => setLocation(e.target.value)}
                 >
-                  <option hidden>Location</option>
-                  <option>Port Harcourt</option>
-                </select>
+                <option hidden>Location</option>
+                <option defaultValue={''}>
+                  Select State
+                  </option>
+                  { statesList.map(state => 
+                  <option key={state.code} value={state.name}>
+                    {state.name}
+                  </option>
+                  )
+                  }
+              </select>
               </div>
               <div className="flex items-center lg:w-1/2">
                 <img src="/images/price.png" alt="" />
@@ -80,19 +91,19 @@ const Explore = () => {
               <div className="flex items-center lg:w-1/2">
                 <img src="/images/type.png" alt="" />
                 <select
-                  name="location"
-                  className="bg-transparent pl-4 border-none"
-                  value={location}
-                  onChange={(e) => { }}
+                  name="filterType"
+                  className="bg-transparent pl-4 border-none focus:shadow"
+                  value={filterType}
+                  onChange={(e) => setFilterType(e.target.value)}
                 >
-                  <option hidden>Facility Type</option>
-                  <option value="Indoor">Arcade/Video Games</option>
-                  <option value="Outdoor">Park/Playground</option>
-                  <option value="Mixed">Gym/Spa</option>
-                  <option value="Mixed">Bar/Restaurant</option>
-                  <option value="Mixed">Sports Field</option>
-                  <option value="Mixed">Lodging</option>
-                  <option value="Mixed">Arts/Music  </option>                </select>
+                <option hidden>Faciity</option>
+                  { facilityList.map(item => 
+                  <option key={item} value={item}>
+                    {item}
+                  </option>
+                  )
+                  }
+          </select>
               </div>
               <div className="flex items-center lg:w-1/2">
                 <img src="/images/star2.png" alt="" />

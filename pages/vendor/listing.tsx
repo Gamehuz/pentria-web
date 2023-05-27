@@ -57,7 +57,7 @@ const Listing = () => {
             Available</div>}
         </div>
       </main>
-      <ListingModal modal={modal} setModal={() => setModal(!modal)} />
+      <ListingModal modal={modal} setModal={() => setModal(!modal)} space={null} />
     </VendorLayout>
   );
 };

@@ -3,16 +3,20 @@ import { useLazyQuery, useMutation } from '@apollo/client';
 import React, { useState, useRef } from 'react';
 import { message } from 'antd';
 import { ADD_MENU } from '@/apollo/guest';
+import ListingModal from './ListingModal';
 
 const ListingCard = ({ list }) => {
   const [messageApi, contextHolder] = message.useMessage();
   const [isModalOpen, setIsModalOpen] = useState(false);
+  const [editModal, setEditModal] = useState(false)
   const [price, setPrice] = useState(0)
   const [currency, setCurrency] = useState("")
   const [previewImages, setPreviewImages] = useState("");
   const selectFile = useRef();
   const [name, setName] = useState("")
   const [duration, setDuration] = useState("")
+  const [time, setTime] = useState('')
+  const [modal, setModal] = useState(false)
 
   const [deleteSpace, { loading }] = useLazyQuery(DELETE_SPACE, {
     variables: { spaceId: list._id },
@@ -54,7 +58,7 @@ const ListingCard = ({ list }) => {
     variables: {
       spaceId: list._id,
       name: name,
-      duration: duration,
+      duration: `${duration} ${time}`,
       price: parseFloat(price),
       currency: currency,
       image: previewImages,
@@ -90,7 +94,7 @@ const ListingCard = ({ list }) => {
       </div>
       <div className='lg:w-20 flex justify-between text-sm'>
         <button onClick={() => setIsModalOpen(true)} className='border border-primaryColor lg:mx-2 text-primaryColor p-3 h-12 rounded-md my-auto px-4'>+Menu</button>
-        <button className='border border-primaryColor lg:mx-2 text-primaryColor px-4 p-3 h-12 rounded-md my-auto'>Edit</button>
+        <button onClick={() => setModal(true)} className='border border-primaryColor lg:mx-2 text-primaryColor px-4 p-3 h-12 rounded-md my-auto'>Edit</button>
         <button onClick={() => deleteSpace()} className='bg-red-500 lg:mx-2 text-white p-3 px-4 h-12 rounded-md my-auto'> {loading ? "Deleting..." : "Delete"}</button>
       </div>
 
@@ -114,16 +118,21 @@ const ListingCard = ({ list }) => {
                 </h4>
                 <div className='my-6'>
                   <input type="text" onChange={(e) => setName(e.target.value)} className='p-3 rounded-md border w-full' placeholder='Enter Menu Name' />
-                  <div className='lg:flex justify-between w-full my-4'>
+                  <div className='lg:flex justify-between w-full my-4 space-x-4'>
                     <select onChange={(e) => setCurrency(e.target.value)} className='p-3 rounded-lg border lg:w-[45%] w-full sm:mb-4'>
+                     <option value="">Select Currency</option>
                       <option value="NGN">NGN</option>
                       <option value="USD">USD</option>
                     </select>
-                    <div className='flex justify-between lg:w-[50%]'>
                       <input onChange={(e) => setPrice(e.target.value)} className='p-3 rounded-lg border w-[55%]' type="number" placeholder='Price' />
-                      <button onClick={(e) => setDuration("hrs")} className={duration === "hrs" ? 'p-3 bg-primaryColor text-white rounded-md' : 'p-3 bg-[#D8D1E9] rounded-md'}>hrs</button>
-                      <button onClick={(e) => setDuration("min")} className={duration === "min" ? 'p-3 bg-primaryColor text-white rounded-md' : 'p-3 bg-[#D8D1E9] rounded-md'}>min</button>
-                    </div>
+                  </div>
+                  <div className='lg:flex justify-between space-x-4'>
+                    <input onChange={(e) => setDuration(e.target.value)} className='p-3 w-full rounded-lg border' type="number" placeholder='duration' />
+                    <select onChange={(e) => setTime(e.target.value)} className='p-3 rounded-lg border w-full sm:mb-4'>
+                     <option value="">Select time</option>
+                      <option value="min">min</option>
+                      <option value="hrs">hr</option>
+                    </select>
                   </div>
                   <div className='my-4'>
                     <input
@@ -169,6 +178,7 @@ const ListingCard = ({ list }) => {
           </div>
         </div>
       }
+      <ListingModal modal={modal} setModal={() => setModal(!modal)} space={list} />
     </div>
   );
 };

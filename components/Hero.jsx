@@ -2,12 +2,14 @@ import Link from "next/link";
 import { useState } from "react"
 import router from 'next/router'
 import { message } from 'antd';
+import { statesList } from "@/util/state";
+import { facilityList } from "@/util/facility";
 
 const Hero = () => {
   const [messageApi, contextHolder] = message.useMessage();
 
   const [filter, setFilter] = useState({
-    recreationName: "",
+    facility: "",
     location: ""
   });
 
@@ -21,12 +23,12 @@ const Hero = () => {
   };
 
   const explore = () => {
-    if (filter.recreationName === "" || filter.location === "") return messageApi.open({
+    if (filter.facility === "" || filter.location === "") return messageApi.open({
       type: 'warning',
       content: "Please fill all fields",
     });
 
-    router.push(`/explore?${filter.recreationName}=${filter.location}`);
+    router.push(`/explore?facility=${filter.facility}?location=${filter.location}`);
   }
   return (
     <div className="m-auto lg:px-16 p-4 sm:pt-10 lg:pt-32 bg-[#FAFAFA] lg:h-[120vh]">
@@ -66,24 +68,39 @@ const Hero = () => {
           <img src="/images/map-pin.png" alt="" />
           <select
             name="location"
-            className="bg-transparent pl-4 border-none"
+            className="bg-transparent pl-4 border-none focus:shadow"
             value={filter.location}
             onChange={(e) => handleFilter(e)}
           >
             <option hidden>Location</option>
-            <option>Port Harcourt</option>
+            <option defaultValue={''}>
+              Select State
+              </option>
+              { statesList.map(state => 
+              <option key={state.code} value={state.name}>
+                {state.name}
+              </option>
+              )
+              }
           </select>
         </div>
         <div className="flex items-center lg:border-l border-gray lg:pl-8 lg:w-1/2">
           <img src="/images/search.png" alt="" />
-          <input
-            className=" bg-transparent focus-within:outline-none p-5 lg:w-[500px] border-none"
-            placeholder={"Enter facility type or recreation space"}
-            type={"text"}
-            value={filter.recreationName}
-            name={"recreationName"}
+              
+          <select
+            name="facility"
+            className="bg-transparent pl-4 border-none focus:shadow"
+            value={filter.facility}
             onChange={(e) => handleFilter(e)}
-          />
+          >
+            <option hidden>Faciity</option>
+              { facilityList.map(item => 
+              <option key={item} value={item}>
+                {item}
+              </option>
+              )
+              }
+          </select>
         </div>
         <div className="lg:w-44 my-auto">
           <button className="bg-primaryColor px-6 py-3 rounded-md text-sm sm:w-full text-white" onClick={() => explore()}>Get Tickets</button>

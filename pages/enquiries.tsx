@@ -38,7 +38,7 @@ const enquiries = () => {
             <h1 className='text-4xl font-bold text-primaryColor sm:text-center my-8'>Contact us</h1>
             <div className='flex my-6'>
               <img src="/images/phone_major.png" className='w-8 h-8' alt="" />
-              <p className='my-auto ml-4'>+2348058092806, +2348103183852</p>
+              <p className='my-auto ml-4'>+2348103183852</p>
             </div>
             <div className='flex my-6'>
               <img src="/images/email_major.png" className='w-8 h-8' alt="" />

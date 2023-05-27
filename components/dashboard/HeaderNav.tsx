@@ -18,7 +18,7 @@ const HeaderNav = ({ setToggle }: { setToggle: any }) => {
             <img src="/images/setting-2.png" className='w-8 h-8 my-auto' alt="" />
           </Link>
           <Link href={"/vendor/listing"}>
-            <img src="/images/team.png" className='w-10 h-10' alt="" />
+            <img src="https://cdn-icons-png.flaticon.com/512/1946/1946429.png" className='w-10 h-10' alt="" />
           </Link>
         </div> : <div className='flex justify-between w-32'>
           <Link href={"/cart"}>

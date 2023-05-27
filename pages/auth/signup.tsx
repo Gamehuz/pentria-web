@@ -7,6 +7,7 @@ import { SIGNUP_USER } from '@/apollo/auth';
 import { GET_BANKS, VERIFY_BANK } from '@/apollo/banks';
 import { deleteCookie } from 'cookies-next';
 import Link from 'next/link';
+import States from '@/components/States';
 
 const Signup = () => {
   const { query } = useRouter();
@@ -39,6 +40,13 @@ const Signup = () => {
       setBanks(data.getBanks)
     }
   })
+
+  const getState = (e: string) => {
+    setState(e)
+  }
+  const changeCity = (e: string) => {
+    setCity(e)
+  }
 
   const [signup, { loading }] = useMutation(SIGNUP_USER, {
     variables: {
@@ -219,30 +227,7 @@ const Signup = () => {
                     onChange={(e) => setAddress(e.target.value)}
                   />
                 </div>
-                <div className='lg:flex justify-between'>
-                  <div className='lg:w-[45%]'>
-                    <label className="font-medium">
-                      City
-                    </label>
-                    <input
-                      type="text"
-                      required
-                      className="w-full mt-2 px-3 py-2 text-gray-500 bg-transparent outline-none border focus:border-indigo-600 shadow-sm rounded-lg"
-                      onChange={(e) => setCity(e.target.value)}
-                    />
-                  </div>
-                  <div className='lg:w-[45%]'>
-                    <label className="font-medium">
-                      State
-                    </label>
-                    <input
-                      type="text"
-                      required
-                      className="w-full mt-2 px-3 py-2 text-gray-500 bg-transparent outline-none border focus:border-indigo-600 shadow-sm rounded-lg"
-                      onChange={(e) => setState(e.target.value)}
-                    />
-                  </div>
-                </div>
+               <States changeState={getState}  changeCity={changeCity}/>
                 <div className='lg:flex justify-between'>
                   <div className='lg:w-[45%]'>
                     <label className="font-medium">
