@@ -64,11 +64,11 @@ const Signup = () => {
     },
     onCompleted: (data) => {
       console.log(data)
+      router.push("/auth/login")
       messageApi.open({
         type: 'success',
         content: 'Signed up successfully!',
       });
-      router.push("/auth/login")
     },
     onError: (error) => {
       messageApi.open({
@@ -340,7 +340,20 @@ const Signup = () => {
                 >
                   {loading ? "Loading..." : "Sign Up"}
                 </button>
-                <p className='text-sm'>Already have an account? <Link className='text-primaryColor' href={"/auth/login"}>Login</Link> </p>
+                <div className='flex justify-between text-sm'>
+                  <p>Already have an account? <Link className='text-primaryColor' href={"/auth/login"}>Login</Link> </p>
+                  {
+                    query.page === "vendor" ? (
+                    <>
+                      <Link className='text-primaryColor' href={"/auth/signup?page=guest"}>Signup as Guest</Link>
+                    </>
+                    ) : (
+                      <>
+                        <Link className='text-primaryColor' href={"/auth/signup?page=vendor"}>Signup as Vendor</Link>
+                      </>
+                    )
+                  }
+                </div>
               </div>
             </div>
           </div>
