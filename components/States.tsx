@@ -54,7 +54,7 @@ function States({ changeState, changeCity }: states) {
         <option defaultValue={''}>
         Select City
         </option>
-        { citites.map(city => 
+        { citites?.map(city => 
         <option key={city} value={city}>
           {city}
         </option>
