@@ -33,11 +33,17 @@ const HeaderNav = () => {
 
         {
           user.accountType === "GUEST" ? <Link href={"/guest/history"}>
-            <img src="https://cdn-icons-png.flaticon.com/512/1946/1946429.png" className='w-10 h-10' alt="" />
-          </Link>
+            <div className='flex w-24 justify-between'>
+              <Link href={"/cart"}>
+                <img src="/images/shopping-cart.png" className='w-8 h-8 my-auto' alt="" />
+              </Link>
+              <Link href={"/guest/history"}>
+                <img src="https://cdn-icons-png.flaticon.com/512/1946/1946429.png" className='w-8 h-8' alt="" />
+              </Link>
+            </div>          </Link>
             : user.accountType === "VENDOR" ?
               <Link href={"/vendor/listing"}>
-                <img src="https://cdn-icons-png.flaticon.com/512/1946/1946429.png" className='w-10 h-10' alt="" />
+                <img src="https://cdn-icons-png.flaticon.com/512/1946/1946429.png" className='w-8 h-8' alt="" />
               </Link>
               : <div className='flex justify-between w-52'>
                 <button onClick={() => setModal(true)} className='bg-white border text-sm border-primaryColor p-3 px-4 text-primaryColor rounded-md'>
@@ -71,7 +77,7 @@ const HeaderNav = () => {
           <Link href={"/enquiries"}>
             <p className='my-3'>Enquiries</p>
           </Link>
-          {!user && <div>
+          {!user ? <div>
             <button onClick={() => setModal(true)} className='bg-white border text-sm my-3 border-primaryColor p-3 w-full px-4 text-primaryColor rounded-md'>
               Sign Up
             </button>
@@ -81,15 +87,17 @@ const HeaderNav = () => {
                 Login
               </button>
             </Link>
-          </div>}
-          {
-            user.accountType === "GUEST" ? <Link href={"/guest/history"}>
-              <img src="https://cdn-icons-png.flaticon.com/512/1946/1946429.png" className='w-10 h-10' alt="" />
-            </Link> :
-              <Link href={"/vendor/listing"}>
-                <img src="https://cdn-icons-png.flaticon.com/512/1946/1946429.png" className='w-10 h-10' alt="" />
+          </div> : user.accountType === "GUEST" ?
+            <div className='flex w-32 justify-between'>
+              <Link href={"/cart"}>
+                <img src="/images/shopping-cart.png" className='w-8 h-8 my-auto' alt="" />
               </Link>
-          }
+              <Link href={"/guest/history"}>
+                <img src="https://cdn-icons-png.flaticon.com/512/1946/1946429.png" className='w-8 h-8' alt="" />
+              </Link>
+            </div> : user.accountType === "VENDOR" ? <Link href={"/vendor/listing"}>
+              <img src="https://cdn-icons-png.flaticon.com/512/1946/1946429.png" className='w-8 h-8' alt="" />
+            </Link> : null}
         </div>
       }
       <SignupModal modal={modal} setModal={() => setModal(!modal)} />
