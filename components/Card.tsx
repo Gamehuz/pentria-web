@@ -5,7 +5,7 @@ const Card = ({ space }: { space: any }) => {
   return (
     <div className='card rounded-md relative lg:w-[32%] bg-[#FAFAFA] my-6'>
       <Link href={`/space?page=${space._id}`}>
-        <img src={space.image[0]} className='rounded-t-md' alt="" />
+        <img src={space.image[0]} className='rounded-t-md h-[300px] w-[500px]' alt="" />
         {/* <img src="/images/Featured.png" className='absolute top-20 -left-5' alt="" /> */}
         <div className='p-4'>
           <div className='flex justify-between my-3'>

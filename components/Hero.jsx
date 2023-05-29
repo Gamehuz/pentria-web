@@ -28,7 +28,7 @@ const Hero = () => {
       content: "Please fill all fields",
     });
 
-    router.push(`/explore?facility=${filter.facility}?location=${filter.location}`);
+    router.push(`/explore?location=${filter.location}&facility=${filter.facility}`);
   }
   return (
     <div className="m-auto lg:px-16 p-4 sm:pt-10 lg:pt-32 bg-[#FAFAFA] lg:h-[120vh]">
