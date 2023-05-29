@@ -60,18 +60,8 @@ const Space = () => {
     },
   })
 
-  function replaceWhitespaceWithPercent(str: string) {
-    // Use a regular expression to match whitespace
-    var regex = /\s/g;
-
-    // Replace the whitespace with "%20"
-    var replacedStr = str.replace(regex, "%20");
-
-    return replacedStr;
-  }
-
   const addToCart = (activity: { duration: React.ReactNode; name: React.ReactNode; currency: React.ReactNode; price: React.ReactNode; image: string | undefined; }) => {
-    dispatch(addCart({ ...activity, count: 1 }))
+    dispatch(addCart({ ...activity, count: 1, spaceId: query.page }))
     messageApi.open({
       type: 'success',
       content: 'Added to cart',
@@ -104,23 +94,23 @@ const Space = () => {
         ) : <main className='lg:px-20 px-4 py-10'>
           <div onClick={() => router.back()} className='font-bold flex cursor-pointer'> <img src="/images/back.svg" className='mr-4' alt="" /> Back to results</div>
           <h3 className='font-bold text-2xl my-4'>{space.name}</h3>
-          <div className='flex justify-between'>
+          <div className='lg:flex justify-between'>
             <div className='flex w-full'> <img src="/images/map-pin.png" className='mr-4 w-8 h-8 my-auto' alt="" /> <p className='my-auto text-lg'>{space.location}</p></div>
             <div className='flex cursor-pointer' onClick={() => favourite()}> <img src="/images/favourite.png" className='mr-4' alt="" /> <p className='my-auto text-[#D78D06] text-base'>Favourite</p></div>
           </div>
-          <div className='flex my-3'>
+          <div className='lg:flex my-3'>
             <div className='w-full'>
               <img src={space.image[0]} className='rounded-md h-full w-full' alt="" />
             </div>
             {
-              space.image.length > 1 && <div className='w-[30%]'>
-                <img src={space.image[1]} className='rounded-md h-[48%] lg:ml-4 mb-6' alt="" />
-                <img src={space.image[2]} className='rounded-md h-[48%] lg:ml-4' alt="" />
+              space.image.length > 1 && <div className='lg:w-[30%] sm:mt-6'>
+                <img src={space.image[1]} className='rounded-md lg:h-[48%] lg:ml-4 mb-6' alt="" />
+                <img src={space.image[2]} className='rounded-md lg:h-[48%] lg:ml-4' alt="" />
               </div>
             }
           </div>
-          <div className='flex justify-between'>
-            <div className='flex justify-between w-[70%]'>
+          <div className='lg:flex justify-between'>
+            <div className='flex justify-between lg:w-[70%] sm:text-xs'>
               <div>
                 <p>Facility Type</p>
                 <p>{space.facilityType}</p>
@@ -143,7 +133,7 @@ const Space = () => {
               </div>
             </div>
             <div>
-              {space.reviews?.length === 0 ? "No Reviews" : <div className='flex w-full justify-between'>
+              {space.reviews?.length === 0 ? "No Reviews" : <div className='flex w-full sm:my-2 justify-between'>
                 <div className={review >= 1 ? 'text-primaryColor mx-1' : 'cursor-pointer mx-1'}>
                   <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="currentColor" className="bi bi-star-fill" viewBox="0 0 16 16">
                     <path d="M3.612 15.443c-.386.198-.824-.149-.746-.592l.83-4.73L.173 6.765c-.329-.314-.158-.888.283-.95l4.898-.696L7.538.792c.197-.39.73-.39.927 0l2.184 4.327 4.898.696c.441.062.612.636.282.95l-3.522 3.356.83 4.73c.078.443-.36.79-.746.592L8 13.187l-4.389 2.256z" />
@@ -173,8 +163,8 @@ const Space = () => {
               </div>}
             </div>
           </div>
-          <div className='flex justify-between text-[#150831]'>
-            <div className='w-[68%]'>
+          <div className='lg:flex justify-between text-[#150831]'>
+            <div className='lg:w-[68%]'>
               <div className='my-4'>
                 <h3 className='font-bold text-2xl'>Description</h3>
                 <p>{space.description}</p>
@@ -184,7 +174,7 @@ const Space = () => {
                 <p>{space.policies}</p>
               </div>
             </div>
-            <div className='w-[30%]'>
+            <div className='lg:w-[30%]'>
               <h3 className='font-bold mb-4 text-2xl'>Menu</h3>
               {
                 space.activities.map((activity: {
@@ -205,15 +195,15 @@ const Space = () => {
               }
             </div>
           </div>
-          <div className='my-6 relative'>
+          <div className='my-6 lg:relative'>
             <div>
               <iframe
-                width="100%" height="600"
+                width="100%" height="400"
                 id="gmap_canvas"
                 src={`https://maps.google.com/maps?q=${space.location}&t=k&z=10&ie=UTF8&iwloc=&output=embed`}
               ></iframe>
             </div>
-            <div className='w-[30%] absolute h-full p-4 top-0 right-0 bg-primaryColor'>
+            <div className='lg:w-[30%] lg:absolute h-full p-4 top-0 right-0 bg-primaryColor'>
               <h1 className='text-white font-bold text-base'>REVIEWS</h1>
               <div>
                 {space.reviews?.slice(0, 2).map((review: { comment: React.ReactNode; rating: React.ReactNode; }, index: React.Key | null | undefined) => (
@@ -249,7 +239,7 @@ const Space = () => {
                   </svg>
                 </div>
               </div>
-              <button onClick={() => sendReview()} className='p-3 border border-white bg-transparent text-white rounded-md w-32 float-right'>{reviewLoading ? 'Loading...' : 'Send'}</button>
+              <button onClick={() => sendReview()} className='p-3 border border-white bg-transparent text-white rounded-md w-32 lg:float-right sm:my-4'>{reviewLoading ? 'Loading...' : 'Send'}</button>
             </div>
           </div>
           <div>

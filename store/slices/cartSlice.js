@@ -10,7 +10,13 @@ export const cartSlice = createSlice({
   initialState,
   reducers: {
     addCart: (state, action) => {
-      state.value.push(action.payload)
+      if (state.value.length === 0) {
+        state.value.push(action.payload)
+      } else if (state.value[0].spaceId === action.payload.spaceId) {
+        state.value.push(action.payload)
+      } else {
+        return
+      }
     },
 
     removeCart: (state, action) => {
