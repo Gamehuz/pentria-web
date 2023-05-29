@@ -4,11 +4,13 @@ import { useState } from "react"
 import SignupModal from './SignupModal';
 import { useSelector } from 'react-redux';
 import { selectUser } from "@/store/slices/userSlice.js"
+import { selectCart } from '@/store/slices/cartSlice';
 
 const HeaderNav = () => {
   const [toggle, setToggle] = useState(false)
   const [modal, setModal] = useState(false)
   const user = useSelector(selectUser)
+  const cart = useSelector(selectCart)
 
   return (
     <div className='shadow'>
@@ -34,9 +36,12 @@ const HeaderNav = () => {
         {
           user.accountType === "GUEST" ? <Link href={"/guest/history"}>
             <div className='flex w-24 justify-between'>
-              <Link href={"/cart"}>
-                <img src="/images/shopping-cart.png" className='w-8 h-8 my-auto' alt="" />
-              </Link>
+              <div className='relative'>
+                <Link href={"/cart"}>
+                  <img src="/images/shopping-cart.png" className='w-8 h-8 my-auto' alt="" />
+                </Link>
+                <div className='absolute -top-1 -right-1 bg-red-500 rounded-full px-1 text-xs text-white h-4 w-4 text-center'>{cart.length}</div>
+              </div>
               <Link href={"/guest/history"}>
                 <img src="https://cdn-icons-png.flaticon.com/512/1946/1946429.png" className='w-8 h-8' alt="" />
               </Link>
@@ -89,9 +94,12 @@ const HeaderNav = () => {
             </Link>
           </div> : user.accountType === "GUEST" ?
             <div className='flex w-32 justify-between'>
-              <Link href={"/cart"}>
-                <img src="/images/shopping-cart.png" className='w-8 h-8 my-auto' alt="" />
-              </Link>
+              <div className='relative'>
+                <Link href={"/cart"}>
+                  <img src="/images/shopping-cart.png" className='w-8 h-8 my-auto' alt="" />
+                </Link>
+                <div className='absolute -top-1 -right-1 bg-red-500 rounded-full px-1 text-xs text-white h-4 w-4 text-center'>{cart.length}</div>
+              </div>
               <Link href={"/guest/history"}>
                 <img src="https://cdn-icons-png.flaticon.com/512/1946/1946429.png" className='w-8 h-8' alt="" />
               </Link>
