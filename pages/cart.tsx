@@ -23,13 +23,14 @@ const Cart = () => {
   const remove = (num: React.Key | null | undefined) => {
     dispatch(removeCart(num))
   }
+  // console.log(cart)
 
   useQuery(SINGLE_SPACE, {
     variables: {
       spaceId: cart[0].spaceId
     },
     onCompleted: data => {
-      console.log(data)
+      // console.log(data)
       setSpace(data.space)
 
     }
@@ -48,6 +49,7 @@ const Cart = () => {
             price: ReactNode;
             duration: ReactNode;
             counters: number;
+            _id: string;
             name: ReactNode; image: string | undefined;
           }, index: React.Key | null | undefined) => (
             <div key={index} className=' my-6'>
@@ -67,13 +69,13 @@ const Cart = () => {
                 </button>
               </div>
               <div className='flex mt-6 lg:w-[35%] justify-between'>
-                <input type="date" className='p-3 border rounded-md ' />
+                <input id={item._id} onChange={(e) => console.log(e.target)} value="" type="date" className='p-3 border rounded-md ' />
                 <input type="time" className='p-3 border rounded-md' />
               </div>
               <div className='mt-5'>
                 <label htmlFor="">Number of tickets</label>
                 <br />
-                <input value={item.count} className='p-3 border rounded-md w-[14%]' type="number" />
+                <input value={item.count}  className='p-3 border rounded-md w-[14%]' type="number" />
               </div>
             </div>
           ))
