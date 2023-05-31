@@ -61,7 +61,7 @@ const Space = () => {
   })
 
   const addToCart = (activity: { duration: React.ReactNode; name: React.ReactNode; currency: React.ReactNode; price: React.ReactNode; image: string | undefined; }) => {
-    dispatch(addCart({ ...activity, count: 1, spaceId: query.page }))
+    dispatch(addCart({ ...activity, count: 1, spaceId: query.page, date: "", time: "" }))
     messageApi.open({
       type: 'success',
       content: 'Added to cart',
@@ -100,12 +100,12 @@ const Space = () => {
           </div>
           <div className='lg:flex my-3'>
             <div className='w-full'>
-              <img src={space.image[0]} className='rounded-md h-full w-full' alt="" />
+              <img src={space.image[0]} className='rounded-md object-cover w-full' alt="" />
             </div>
             {
               space.image.length > 1 && <div className='lg:w-[30%] sm:mt-6'>
-                <img src={space.image[1]} className='rounded-md lg:h-[48%] lg:ml-4 mb-6' alt="" />
-                <img src={space.image[2]} className='rounded-md lg:h-[48%] lg:ml-4' alt="" />
+                <img src={space.image[1]} className='rounded-md lg:h-[48%] object-cover lg:ml-4 mb-6' alt="" />
+                <img src={space.image[2]} className='rounded-md lg:h-[48%] object-cover lg:ml-4' alt="" />
               </div>
             }
           </div>

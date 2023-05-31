@@ -1,9 +1,9 @@
 import FrontLayout from '@/layout/FrontLayout';
 import React, { ReactNode, useEffect, useState } from 'react';
 import { useSelector } from 'react-redux';
-import { selectCart } from "@/store/slices/cartSlice.js"
+import { addTime, selectCart, setCount } from "@/store/slices/cartSlice.js"
 import { useDispatch } from 'react-redux';
-import { clearCart, removeCart } from '@/store/slices/cartSlice';
+import { clearCart, removeCart, addDate } from '@/store/slices/cartSlice';
 import { SINGLE_SPACE } from '@/apollo/spaces';
 import { useQuery } from '@apollo/client';
 import { selectUser } from '@/store/slices/userSlice';
@@ -23,11 +23,22 @@ const Cart = () => {
   const remove = (num: React.Key | null | undefined) => {
     dispatch(removeCart(num))
   }
-  // console.log(cart)
+
+  const setDate = (date: string, index: any) => {
+    dispatch(addDate({ date, index }))
+  }
+
+  const setTime = (time: string, index: any) => {
+    dispatch(addTime({ time, index }))
+  }
+
+  const setCounter = (count: string, index: any) => {
+    dispatch(setCount({ count, index }))
+  }
 
   useQuery(SINGLE_SPACE, {
     variables: {
-      spaceId: cart[0].spaceId
+      spaceId: cart[0]?.spaceId
     },
     onCompleted: data => {
       // console.log(data)
@@ -49,6 +60,8 @@ const Cart = () => {
             price: ReactNode;
             duration: ReactNode;
             counters: number;
+            time: string;
+            date: string;
             _id: string;
             name: ReactNode; image: string | undefined;
           }, index: React.Key | null | undefined) => (
@@ -69,13 +82,13 @@ const Cart = () => {
                 </button>
               </div>
               <div className='flex mt-6 lg:w-[35%] justify-between'>
-                <input id={item._id} onChange={(e) => console.log(e.target)} value="" type="date" className='p-3 border rounded-md ' />
-                <input type="time" className='p-3 border rounded-md' />
+                <input onChange={(e) => setDate(e.target.value, index)} value={item.date} type="date" className='p-3 border rounded-md ' />
+                <input type="time" onChange={(e) => setTime(e.target.value, index)} value={item.time} className='p-3 border rounded-md' />
               </div>
               <div className='mt-5'>
                 <label htmlFor="">Number of tickets</label>
                 <br />
-                <input value={item.count}  className='p-3 border rounded-md w-[14%]' type="number" />
+                <input value={item.count} onChange={(e) => setCounter(e.target.value, index)} className='p-3 border rounded-md w-[14%]' type="number" />
               </div>
             </div>
           ))
