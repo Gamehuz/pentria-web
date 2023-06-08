@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from 'react';
+import { EyeIcon, EyeSlashIcon } from "@heroicons/react/24/solid";
 import FrontLayout from '@/layout/FrontLayout'
 import router, { useRouter } from "next/router"
 import { message } from 'antd';
@@ -23,6 +24,7 @@ const Signup = () => {
   const [confirmPassword, setConfirmPassword] = useState("")
   const [bName, setBusinessName] = useState("")
   const [bank, setBank] = useState<string>("")
+  const [show, setShow] = useState(false)
 
   const [bankName, setBankName] = useState("")
   const [occupation, setOccupation] = useState("")
@@ -131,6 +133,7 @@ const Signup = () => {
         <div className='lg:flex'>
           <div className='sm:hidden  w-1/2 p-10 bg-primaryColor text-white'>
             <div className='fixed'>
+              <Link className='text-white' href={"/"}>{'<'} Return to Homepage</Link>
               <h1 className=' text-4xl my-4'>Welcome to Pentria</h1>
               <p>Register with your correct details to enjoy
                 our premium services</p>
@@ -234,22 +237,52 @@ const Signup = () => {
                       Password
                     </label>
                     <input
-                      type="password"
+                      type={show ? "text" : "password"}
                       required
                       className="w-full mt-2 px-3 py-2 text-gray-500 bg-transparent outline-none border focus:border-indigo-600 shadow-sm rounded-lg"
                       onChange={(e) => setPassword(e.target.value)}
                     />
+                    {show ? 
+
+                      (
+                        <>
+                          <EyeSlashIcon className='w-5 cursor-pointer relative right-3 top-[-30px] float-right' onClick={() => setShow(!show)} />
+                        </>
+                      ) :
+
+                      (
+                        <>
+                          <EyeIcon className='w-5 cursor-pointer relative right-3 top-[-30px] float-right' onClick={() => setShow(!show)} />
+                        </>
+                      )
+
+                    }
                   </div>
                   <div className='lg:w-[45%]'>
                     <label className="font-medium">
                       Confirm Password
                     </label>
                     <input
-                      type="password"
+                      type={show ? "text" : "password"}
                       required
                       className="w-full mt-2 px-3 py-2 text-gray-500 bg-transparent outline-none border focus:border-indigo-600 shadow-sm rounded-lg"
                       onChange={(e) => setConfirmPassword(e.target.value)}
                     />
+                    {show ? 
+
+                      (
+                        <>
+                          <EyeSlashIcon className='w-5 cursor-pointer relative right-3 top-[-30px] float-right' onClick={() => setShow(!show)} />
+                        </>
+                      ) :
+
+                      (
+                        <>
+                          <EyeIcon className='w-5 cursor-pointer relative right-3 top-[-30px] float-right' onClick={() => setShow(!show)} />
+                        </>
+                      )
+
+                    }
                   </div>
                 </div>
                 {

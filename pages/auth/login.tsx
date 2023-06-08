@@ -2,6 +2,7 @@ import { GET_USER, LOGIN_USER } from '@/apollo/auth';
 import FrontLayout from '@/layout/FrontLayout';
 import { useLazyQuery, useMutation } from '@apollo/client';
 import React, { useEffect, useState } from 'react';
+import { EyeIcon, EyeSlashIcon } from "@heroicons/react/24/solid";
 import { message } from 'antd';
 import router from 'next/router';
 import { setCookie } from 'cookies-next';
@@ -12,6 +13,7 @@ const Login = () => {
   const [email, setEmail] = useState("")
   const [password, setPassword] = useState("")
   const [messageApi, contextHolder] = message.useMessage();
+  const [show, setShow] = useState(false)
 
 
   useEffect(() => {
@@ -54,6 +56,7 @@ const Login = () => {
       <main>
         <div className='lg:flex'>
           <div className='sm:hidden h-screen w-1/2 p-10 bg-primaryColor text-white'>
+          <Link className='text-white' href={"/"}>{'<'} Return to Homepage</Link>
             <h1 className=' text-4xl my-4'>Hello, Welcome Back </h1>
             <p>Login with your correct details to enjoy
               our premium services</p>
@@ -106,12 +109,29 @@ const Login = () => {
                   <label className="font-medium">
                     Password
                   </label>
-                  <input
-                    type="password"
-                    required
-                    className="w-full mt-2 px-3 py-2 text-gray-500 bg-transparent outline-none border focus:border-indigo-600 shadow-sm rounded-lg"
-                    onChange={(e) => setPassword(e.target.value)}
-                  />
+                  <div className='w-full'>
+                    <input
+                      type={show ? "text" : "password"}
+                      required
+                      className="w-full mt-2 px-3 py-2 text-gray-500 bg-transparent outline-none border focus:border-indigo-600 shadow-sm rounded-lg"
+                      onChange={(e) => setPassword(e.target.value)}
+                    />
+                    {show ? 
+
+                      (
+                        <>
+                          <EyeSlashIcon className='w-5 cursor-pointer relative right-3 top-[-30px] float-right' onClick={() => setShow(!show)} />
+                        </>
+                      ) :
+
+                      (
+                        <>
+                          <EyeIcon className='w-5 cursor-pointer relative right-3 top-[-30px] float-right' onClick={() => setShow(!show)} />
+                        </>
+                      )
+
+                    }
+                  </div>
                 </div>
                 <button
                   className="w-full px-4 py-2 text-white font-medium bg-primaryColor rounded-lg"
@@ -119,7 +139,7 @@ const Login = () => {
                 >
                   {loading ? "Loading.." : "Login"}
                 </button>
-                <div className='flex justify-between text-sm'>
+                <div className=' text-center lg:flex justify-between text-sm'>
                   <p>Don&apos;t have an account? <Link className='text-primaryColor' href={"/auth/signup?page=vendor"}>Signup as Vendor</Link></p>
                   <Link className='text-primaryColor' href={"/auth/signup?page=guest"}>Signup as Guest</Link>
                 </div>
