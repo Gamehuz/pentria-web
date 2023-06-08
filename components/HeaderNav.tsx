@@ -4,11 +4,13 @@ import { useState } from "react"
 import SignupModal from './SignupModal';
 import { useSelector } from 'react-redux';
 import { selectUser } from "@/store/slices/userSlice.js"
+import { selectCart } from '@/store/slices/cartSlice';
 
 const HeaderNav = () => {
   const [toggle, setToggle] = useState(false)
   const [modal, setModal] = useState(false)
   const user = useSelector(selectUser)
+  const cart = useSelector(selectCart)
 
   return (
     <div className='shadow'>
@@ -33,11 +35,20 @@ const HeaderNav = () => {
 
         {
           user.accountType === "GUEST" ? <Link href={"/guest/history"}>
-            <img src="https://cdn-icons-png.flaticon.com/512/1946/1946429.png" className='w-10 h-10' alt="" />
-          </Link>
+            <div className='flex w-24 justify-between'>
+              <div className='relative'>
+                <Link href={"/cart"}>
+                  <img src="/images/shopping-cart.png" className='w-8 h-8 my-auto' alt="" />
+                </Link>
+                <div className='absolute -top-1 -right-1 bg-red-500 rounded-full px-1 text-xs text-white h-4 w-4 text-center'>{cart.length}</div>
+              </div>
+              <Link href={"/guest/history"}>
+                <img src="https://cdn-icons-png.flaticon.com/512/1946/1946429.png" className='w-8 h-8' alt="" />
+              </Link>
+            </div>          </Link>
             : user.accountType === "VENDOR" ?
               <Link href={"/vendor/listing"}>
-                <img src="https://cdn-icons-png.flaticon.com/512/1946/1946429.png" className='w-10 h-10' alt="" />
+                <img src="https://cdn-icons-png.flaticon.com/512/1946/1946429.png" className='w-8 h-8' alt="" />
               </Link>
               : <div className='flex justify-between w-52'>
                 <button onClick={() => setModal(true)} className='bg-white border text-sm border-primaryColor p-3 px-4 text-primaryColor rounded-md'>
@@ -71,7 +82,7 @@ const HeaderNav = () => {
           <Link href={"/enquiries"}>
             <p className='my-3'>Enquiries</p>
           </Link>
-          {!user && <div>
+          {!user ? <div>
             <button onClick={() => setModal(true)} className='bg-white border text-sm my-3 border-primaryColor p-3 w-full px-4 text-primaryColor rounded-md'>
               Sign Up
             </button>
@@ -81,15 +92,20 @@ const HeaderNav = () => {
                 Login
               </button>
             </Link>
-          </div>}
-          {
-            user.accountType === "GUEST" ? <Link href={"/guest/history"}>
-              <img src="https://cdn-icons-png.flaticon.com/512/1946/1946429.png" className='w-10 h-10' alt="" />
-            </Link> :
-              <Link href={"/vendor/listing"}>
-                <img src="https://cdn-icons-png.flaticon.com/512/1946/1946429.png" className='w-10 h-10' alt="" />
+          </div> : user.accountType === "GUEST" ?
+            <div className='flex w-32 justify-between'>
+              <div className='relative'>
+                <Link href={"/cart"}>
+                  <img src="/images/shopping-cart.png" className='w-8 h-8 my-auto' alt="" />
+                </Link>
+                <div className='absolute -top-1 -right-1 bg-red-500 rounded-full px-1 text-xs text-white h-4 w-4 text-center'>{cart.length}</div>
+              </div>
+              <Link href={"/guest/history"}>
+                <img src="https://cdn-icons-png.flaticon.com/512/1946/1946429.png" className='w-8 h-8' alt="" />
               </Link>
-          }
+            </div> : user.accountType === "VENDOR" ? <Link href={"/vendor/listing"}>
+              <img src="https://cdn-icons-png.flaticon.com/512/1946/1946429.png" className='w-8 h-8' alt="" />
+            </Link> : null}
         </div>
       }
       <SignupModal modal={modal} setModal={() => setModal(!modal)} />

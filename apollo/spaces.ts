@@ -103,3 +103,15 @@ query space($spaceId: ID!) {
 }
 `
 
+export const SEND_REVIEW = gql`
+  mutation SendReview($spaceId: ID!, $comment: String!, $rating: Int!) {
+    sendReview(spaceId: $spaceId, comment: $comment, rating: $rating) {
+      _id
+      user
+      comment
+      rating
+      createdAt
+      updatedAt
+    }
+  }
+`
