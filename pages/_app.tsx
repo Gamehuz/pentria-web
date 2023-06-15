@@ -1,5 +1,5 @@
 import '@/styles/globals.css'
-import type { AppProps } from 'next/app'
+import { AppProps } from 'next/app'
 import Head from 'next/head'
 import { ApolloClient, InMemoryCache, ApolloProvider, gql } from '@apollo/client';
 import axios from 'axios';
@@ -21,7 +21,7 @@ const client = new ApolloClient({
 axios.defaults.baseURL = 'https://pentria-apiv1-4w2bw.ondigitalocean.app/graphql';
 axios.defaults.headers.common['Authorization'] = "Bearer" + token;
 
-export default function App({ Component, pageProps }: AppProps) {
+export default function App({ Component, pageProps }: AppProps): JSX.Element {
 
   return (
     <>
@@ -39,3 +39,4 @@ export default function App({ Component, pageProps }: AppProps) {
     </>
   )
 }
+
