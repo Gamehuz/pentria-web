@@ -33,6 +33,8 @@ export interface Activity {
   _id:      string;
   currency: string;
   duration: string;
+  count?: number;
+  date?: string;
   image:    string;
   name:     string;
   price:    number;

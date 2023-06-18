@@ -51,7 +51,6 @@ const Cart = () => {
       tickets: tickets
     },
     onCompleted: (data) => {
-      console.log(data)
       messageApi.open({
         type: 'success',
         content: `Hurray you've got a discount!!!`,
@@ -84,13 +83,11 @@ const Cart = () => {
       total: checkout.total,
     },
     onCompleted: (data) => {
-      console.log(data)
+      clear()
       messageApi.open({
         type: 'success',
         content: `Booking successful `,
       });
-
-      console.log(data)
       window.location.replace(data.createBooking.link)
     },
     onError: (error) => {
