@@ -4,7 +4,7 @@ import { useSelector } from 'react-redux';
 import { addTime, selectCart, setCount, selectTickets } from "@/store/slices/cartSlice.js"
 import { useDispatch } from 'react-redux';
 import { clearCart, removeCart, addDate, addTickets, clearTickets } from '@/store/slices/cartSlice';
-import { SINGLE_SPACE, DISCOUNT } from '@/apollo/spaces';
+import { SINGLE_SPACE, DISCOUNT, CREATE_BOOKING } from '@/apollo/spaces';
 import { useQuery, useMutation } from '@apollo/client';
 import { selectUser } from '@/store/slices/userSlice';
 import { message } from 'antd';
@@ -64,6 +64,34 @@ const Cart = () => {
         total: data.calculateDiscount.total,
       }
       setCheckout(payload)
+    },
+    onError: (error) => {
+      messageApi.open({
+        type: 'error',
+        content: error.message,
+      });
+    }
+  })
+
+  const [CreateBooking, { }] = useMutation(CREATE_BOOKING, {
+    variables: {
+      tickets: tickets,
+      spaceId: cart[0]?.spaceId,
+      specialRequest: soecialRequest,
+      initalAmount: checkout.initalAmount,
+      discountPercentage: checkout.discountPercentage,
+      discountAmount: checkout.discountAmount,
+      total: checkout.total,
+    },
+    onCompleted: (data) => {
+      console.log(data)
+      messageApi.open({
+        type: 'success',
+        content: `Booking successful `,
+      });
+
+      console.log(data)
+      window.location.replace(data.createBooking.link)
     },
     onError: (error) => {
       messageApi.open({
@@ -228,7 +256,7 @@ const Cart = () => {
                       </div>
 
                       <br />
-                      <button className='p-3 border border-primaryColor text-primaryColor my-1 rounded-md ml-auto w-32'>Book Now</button>
+                      <button onClick={() => CreateBooking()} className='p-3 border border-primaryColor text-primaryColor my-1 rounded-md ml-auto w-32'>Book Now</button>
                     </div>
                     }
                   </div>

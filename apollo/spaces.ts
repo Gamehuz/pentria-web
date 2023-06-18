@@ -126,3 +126,13 @@ export const DISCOUNT = gql`
   }
 }
 `
+
+export const CREATE_BOOKING = gql`
+  mutation CreateBooking($tickets: [ITicket!]!, $spaceId: ID!, $specialRequest: String!, $discountPercentage: Float, $initalAmount: Float, $discountAmount: Float, $total: Float) {
+  createBooking(tickets: $tickets, spaceId: $spaceId, specialRequest: $specialRequest, discountPercentage: $discountPercentage, initalAmount: $initalAmount, discountAmount: $discountAmount, total: $total) {
+    link
+    status
+    tx_ref
+  }
+}
+`
