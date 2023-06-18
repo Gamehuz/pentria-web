@@ -100,7 +100,7 @@ const Space = () => {
           </div>
           <div className='lg:flex my-3'>
             <div className='w-full'>
-              <img src={space.image[0]} className='rounded-md object-cover w-full' alt="" />
+              <img src={space.image[0]} className='rounded-md object-cover w-full h-[400px] lg:h-[600px]' alt="" />
             </div>
             {
               space.image.length > 1 && <div className='lg:w-[30%] sm:mt-6'>
