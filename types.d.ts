@@ -46,3 +46,10 @@ export interface Author {
   firstName:   string;
   lastName:    string;
 }
+
+export interface CHECKOUT_TOTAL {
+  initalAmount: number;
+  discountPercentage: number;
+  discountAmount: number;
+  total: number;
+}

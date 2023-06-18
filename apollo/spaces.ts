@@ -115,3 +115,14 @@ export const SEND_REVIEW = gql`
     }
   }
 `
+
+export const DISCOUNT = gql`
+  mutation CalculateDiscount($tickets: [ITicket!]!) {
+  calculateDiscount(tickets: $tickets) {
+    discountAmount
+    discountPercentage
+    initalAmount
+    total
+  }
+}
+`

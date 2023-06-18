@@ -1,10 +1,8 @@
 import { GET_USER, LOGIN_USER } from '@/apollo/auth';
-import FrontLayout from '@/layout/FrontLayout';
-import { useLazyQuery, useMutation } from '@apollo/client';
+import { useMutation } from '@apollo/client';
 import React, { useEffect, useState } from 'react';
 import { EyeIcon, EyeSlashIcon } from "@heroicons/react/24/solid";
 import { message } from 'antd';
-import router from 'next/router';
 import { setCookie } from 'cookies-next';
 import { deleteCookie } from 'cookies-next';
 import Link from 'next/link';

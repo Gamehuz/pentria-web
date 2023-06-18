@@ -1,22 +1,32 @@
 import FrontLayout from '@/layout/FrontLayout';
 import React, { ReactNode, useEffect, useState } from 'react';
 import { useSelector } from 'react-redux';
-import { addTime, selectCart, setCount } from "@/store/slices/cartSlice.js"
+import { addTime, selectCart, setCount, selectTickets } from "@/store/slices/cartSlice.js"
 import { useDispatch } from 'react-redux';
-import { clearCart, removeCart, addDate } from '@/store/slices/cartSlice';
-import { SINGLE_SPACE } from '@/apollo/spaces';
-import { useQuery } from '@apollo/client';
+import { clearCart, removeCart, addDate, addTickets, clearTickets } from '@/store/slices/cartSlice';
+import { SINGLE_SPACE, DISCOUNT } from '@/apollo/spaces';
+import { useQuery, useMutation } from '@apollo/client';
 import { selectUser } from '@/store/slices/userSlice';
+import { message } from 'antd';
+import { CHECKOUT_TOTAL } from '@/types';
 
 
 const Cart = () => {
   const cart = useSelector(selectCart)
+  const tickets = useSelector(selectTickets)
   const user = useSelector(selectUser)
 
   const dispatch = useDispatch();
   const [modal, setModal] = useState(false);
   const [space, setSpace] = useState<any>([])
   const [soecialRequest, setSpecialRequest] = useState('')
+  const [checkout, setCheckout] = useState<CHECKOUT_TOTAL>({
+    initalAmount: 0,
+    discountPercentage: 0,
+    discountAmount: 0,
+    total: 0,
+})
+  const [messageApi, contextHolder] = message.useMessage();
   const clear = () => {
     dispatch(clearCart([]))
   }
@@ -36,6 +46,33 @@ const Cart = () => {
     dispatch(setCount({ count, index }))
   }
 
+  const [CalculateDiscount, { loading }] = useMutation(DISCOUNT, {
+    variables: {
+      tickets: tickets
+    },
+    onCompleted: (data) => {
+      console.log(data)
+      messageApi.open({
+        type: 'success',
+        content: `Hurray you've got a discount!!!`,
+      });
+
+      const payload:CHECKOUT_TOTAL = {
+        initalAmount: data.calculateDiscount.initalAmount,
+        discountPercentage: data.calculateDiscount.discountPercentage,
+        discountAmount: data.calculateDiscount.discountAmount,
+        total: data.calculateDiscount.total,
+      }
+      setCheckout(payload)
+    },
+    onError: (error) => {
+      messageApi.open({
+        type: 'error',
+        content: error.message,
+      });
+    }
+  })
+
   useQuery(SINGLE_SPACE, {
     variables: {
       spaceId: cart[0]?.spaceId
@@ -47,8 +84,32 @@ const Cart = () => {
     }
   })
 
+  const getDiscount = async () => {
+    dispatch(clearTickets([]))
+    const values = cart.map(((item: any) => {
+      const payload = {
+        activityId: item._id,
+        count: parseInt(item.count),
+        date: item.date,
+        duration: item.duration,
+        name: item.name,
+        price: item.price,
+        spaceId: item.spaceId,
+        time: item.time,
+      }
+
+      dispatch(addTickets(payload))
+
+      return payload
+    }))
+    
+    await CalculateDiscount()
+    setModal(true)
+  }
+
   return (
     <FrontLayout>
+      {contextHolder}
       <main className='lg:px-20 py-10 px-6'>
         <h1 className='text-3xl text-primaryColor mt-8 font-bold'>Cart</h1>
         <p onClick={() => clear()} className='cursor-pointer float-right text-blue-500'>Clear Cart</p>
@@ -98,7 +159,7 @@ const Cart = () => {
           <textarea className='w-full h-40 rounded-md' onChange={(e) => setSpecialRequest(e.target.value)}></textarea>
         </div>
         <div className='pb-10'>
-          <button onClick={() => setModal(true)} className='float-right p-3 text-white rounded md bg-primaryColor'>Proceed to Checkout</button>
+          <button onClick={() => getDiscount()} className='float-right p-3 text-white rounded md bg-primaryColor'>Proceed to Checkout</button>
         </div>
 
         <div>
@@ -126,7 +187,7 @@ const Cart = () => {
                     <p>{space.location}</p>
                     <hr />
                     <p className='text-center text-sm my-2'>Details</p>
-                    <div className='flex my-2'>
+                    <div className='flex my-2 space-x-5'>
                       <p>Name: {user.firstName} {user.lastName}</p>
                       {soecialRequest !== "" && <p>Special Request: {soecialRequest}</p>}
                     </div>
@@ -155,7 +216,21 @@ const Cart = () => {
                         )}
                       </tbody>
                     </table>
-                    <button className='p-3 border border-primaryColor text-primaryColor my-3 rounded-md ml-auto w-32'>Book Now</button>
+                    {checkout.total && <div>
+                      <div>
+                        <span className='font-bold'>Sub Total: </span> <span>{ checkout.initalAmount }</span>
+                      </div>
+                      <div>
+                        <span className='font-bold'>Discount: </span> <span>{ checkout.discountPercentage }%</span>
+                      </div>
+                      <div>
+                        <span className='font-bold'>Total: </span> <span>{ checkout.total }</span>
+                      </div>
+
+                      <br />
+                      <button className='p-3 border border-primaryColor text-primaryColor my-1 rounded-md ml-auto w-32'>Book Now</button>
+                    </div>
+                    }
                   </div>
                 </div>
               </div>
