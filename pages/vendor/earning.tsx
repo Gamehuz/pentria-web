@@ -1,17 +1,25 @@
-import { EARNINGS } from '@/apollo/vendor';
+import { BALANCE, CANCEL_BOOKING, CONFIRM_BOOKING, EARNINGS } from '@/apollo/vendor';
 import VendorLayout from '@/layout/VendorLayout';
-import { useQuery } from '@apollo/client';
+import { useQuery, useMutation } from '@apollo/client';
 import React, { useEffect, useState } from 'react';
 import { useSelector } from 'react-redux';
 import { selectUser } from "@/store/slices/userSlice.js"
+import { message } from 'antd';
 
 const Earning = () => {
+  const [messageApi, contextHolder] = message.useMessage();
   const [earnings, setEarnings] = useState<any>([]);
   const user = useSelector(selectUser)
+  const [bal, setBal] = useState(0)
+  const [bookingId, setId] = useState('')
 
-  // useEffect(() => {
-  //   console.log(user);
-  // }, [user])
+  useQuery(BALANCE, {
+    onCompleted(data) {
+      console.log(data);
+      const balance = Math.round(data.walletBalance)
+      setBal(balance)
+    },
+  })
 
   useQuery(EARNINGS, {
     variables: {
@@ -22,13 +30,63 @@ const Earning = () => {
       setEarnings(data.bookingSold);
     }
   });
+
+  const [ConfirmBooking, { }] = useMutation(CONFIRM_BOOKING, {
+    variables: {
+      confirmBookingId: bookingId
+    },
+    onCompleted: (data) => {
+      messageApi.open({
+        type: 'success',
+        content: `Booking status updated `,
+      });
+
+      console.log(data)
+    },
+    onError: (error) => {
+      messageApi.open({
+        type: 'error',
+        content: error.message,
+      });
+    }
+  })
+
+  const [CancleBooking, { }] = useMutation(CANCEL_BOOKING, {
+    variables: {
+      cancleBookingId: bookingId
+    },
+    onCompleted: (data) => {
+      messageApi.open({
+        type: 'success',
+        content: `Booking Cancelled`,
+      });
+      console.log(data)
+    },
+    onError: (error) => {
+      messageApi.open({
+        type: 'error',
+        content: error.message,
+      });
+    }
+  })
+
+  const updateStatus = (value:string, id: string) => {
+    console.log(value, id)
+    setId(id)
+    if (value === 'Used') {
+      ConfirmBooking()
+      return
+    }
+    CancleBooking()
+  }
   return (
     <VendorLayout>
+      {contextHolder}
       <main className='mt-16 lg:w-[80%]'>
         <div className='bg-[#D8D1E9] w-full p-8 flex justify-between'>
           <div>
-            <p>Total Income</p>
-            <h4 className='text-2xl font-bol'>NGN 3,000,000 </h4>
+            <p>Total Earnings</p>
+            <h4 className='text-2xl font-bol'>NGN {bal} </h4>
           </div>
           <button className='p-4 bg-primaryColor text-white rounded-md'>Withdraw</button>
         </div>
@@ -60,15 +118,20 @@ const Earning = () => {
             </thead>
             <tbody>
               {earnings.map((earning: {
-                customer: string; author: string | number | boolean | React.ReactElement<any, string | React.JSXElementConstructor<any>> | React.ReactFragment | React.ReactPortal | React.PromiseLikeOfReactNode | null | undefined; amount: string | number | boolean | React.ReactElement<any, string | React.JSXElementConstructor<any>> | React.ReactFragment | React.ReactPortal | React.PromiseLikeOfReactNode | null | undefined; status: string | number | boolean | React.ReactElement<any, string | React.JSXElementConstructor<any>> | React.ReactFragment | React.ReactPortal | React.PromiseLikeOfReactNode | null | undefined;
+                customer: string; _id: string; author: string | number | boolean | React.ReactElement<any, string | React.JSXElementConstructor<any>> | React.ReactFragment | React.ReactPortal | React.PromiseLikeOfReactNode | null | undefined; amount: string | number | boolean | React.ReactElement<any, string | React.JSXElementConstructor<any>> | React.ReactFragment | React.ReactPortal | React.PromiseLikeOfReactNode | null | undefined; status: string | number | boolean | React.ReactElement<any, string | React.JSXElementConstructor<any>> | React.ReactFragment | React.ReactPortal | React.PromiseLikeOfReactNode | null | undefined;
               }, index: number) => (
                 <tr key={index}>
                   <td className='p-2'>{index + 1}</td>
                   <td>{earning.customer}</td>
                   <td>{earning.amount}</td>
                   <td>{earning.status}</td>
-                  <td>
-                    <img src="/images/trash.png" alt="" />
+                  <td >
+                    <select className='rounded-xl mt-1' name="" id={earning._id} onChange={(e) => updateStatus(e.target.value, earning._id)} >
+                      <option value="">Selet status</option>
+                      <option value="Used">Used</option>
+                      <option value="Cancelled">Cancelled</option>
+                      {/* <option value="Active">Active</option> */}
+                    </select>
                   </td>
                 </tr>
               ))}

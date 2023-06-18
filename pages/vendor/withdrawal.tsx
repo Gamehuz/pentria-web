@@ -32,14 +32,14 @@ const withdrawal = () => {
             </tr>
           </thead>
           <tbody>
-            <tr>
+            {/* <tr>
               <td className='p-2'>12/04/2023</td>
               <td>NGN 6,000</td>
               <td>Confirmed</td>
               <td>
                 <img src="/images/trash.png" alt="" />
               </td>
-            </tr>
+            </tr> */}
           </tbody>
         </table>
       </main>

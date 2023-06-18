@@ -67,7 +67,7 @@ const SideNav = ({ toggle }: { toggle: boolean }) => {
                       <div className={router.pathname.includes("earning") ? 'w-8 h-8 bg-white p-1 rounded-full' : 'w-8 h-8 rounded-full'}>
                         <img src="/images/money-recive.png" className='w-6 h-6' alt="" />
                       </div>
-                      <p className='my-auto font-bold ml-6'>Earnings</p>
+                      <p className='my-auto font-bold ml-6'>Bookings</p>
                     </div>
                   </Link>
                   <Link href={"/vendor/withdrawal"}>

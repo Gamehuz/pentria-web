@@ -73,3 +73,25 @@ export const EARNINGS = gql`
     }
   }
 `
+
+export const BALANCE = gql`
+  query Wallet_Balance {
+    walletBalance
+  }
+`
+
+export const CONFIRM_BOOKING = gql`
+  mutation ConfirmBooking($confirmBookingId: ID) {
+  confirmBooking(id: $confirmBookingId) {
+    status
+  }
+}
+`
+
+export const CANCEL_BOOKING = gql`
+  mutation CancleBooking($cancleBookingId: ID) {
+  cancleBooking(id: $cancleBookingId) {
+    status
+  }
+}
+`
