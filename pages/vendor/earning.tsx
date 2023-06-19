@@ -41,9 +41,14 @@ const Earning = () => {
         content: `Booking status updated `,
       });
 
-      console.log(data)
+      // const index = earnings.findIndex( (item:any) => item.bookingId === bookingId)
+      // const bookings = earnings
+      // const updatedEarnings = bookings[index].status = data.confirmBooking.status
+      // console.log(data.confirmBooking.status, index)
+      // setEarnings(updatedEarnings)
     },
     onError: (error) => {
+      // console.log(error)
       messageApi.open({
         type: 'error',
         content: error.message,
@@ -60,9 +65,14 @@ const Earning = () => {
         type: 'success',
         content: `Booking Cancelled`,
       });
-      console.log(data)
+      // const index = earnings.findIndex( (item:any) => item.bookingId === bookingId)
+      // const bookings = earnings
+      // const updatedEarnings = bookings[index].status = data.cancleBooking.status
+      // console.log(data.cancleBooking.status, index)
+      // setEarnings(updatedEarnings)
     },
     onError: (error) => {
+      // console.log(error)
       messageApi.open({
         type: 'error',
         content: error.message,
@@ -106,37 +116,39 @@ const Earning = () => {
               Print Statement
             </button>
           </div>
-          <table className="table-auto w-full mt-6">
-            <thead className='bg-gray-300'>
-              <tr>
-                <td className='p-2'>S/N</td>
-                <td>User</td>
-                <td>Total</td>
-                <td>Status</td>
-                <td>Action</td>
-              </tr>
-            </thead>
-            <tbody>
-              {earnings.map((earning: {
-                customer: string; _id: string; author: string | number | boolean | React.ReactElement<any, string | React.JSXElementConstructor<any>> | React.ReactFragment | React.ReactPortal | React.PromiseLikeOfReactNode | null | undefined; amount: string | number | boolean | React.ReactElement<any, string | React.JSXElementConstructor<any>> | React.ReactFragment | React.ReactPortal | React.PromiseLikeOfReactNode | null | undefined; status: string | number | boolean | React.ReactElement<any, string | React.JSXElementConstructor<any>> | React.ReactFragment | React.ReactPortal | React.PromiseLikeOfReactNode | null | undefined;
-              }, index: number) => (
-                <tr key={index}>
-                  <td className='p-2'>{index + 1}</td>
-                  <td>{earning.customer}</td>
-                  <td>{earning.amount}</td>
-                  <td>{earning.status}</td>
-                  <td >
-                    <select className='rounded-xl mt-1' name="" id={earning._id} onChange={(e) => updateStatus(e.target.value, earning._id)} >
-                      <option value="">Selet status</option>
-                      <option value="Used">Used</option>
-                      <option value="Cancelled">Cancelled</option>
-                      {/* <option value="Active">Active</option> */}
-                    </select>
-                  </td>
+          <div className="overflow-scroll lg:overflow-hidden">
+            <table className="table-auto w-full mt-6">
+              <thead className='bg-gray-300'>
+                <tr>
+                  <td className='p-2'>S/N</td>
+                  <td>User</td>
+                  <td>Total</td>
+                  <td>Status</td>
+                  <td>Action</td>
                 </tr>
-              ))}
-            </tbody>
-          </table>
+              </thead>
+              <tbody>
+                {earnings.map((earning: {
+                  customer: string; bookingId: string; author: string | number | boolean | React.ReactElement<any, string | React.JSXElementConstructor<any>> | React.ReactFragment | React.ReactPortal | React.PromiseLikeOfReactNode | null | undefined; amount: string | number | boolean | React.ReactElement<any, string | React.JSXElementConstructor<any>> | React.ReactFragment | React.ReactPortal | React.PromiseLikeOfReactNode | null | undefined; status: string | number | boolean | React.ReactElement<any, string | React.JSXElementConstructor<any>> | React.ReactFragment | React.ReactPortal | React.PromiseLikeOfReactNode | null | undefined;
+                }, index: number) => (
+                  <tr key={index}>
+                    <td className='p-2'>{index + 1}</td>
+                    <td>{earning.customer}</td>
+                    <td>{earning.amount}</td>
+                    <td>{earning.status}</td>
+                    <td >
+                      <select className='rounded-xl mt-1' name="" id={earning.bookingId} onChange={(e) => updateStatus(e.target.value, earning.bookingId)} >
+                        <option value="">Selet status</option>
+                        <option value="Used">Used</option>
+                        <option value="Cancelled">Cancelled</option>
+                        {/* <option value="Active">Active</option> */}
+                      </select>
+                    </td>
+                  </tr>
+                ))}
+              </tbody>
+            </table>
+          </div>
         </div>
       </main>
     </VendorLayout>

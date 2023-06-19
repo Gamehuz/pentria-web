@@ -1,11 +1,30 @@
+import { useQuery, useMutation } from '@apollo/client';
+import { useEffect, useState } from 'react';
 import VendorLayout from '@/layout/VendorLayout';
-import React from 'react';
+import { BALANCE } from '@/apollo/vendor';
 
-const withdrawal = () => {
+const Withdrawal = () => {
+  const [bal, setBal] = useState(0)
+
+  useQuery(BALANCE, {
+    onCompleted(data) {
+      console.log(data);
+      const balance = Math.round(data.walletBalance)
+      setBal(balance)
+    },
+  })
+
   return (
     <VendorLayout>
-      <main className='mt-20 lg:w-[80%] p-6'>
-        <div className='lg:flex justify-between'>
+      <main className='mt-16 lg:w-[80%]'>
+      <div className='bg-[#D8D1E9] w-full p-8 flex justify-between'>
+          <div>
+            <p>Total Earnings</p>
+            <h4 className='text-2xl font-bol'>NGN {bal} </h4>
+          </div>
+          <button className='p-4 bg-primaryColor text-white rounded-md'>Withdraw</button>
+        </div>
+        <div className='lg:flex justify-between p-8'>
           <div className="relative">
             <svg xmlns="http://www.w3.org/2000/svg" className="absolute top-0 bottom-0 w-6 h-6 my-auto text-gray-400 left-3" fill="none" viewBox="0 0 24 24" stroke="currentColor">
               <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
@@ -47,4 +66,4 @@ const withdrawal = () => {
   );
 };
 
-export default withdrawal;
+export default Withdrawal;
