@@ -1,25 +1,18 @@
+import React, { useEffect, useState } from 'react';
+import { Table } from 'flowbite-react';
 import { BALANCE, CANCEL_BOOKING, CONFIRM_BOOKING, EARNINGS } from '@/apollo/vendor';
 import VendorLayout from '@/layout/VendorLayout';
 import { useQuery, useMutation } from '@apollo/client';
-import React, { useEffect, useState } from 'react';
 import { useSelector } from 'react-redux';
 import { selectUser } from "@/store/slices/userSlice.js"
 import { message } from 'antd';
+import Withdraw from '@/components/dashboard/Withdraw';
 
 const Earning = () => {
   const [messageApi, contextHolder] = message.useMessage();
   const [earnings, setEarnings] = useState<any>([]);
   const user = useSelector(selectUser)
-  const [bal, setBal] = useState(0)
   const [bookingId, setId] = useState('')
-
-  useQuery(BALANCE, {
-    onCompleted(data) {
-      console.log(data);
-      const balance = Math.round(data.walletBalance)
-      setBal(balance)
-    },
-  })
 
   useQuery(EARNINGS, {
     variables: {
@@ -46,6 +39,7 @@ const Earning = () => {
       // const updatedEarnings = bookings[index].status = data.confirmBooking.status
       // console.log(data.confirmBooking.status, index)
       // setEarnings(updatedEarnings)
+      window.location.reload()
     },
     onError: (error) => {
       // console.log(error)
@@ -65,11 +59,7 @@ const Earning = () => {
         type: 'success',
         content: `Booking Cancelled`,
       });
-      // const index = earnings.findIndex( (item:any) => item.bookingId === bookingId)
-      // const bookings = earnings
-      // const updatedEarnings = bookings[index].status = data.cancleBooking.status
-      // console.log(data.cancleBooking.status, index)
-      // setEarnings(updatedEarnings)
+      window.location.reload()
     },
     onError: (error) => {
       // console.log(error)
@@ -93,13 +83,7 @@ const Earning = () => {
     <VendorLayout>
       {contextHolder}
       <main className='mt-16 lg:w-[80%]'>
-        <div className='bg-[#D8D1E9] w-full p-8 flex justify-between'>
-          <div>
-            <p>Total Earnings</p>
-            <h4 className='text-2xl font-bol'>NGN {bal} </h4>
-          </div>
-          <button className='p-4 bg-primaryColor text-white rounded-md'>Withdraw</button>
-        </div>
+      <Withdraw />
         <div className=' p-6'>
           <div className='lg:flex justify-between'>
             <div className="relative">
@@ -116,38 +100,56 @@ const Earning = () => {
               Print Statement
             </button>
           </div>
-          <div className="overflow-scroll lg:overflow-hidden">
-            <table className="table-auto w-full mt-6">
-              <thead className='bg-gray-300'>
-                <tr>
-                  <td className='p-2'>S/N</td>
-                  <td>User</td>
-                  <td>Total</td>
-                  <td>Status</td>
-                  <td>Action</td>
-                </tr>
-              </thead>
-              <tbody>
-                {earnings.map((earning: {
-                  customer: string; bookingId: string; author: string | number | boolean | React.ReactElement<any, string | React.JSXElementConstructor<any>> | React.ReactFragment | React.ReactPortal | React.PromiseLikeOfReactNode | null | undefined; amount: string | number | boolean | React.ReactElement<any, string | React.JSXElementConstructor<any>> | React.ReactFragment | React.ReactPortal | React.PromiseLikeOfReactNode | null | undefined; status: string | number | boolean | React.ReactElement<any, string | React.JSXElementConstructor<any>> | React.ReactFragment | React.ReactPortal | React.PromiseLikeOfReactNode | null | undefined;
-                }, index: number) => (
-                  <tr key={index}>
-                    <td className='p-2'>{index + 1}</td>
-                    <td>{earning.customer}</td>
-                    <td>{earning.amount}</td>
-                    <td>{earning.status}</td>
-                    <td >
-                      <select className='rounded-xl mt-1' name="" id={earning.bookingId} onChange={(e) => updateStatus(e.target.value, earning.bookingId)} >
+          <div className="sm:w-2/3 overflow-scroll lg:overflow-hidden">
+            <Table striped>
+              <Table.Head>
+                <Table.HeadCell>
+                  User
+                </Table.HeadCell>
+                <Table.HeadCell>
+                  Total
+                </Table.HeadCell>
+                <Table.HeadCell>
+                  Status
+                </Table.HeadCell>
+                <Table.HeadCell>
+                  payment
+                </Table.HeadCell>
+                <Table.HeadCell>
+                  Action
+                </Table.HeadCell>
+              </Table.Head>
+              <Table.Body className="divide-y">
+              { earnings.map((earning: any) => (
+                <>
+                  <Table.Row key={earning.bookingId}>
+                    <Table.Cell>
+                      {earning.customer}
+                    </Table.Cell>
+                    <Table.Cell>
+                      {earning.currency} {earning.amount}
+                    </Table.Cell>
+                    <Table.Cell>
+                       {earning.status}
+                    </Table.Cell>
+                    <Table.Cell>
+                      {earning.payment}
+                    </Table.Cell>
+                    <Table.Cell>
+                    <select className='rounded-xl mt-1' name="" id={earning.bookingId} onChange={(e) => updateStatus(e.target.value, earning.bookingId)} >
                         <option value="">Selet status</option>
                         <option value="Used">Used</option>
                         <option value="Cancelled">Cancelled</option>
-                        {/* <option value="Active">Active</option> */}
                       </select>
-                    </td>
-                  </tr>
-                ))}
-              </tbody>
-            </table>
+                    </Table.Cell>
+                  </Table.Row>
+                </>
+              ))
+
+              } 
+        
+              </Table.Body>
+            </Table>
           </div>
         </div>
       </main>

@@ -86,7 +86,7 @@ const Cart = () => {
       clear()
       messageApi.open({
         type: 'success',
-        content: `Booking successful `,
+        content: `Booking in progress you will be redirected to pay`,
       });
       window.location.href = data.createBooking.link
     },

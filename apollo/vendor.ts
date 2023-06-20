@@ -70,6 +70,8 @@ export const EARNINGS = gql`
       bookingId
       status
       customer
+      payment
+      currency
     }
   }
 `

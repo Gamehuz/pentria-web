@@ -1,29 +1,24 @@
 import { useQuery, useMutation } from '@apollo/client';
 import { useEffect, useState } from 'react';
+import { Modal, Button } from 'flowbite-react';
+
 import VendorLayout from '@/layout/VendorLayout';
 import { BALANCE } from '@/apollo/vendor';
+import { message } from 'antd';
+import Withdraw from '@/components/dashboard/Withdraw';
 
 const Withdrawal = () => {
-  const [bal, setBal] = useState(0)
+  
+  const [messageApi, contextHolder] = message.useMessage();
+  
 
-  useQuery(BALANCE, {
-    onCompleted(data) {
-      console.log(data);
-      const balance = Math.round(data.walletBalance)
-      setBal(balance)
-    },
-  })
+  
 
   return (
     <VendorLayout>
+      {contextHolder}
       <main className='mt-16 lg:w-[80%]'>
-      <div className='bg-[#D8D1E9] w-full p-8 flex justify-between'>
-          <div>
-            <p>Total Earnings</p>
-            <h4 className='text-2xl font-bol'>NGN {bal} </h4>
-          </div>
-          <button className='p-4 bg-primaryColor text-white rounded-md'>Withdraw</button>
-        </div>
+        <Withdraw />
         <div className='lg:flex justify-between p-8'>
           <div className="relative">
             <svg xmlns="http://www.w3.org/2000/svg" className="absolute top-0 bottom-0 w-6 h-6 my-auto text-gray-400 left-3" fill="none" viewBox="0 0 24 24" stroke="currentColor">
@@ -61,6 +56,8 @@ const Withdrawal = () => {
             </tr> */}
           </tbody>
         </table>
+
+
       </main>
     </VendorLayout>
   );
