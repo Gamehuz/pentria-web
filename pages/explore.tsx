@@ -124,7 +124,7 @@ const Explore = () => {
                   value={filterType}
                   onChange={(e) => setFilterType(e.target.value)}
                 >
-                <option hidden>Faciity</option>
+                <option hidden>Facility</option>
                   { facilityList.map(item => 
                   <option key={item} value={item}>
                     {item}

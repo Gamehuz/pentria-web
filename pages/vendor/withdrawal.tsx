@@ -35,9 +35,9 @@ const Withdrawal = () => {
               className="w-full py-3 pl-12 pr-4 text-gray-500 border rounded-md outline-none bg-gray-50 focus:bg-white focus:border-indigo-600"
             />
           </div>
-          <button className='p-3 border border-primaryColor px-10 sm:w-full sm:mt-4 text-primaryColor rounded-md'>
+          {/* <button className='p-3 border border-primaryColor px-10 sm:w-full sm:mt-4 text-primaryColor rounded-md'>
             Print Statement
-          </button>
+          </button> */}
         </div>
 
         <table className="table-auto w-full mt-6">

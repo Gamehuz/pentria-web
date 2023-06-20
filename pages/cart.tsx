@@ -88,7 +88,7 @@ const Cart = () => {
         type: 'success',
         content: `Booking successful `,
       });
-      window.location.replace(data.createBooking.link)
+      window.location.href = data.createBooking.link
     },
     onError: (error) => {
       messageApi.open({

@@ -1,3 +1,5 @@
+import { Table } from 'flowbite-react';
+import { useRouter } from 'next/router'
 import { GET_HISTORY } from '@/apollo/guest';
 import VendorLayout from '@/layout/VendorLayout';
 import { useQuery } from '@apollo/client';
@@ -13,6 +15,7 @@ const History = () => {
   const [lists, setList] = useState([])
   const user = useSelector(selectUser)
   const dispatch = useDispatch();
+  const router = useRouter()
 
   const { loading } = useQuery(GET_HISTORY, {
     variables: {
@@ -45,7 +48,7 @@ const History = () => {
               className="w-full py-3 pl-12 pr-4 text-gray-500 border rounded-md outline-none bg-gray-50 focus:bg-white focus:border-indigo-600"
             />
           </div>
-          <button className='p-3 px-10 border border-primaryColor sm:w-full sm:mt-4 text-primaryColor rounded-md'>
+          <button onClick={() => router.push('/explore')} className='p-3 px-10 border border-primaryColor sm:w-full sm:mt-4 text-primaryColor rounded-md'>
             Explore
           </button>
         </div>
@@ -53,28 +56,54 @@ const History = () => {
           <Spin size="large" />
         </div> : <div className='mt-6'>
           {lists.length >= 1 ? <div>
-            <table className='w-full'>
-              <thead>
-                <tr>
-                  <td>Space</td>
-                  <td>Ticket</td>
-                  <td>Total</td>
-                  <td>Ticket Code</td>
-                  <td>Status</td>
-                  <td></td>
-                </tr>
-              </thead>
-              <tbody>
-                <tr>
-                  <td></td>
-                  <td></td>
-                  <td></td>
-                  <td></td>
-                  <td></td>
-                  <td></td>
-                </tr>
-              </tbody>
-            </table>
+            <Table striped>
+              <Table.Head>
+                <Table.HeadCell>
+                  Space
+                </Table.HeadCell>
+                <Table.HeadCell>
+                Ticket
+                </Table.HeadCell>
+                <Table.HeadCell>
+                  Total
+                </Table.HeadCell>
+                <Table.HeadCell>
+                payment
+                </Table.HeadCell>
+                <Table.HeadCell>
+                  Status
+                </Table.HeadCell>
+                {/* <Table.HeadCell>
+                  Date
+                </Table.HeadCell> */}
+              </Table.Head>
+              <Table.Body className="divide-y">
+              { lists.map((list: any) => (
+                <>
+                  <Table.Row key={list._id}>
+                    <Table.Cell>
+                      {list.spaceId.name}
+                    </Table.Cell>
+                    <Table.Cell>
+                      {list.tickets.length}
+                    </Table.Cell>
+                    <Table.Cell>
+                      {list.currency} {list.total}
+                    </Table.Cell>
+                    <Table.Cell>
+                      {list.payment}
+                    </Table.Cell>
+                    <Table.Cell>
+                      {list.status}
+                    </Table.Cell>
+                  </Table.Row>
+                </>
+              ))
+
+              } 
+        
+              </Table.Body>
+            </Table>
           </div> : <div className='text-center text-3xl mt-28'>
             There is no History</div>}
         </div>}
