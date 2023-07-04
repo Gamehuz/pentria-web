@@ -1,5 +1,6 @@
 import Card from '@/components/Card'
 import FrontLayout from '@/layout/FrontLayout'
+import { Metadata } from 'next'
 import { Josefin_Sans } from 'next/font/google'
 import FaqsCard from '@/components/FaqsCard.jsx'
 import Hero from '@/components/Hero'
@@ -9,6 +10,12 @@ import { GET_SPACES } from '@/apollo/spaces'
 import { useQuery } from '@apollo/client'
 
 const josefin_Sans = Josefin_Sans({ subsets: ['latin'] })
+
+ 
+export const metadata: Metadata = {
+  title: 'https://pentria.app/',
+  description: 'Beat the queue with one-click ticket reservation. Enjoy seamless playtime at a recreation space near you.',
+}
 
 
 type FaqType = {

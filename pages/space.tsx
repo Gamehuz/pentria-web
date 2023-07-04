@@ -1,5 +1,6 @@
 import FrontLayout from '@/layout/FrontLayout';
 import React, { ReactNode, useEffect, useState } from 'react';
+import { Metadata } from 'next'
 import router, { useRouter } from "next/router"
 import { useMutation, useQuery } from '@apollo/client';
 import { GET_SPACES, SEND_REVIEW, SINGLE_SPACE } from '@/apollo/spaces';
@@ -11,6 +12,12 @@ import { message } from 'antd';
 import { useDispatch } from 'react-redux';
 import { addCart } from '@/store/slices/cartSlice';
 import { calcAvgRating } from '@/util/helper';
+
+
+export const metadata: Metadata = {
+  title: 'https://pentria.app/',
+  description: 'Beat the queue with one-click ticket reservation. Enjoy seamless playtime at a recreation space near you.',
+}
 
 const Space = () => {
   const { query } = useRouter();
