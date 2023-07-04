@@ -28,6 +28,8 @@ export default function App({ Component, pageProps }: AppProps): JSX.Element {
       <Head>
         <meta name="viewport" content="initial-scale=1.0, width=device-width" />
         <title>Pentria</title>
+        <meta name="description" content="Beat the queue with one-click ticket reservation. Enjoy seamless playtime at a recreation space near you." />
+        <meta name="keywords" content="ticket, spaces," />
       </Head>
       <ApolloProvider client={client}>
         <Provider store={store}>

@@ -13,7 +13,7 @@ const josefin_Sans = Josefin_Sans({ subsets: ['latin'] })
 
  
 export const metadata: Metadata = {
-  title: 'https://pentria.app/',
+  title: 'Beat the queue with one-click ticket reservation. Enjoy seamless playtime at a recreation space near you.',
   description: 'Beat the queue with one-click ticket reservation. Enjoy seamless playtime at a recreation space near you.',
 }
 

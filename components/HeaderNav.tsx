@@ -82,7 +82,7 @@ const HeaderNav = () => {
           <Link href={"/enquiries"}>
             <p className='my-3'>Enquiries</p>
           </Link>
-          {!user ? <div>
+          {!user.firstName ? <div>
             <button onClick={() => setModal(true)} className='bg-white border text-sm my-3 border-primaryColor p-3 w-full px-4 text-primaryColor rounded-md'>
               Sign Up
             </button>

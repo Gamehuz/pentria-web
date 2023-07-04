@@ -15,7 +15,7 @@ import { calcAvgRating } from '@/util/helper';
 
 
 export const metadata: Metadata = {
-  title: 'https://pentria.app/',
+  title: 'Beat the queue with one-click ticket reservation. Enjoy seamless playtime at a recreation space near you.',
   description: 'Beat the queue with one-click ticket reservation. Enjoy seamless playtime at a recreation space near you.',
 }
 
