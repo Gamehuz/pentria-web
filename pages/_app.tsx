@@ -2,6 +2,7 @@ import '@/styles/globals.css'
 import { AppProps } from 'next/app'
 import Head from 'next/head'
 import { GoogleOAuthProvider } from '@react-oauth/google';
+import { FacebookProvider } from 'react-facebook';
 import { ApolloClient, InMemoryCache, ApolloProvider, gql } from '@apollo/client';
 import axios from 'axios';
 import { getCookie } from 'cookies-next';
@@ -36,7 +37,9 @@ export default function App({ Component, pageProps }: AppProps): JSX.Element {
         <Provider store={store}>
           <PersistGate loading={null} persistor={persistor}>
             <GoogleOAuthProvider clientId='1054832259017-7ud7lha28m8r3p9oa6fj6hsv0ndme7bb.apps.googleusercontent.com'>
-              <Component {...pageProps} />
+              <FacebookProvider appId="171352182602769">
+                <Component {...pageProps} />
+              </FacebookProvider>
             </GoogleOAuthProvider>
           </PersistGate>
         </Provider>

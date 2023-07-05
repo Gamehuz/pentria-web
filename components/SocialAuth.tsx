@@ -1,7 +1,7 @@
 import { SOCIAL_AUTH } from '@/apollo/auth';
 import { useMutation } from '@apollo/client';
 import { useGoogleLogin } from '@react-oauth/google';
-import FacebookLogin from 'react-facebook-login';
+import { useLogin } from 'react-facebook';
 import { message } from 'antd';
 import axios from 'axios';
 import { setCookie } from 'cookies-next';
@@ -20,6 +20,20 @@ function SocialAuth() {
     facebookId: '',
     accountType: ''
   })
+  const { login, status, isLoading, error} = useLogin();
+
+  async function handleLogin() {
+    try {
+      const response = await login({
+        scope: 'email',
+      });
+
+      console.log(response)
+      console.log(response.status);
+    } catch (error: any) {
+      console.log(error.message);
+    }
+  }
 
   const responseFacebook = (response: any) => {
     console.log(response);
@@ -107,18 +121,9 @@ function SocialAuth() {
                       </defs>
                     </svg>
                   </button>
-                  <FacebookLogin
-                    appId=" 171352182602769"
-                    autoLoad={true}
-                    fields="name,email,picture,first_name,last_name"
-                    callback={responseFacebook}
-                    textButton=''
-                    cssClass="flex justify-center py-2.5 border rounded-lg hover:bg-gray-50 duration-150 active:bg-gray-100 w-[120px]"
-                    icon={
-                    <>
+                  <button onClick={() => handleLogin() } className="flex justify-center py-2.5 border rounded-lg hover:bg-gray-50 duration-150 active:bg-gray-100 w-[120px]">
                     <img src="/images/facebook.png" className='w-6 h-6' alt="" />
-                    </>}
-                  />
+                  </button>
                   
       </div>
       <div className="relative top-5 pb-5">
