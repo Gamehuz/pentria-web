@@ -17,6 +17,17 @@ export const SIGNUP_USER = gql`
     }
   }
 `
+
+export const SOCIAL_AUTH = gql`
+  mutation($input: SignInput!) {
+    socialAuth(input: $input) {
+      _id
+      accountType
+      token
+    }
+  }
+`
+
 export const GET_USER = gql`
   query User{
     user {

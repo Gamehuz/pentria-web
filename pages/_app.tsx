@@ -1,6 +1,7 @@
 import '@/styles/globals.css'
 import { AppProps } from 'next/app'
 import Head from 'next/head'
+import { GoogleOAuthProvider } from '@react-oauth/google';
 import { ApolloClient, InMemoryCache, ApolloProvider, gql } from '@apollo/client';
 import axios from 'axios';
 import { getCookie } from 'cookies-next';
@@ -11,14 +12,14 @@ import { PersistGate } from 'redux-persist/integration/react';
 const token = getCookie('token')
 
 const client = new ApolloClient({
-  uri: 'https://pentria-apiv1-4w2bw.ondigitalocean.app/graphql',
+  uri: 'http://localhost:8000/graphql',
   cache: new InMemoryCache(),
   headers: {
     ...(token !== undefined ? { Authorization: `Bearer ${token}` } : {})
   },
 });
 
-axios.defaults.baseURL = 'https://pentria-apiv1-4w2bw.ondigitalocean.app/graphql';
+axios.defaults.baseURL = 'http://localhost:8000/graphql';
 axios.defaults.headers.common['Authorization'] = "Bearer" + token;
 
 export default function App({ Component, pageProps }: AppProps): JSX.Element {
@@ -34,7 +35,9 @@ export default function App({ Component, pageProps }: AppProps): JSX.Element {
       <ApolloProvider client={client}>
         <Provider store={store}>
           <PersistGate loading={null} persistor={persistor}>
-            <Component {...pageProps} />
+            <GoogleOAuthProvider clientId='1054832259017-7ud7lha28m8r3p9oa6fj6hsv0ndme7bb.apps.googleusercontent.com'>
+              <Component {...pageProps} />
+            </GoogleOAuthProvider>
           </PersistGate>
         </Provider>
       </ApolloProvider>
