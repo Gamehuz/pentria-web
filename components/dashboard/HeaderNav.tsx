@@ -12,7 +12,10 @@ const HeaderNav = ({ setToggle }: { setToggle: any }) => {
     <div className='py-5 fixed w-full z-20 bg-white flex justify-between lg:px-20 px-4 shadow'>
       <img src="/images/hamburger.png" className='w-8 h-8 cursor-pointer lg:hidden' onClick={() => setToggle()} alt="" />
       <Link href={"/"}>
-        <img src="/images/Pentria.svg" alt="" />
+        <div className='flex space-x-2'>
+          <img src="/images/Pentria.svg" alt="" /> 
+          <small className='beta'>Beta</small>
+        </div>
       </Link>
       {
         user.accountType === "VENDOR" ? <div className='flex justify-between w-24'>

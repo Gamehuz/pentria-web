@@ -16,7 +16,10 @@ const HeaderNav = () => {
     <div className='shadow'>
       <div className='sm:hidden lg:flex justify-between px-20 p-5 text-sm'>
         <Link href={"/"}>
-          <img src="/images/Pentria.svg" alt="" />
+          <div className='flex space-x-2'>
+            <img src="/images/Pentria.svg" alt="" /> 
+            <small className='beta'>Beta</small>
+          </div>
         </Link>
         <div className='flex w-96 my-auto justify-between text-primaryColor'>
           <Link href={"/explore"}>
@@ -65,6 +68,7 @@ const HeaderNav = () => {
       <div className='sm:flex justify-between lg:hidden p-3'>
         <Link href={"/"}>
           <img src="/images/Pentria.svg" alt="" />
+          <small className='beta'>Beta</small>
         </Link>
         <img src="/images/hamburger.png" className='w-8 h-8 cursor-pointer' onClick={() => setToggle(!toggle)} alt="" />
       </div>
