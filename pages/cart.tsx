@@ -7,7 +7,9 @@ import { clearCart, removeCart, addDate, addTickets, clearTickets } from '@/stor
 import { SINGLE_SPACE, DISCOUNT, CREATE_BOOKING } from '@/apollo/spaces';
 import { useQuery, useMutation } from '@apollo/client';
 import { selectUser } from '@/store/slices/userSlice';
-import { message } from 'antd';
+import { DatePicker, message } from 'antd';
+import MyDatePicker from '@/components/DatePicker';
+import TimePicker from '@/components/TimePicker';
 import { CHECKOUT_TOTAL } from '@/types';
 
 
@@ -167,9 +169,11 @@ const Cart = () => {
                   Remove
                 </button>
               </div>
-              <div className='flex mt-6 lg:w-[35%] justify-between'>
-                <input onChange={(e) => setDate(e.target.value, index)} value={item.date} type="date" className='p-3 border rounded-md ' />
-                <input type="time" onChange={(e) => setTime(e.target.value, index)} value={item.time} className='p-3 border rounded-md' />
+              <div className='lg:flex mt-6 justify-between'>
+                {/* <input onChange={(e) => setDate(e.target.value, index)} value={item.date} type="date" className='p-3 border rounded-md ' /> */}
+                <MyDatePicker onDayClick={(e:string) => setDate(e, index)} />
+                {/* <input type="time" onChange={(e) => setTime(e.target.value, index)} value={item.time} className='p-3 border rounded-md' /> */}
+                <TimePicker onTimeClick={(e:string) => setTime(e, index)} />
               </div>
               <div className='mt-5'>
                 <label htmlFor="">Number of tickets</label>
