@@ -1,6 +1,7 @@
 import { SOCIAL_AUTH } from '@/apollo/auth';
 import { useMutation } from '@apollo/client';
 import { useGoogleLogin } from '@react-oauth/google';
+import FacebookLogin from 'react-facebook-login';
 import { message } from 'antd';
 import axios from 'axios';
 import { setCookie } from 'cookies-next';
@@ -20,6 +21,9 @@ function SocialAuth() {
     accountType: ''
   })
 
+  const responseFacebook = (response: any) => {
+    console.log(response);
+  }
 
   const [social_login, { loading }] = useMutation(SOCIAL_AUTH, {
     variables: {
@@ -87,8 +91,8 @@ function SocialAuth() {
   return (
     <div>
       {contextHolder}
-      <div className="grid grid-cols-2 gap-x-2">
-                  <button onClick={() => callGoogle()} className="flex items-center justify-center py-2.5 border rounded-lg hover:bg-gray-50 duration-150 active:bg-gray-100">
+      <div className="grid grid-cols-2 place-items-center w-1/2 m-auto">
+                  <button onClick={() => callGoogle()} className="flex justify-center w-[120px] py-2.5 border rounded-lg hover:bg-gray-50 duration-150 active:bg-gray-100">
                     <svg className="w-5 h-5" viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg">
                       <g clipPath="url(#clip0_17_40)">
                         <path d="M47.532 24.5528C47.532 22.9214 47.3997 21.2811 47.1175 19.6761H24.48V28.9181H37.4434C36.9055 31.8988 35.177 34.5356 32.6461 36.2111V42.2078H40.3801C44.9217 38.0278 47.532 31.8547 47.532 24.5528Z" fill="#4285F4" />
@@ -103,9 +107,19 @@ function SocialAuth() {
                       </defs>
                     </svg>
                   </button>
-                  <button className="flex items-center justify-center py-2.5 border rounded-lg hover:bg-gray-50 duration-150 active:bg-gray-100">
+                  <FacebookLogin
+                    appId=" 171352182602769"
+                    autoLoad={true}
+                    fields="name,email,picture,first_name,last_name"
+                    callback={responseFacebook}
+                    textButton=''
+                    cssClass="flex justify-center py-2.5 border rounded-lg hover:bg-gray-50 duration-150 active:bg-gray-100 w-[120px]"
+                    icon={
+                    <>
                     <img src="/images/facebook.png" className='w-6 h-6' alt="" />
-                  </button>
+                    </>}
+                  />
+                  
       </div>
       <div className="relative top-5 pb-5">
         <span className="block w-full h-px bg-gray-300"></span>
