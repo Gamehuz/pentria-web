@@ -11,10 +11,10 @@ const Card = ({ space }: { space: any }) => {
         <img src={space.image[0]} className='rounded-t-md h-[300px] w-[500px]' alt="" />
         {/* <img src="/images/Featured.png" className='absolute top-20 -left-5' alt="" /> */}
         <div className='p-4'>
-          <div className='flex justify-between my-3'>
+          {/* <div className='flex justify-between my-3'>
             <h5 className='font-bold text-xl text-[#D78D06] my-auto'> {space.currency} {space.price}</h5>
             <img src="/images/favourite.png" alt="" />
-          </div>
+          </div> */}
           <p className='font-bold text-lg'>{space.name}</p>
           <p className='text-sm text-[#C4C4C4]'>{space.location}</p>
           <div className='flex justify-between my-3'>

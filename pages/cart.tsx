@@ -22,6 +22,7 @@ const Cart = () => {
   const [modal, setModal] = useState(false);
   const [space, setSpace] = useState<any>([])
   const [soecialRequest, setSpecialRequest] = useState('')
+  const [btnDisabled, setBtn] = useState(false)
   const [checkout, setCheckout] = useState<CHECKOUT_TOTAL>({
     initalAmount: 0,
     discountPercentage: 0,
@@ -112,6 +113,7 @@ const Cart = () => {
   })
 
   const getDiscount = async () => {
+    setBtn(true)
     dispatch(clearTickets([]))
     const values = cart.map(((item: any) => {
       const payload = {
@@ -131,8 +133,17 @@ const Cart = () => {
     }))
     
     await CalculateDiscount()
-    setModal(true)
   }
+
+
+  useEffect(() => {
+
+    if (checkout.total) {
+      setModal(true)
+      setBtn(false)
+    }
+
+  }, [checkout])
 
   return (
     <FrontLayout>
@@ -188,7 +199,7 @@ const Cart = () => {
           <textarea className='w-full h-40 rounded-md' onChange={(e) => setSpecialRequest(e.target.value)}></textarea>
         </div>
         <div className='pb-10'>
-          <button onClick={() => getDiscount()} className='float-right p-3 text-white rounded md bg-primaryColor'>Proceed to Checkout</button>
+          <button onClick={() => getDiscount()} disabled={btnDisabled} className='float-right p-3 text-white rounded md bg-primaryColor'>Proceed to Checkout</button>
         </div>
 
         <div>
