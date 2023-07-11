@@ -82,6 +82,7 @@ query space($spaceId: ID!) {
       image
       price
       name
+      timeUnit
       spaceId{
         _id
       }

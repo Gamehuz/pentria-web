@@ -1,138 +1,120 @@
 /* eslint-disable react/prop-types */
 import { useState } from "react";
+import { useDispatch } from 'react-redux';
+import { message } from 'antd';
 
-const TimePicker = ({ onTimeClick }) => {
+import { addStartTime, addEndTime, updateTotal, updateDuration } from "@/store/slices/cartSlice.js"
+
+const TimePicker = ({ activityId, duration, price, timeList }) => {
+  const dispatch = useDispatch();
+  const [messageApi, contextHolder] = message.useMessage();
+
   const [selectedTime, setSelectedTime] = useState(null);
-  const [timeOptions, setTimeOptions] = useState([
-    {
-      label: "09:00",
-      value: "09:00",
-    },
-    {
-      label: "09:30",
-      value: "09:30",
-    },
-    {
-      label: "10:00",
-      value: "10:00",
-    },
-    {
-      label: "10:30",
-      value: "10:30",
-    },
-    {
-      label: "11:00",
-      value: "11:00",
-    },
-    {
-      label: "11:30",
-      value: "11:30",
-    },
-    {
-      label: "12:00",
-      value: "12:00",
-    },
-    {
-      label: "12:30",
-      value: "12:30",
-    },
-    {
-      label: "13:00",
-      value: "13:00",
-    },
-    {
-      label: "13:30",
-      value: "13:30",
-    },
-    {
-      label: "14:00",
-      value: "14:00",
-    },
-    {
-      label: "14:30",
-      value: "14:30",
-    },
-    {
-      label: "15:00",
-      value: "15:00",
-    },
-    {
-      label: "15:30",
-      value: "15:30",
-    },
-    {
-      label: "16:00",
-      value: "16:00",
-    },
-    {
-      label: "16:30",
-      value: "16:30",
-    },
-    {
-      label: "17:00",
-      value: "17:00",
-    },
-    {
-      label: "17:30",
-      value: "17:30",
-    },
-    {
-      label: "18:00",
-      value: "18:00",
-    },
-    {
-      label: "18:30",
-      value: "18:30",
-    },
-    {
-      label: "19:00",
-      value: "19:00",
-    },
-    {
-      label: "19:30",
-      value: "19:30",
-    }
-  ]);
-
-  // useEffect(() => {
-  //   const currentDate = new Date();
-  //   const currentTime = new Date(
-  //     currentDate.getFullYear(),
-  //     currentDate.getMonth(),
-  //     currentDate.getDate(),
-  //     currentDate.getHours(),
-  //     currentDate.getMinutes()
-  //   );
-  //   const endTime = new Date(currentTime.getTime() + 6 * 60 * 60 * 1000);
-  //   const options = [];
-  //   let time = currentTime;
-  //   while (time < endTime) {
-  //     const label = time.toLocaleTimeString([], {
-  //       hour: "numeric",
-  //       minute: "2-digit",
-  //     });
-  //     options.push({
-  //       label,
-  //       value: label,
-  //       isPast: time < currentTime,
-  //     });
-  //     time.setTime(time.getTime() + 30 * 60 * 1000);
-  //   }
-  //   setTimeOptions(options);
-  // }, []);
+  const [startTime, setStartTime] = useState(null);
+  const [endTime, setEndTime] = useState(null)
 
   const handleTimeClick = (time) => {
     setSelectedTime(time);
-    if (onTimeClick) {
-      onTimeClick(time);
+    if (!startTime) {
+      setStartTime(time)
+      dispatch(addStartTime({ time, activityId }))
+    }else {
+      const [startHours, startMinutes] = startTime.split(':')
+      const [endHours, endMinutes] = time.split(':')
+
+      if (parseInt(startHours) > parseInt(endHours)) {
+        messageApi.open({
+          type: 'error',
+          content: 'Start time should be earlier',
+        });
+        return
+      }
+
+      setEndTime(time)
+      const increment = duration; // minutes
+
+      const startTimeInMinutes = parseInt(startHours, 10) * 60 + parseInt(startMinutes, 10);
+      const endTimeInMinutes = parseInt(endHours, 10) * 60 + parseInt(endMinutes, 10);
+
+      const timeDiffInMinutes = endTimeInMinutes - startTimeInMinutes;
+      const numIncrements = Math.floor(timeDiffInMinutes / increment);
+      // console.log(numIncrements)
+
+
+      const total = price * numIncrements
+      const durationVal = duration * numIncrements
+      dispatch(addEndTime({ time, activityId }))
+      dispatch(updateDuration({ durationVal, activityId }))
+      dispatch(updateTotal({ total, activityId }))
     }
   };
 
+  const cancleTime = () => {
+    setSelectedTime(null)
+    setStartTime(null)
+    setEndTime(null)
+  }
+
   return (
     <div className="lg:w-[500px]">
-      <p className="py-4 text-center">Start Time</p>
-      <div className='grid grid-cols-6 gap-2'>
-        {timeOptions.map(({ label, value }) => (
+      {contextHolder}
+      {
+        endTime ? '' : (
+          <>
+            <p className="text-center py-3">
+        {
+          startTime && !endTime ? 'Select end time' : 'Select start time'
+        }
+      </p>
+          </>
+        )
+      }
+
+      { startTime && (
+        <>
+          <div className="flex space-x-4 my-10">
+        <div className="flex space-x-4">
+          <p className="">Start</p>
+          <div
+            className={`${'py-1 px-3 cursor-pointer text-center text-white rounded-md bg-primaryColor'}` }
+          >
+            {startTime}
+          </div>
+        </div>
+        <div className="flex space-x-4">
+          {
+            endTime && (
+              <>
+                <p>End</p>
+          <div
+          className={`${'py-1 px-3 cursor-pointer text-center text-white rounded-md bg-primaryColor'}`}
+        >
+         {endTime}
+        </div>
+              </>
+            )
+          }
+          
+        </div>
+
+        <div
+          className={`${'py-1 px-3 cursor-pointer text-center text-white rounded-md bg-primaryColor'}`}
+          onClick={() => cancleTime()}
+        >
+         Cancel
+        </div>
+
+      </div>
+        </>
+      )
+
+      }
+      {
+        endTime ? '' : (
+          <>
+
+<div className='grid grid-cols-6 gap-2'>
+        {timeList.map(({ label, value }) => (
           <div
             key={value}
             className={`${'p-1 cursor-pointer text-center text-white rounded-md'} ${
@@ -144,6 +126,10 @@ const TimePicker = ({ onTimeClick }) => {
           </div>
         ))}
       </div>
+
+          </>
+        )
+      }
     </div>
   );
 };

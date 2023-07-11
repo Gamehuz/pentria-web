@@ -70,13 +70,14 @@ export const ADD_FAVOURITE = gql`
 `
 
 export const ADD_MENU = gql`
-  mutation AddActivity($spaceId: ID!, $image: String!, $name: String!, $currency: String!, $price: Float!, $duration: String!) {
-    addActivity(spaceId: $spaceId, image: $image, name: $name, currency: $currency, price: $price, duration: $duration) {
+  mutation AddActivity($spaceId: ID!, $image: String!, $name: String!, $currency: String!, $price: Float!, $timeUnit: TimeUnit!,  $duration: Int!) {
+    addActivity(spaceId: $spaceId, image: $image, name: $name, currency: $currency, price: $price, timeUnit: $timeUnit, duration: $duration) {
       _id
       image
       name
       currency
       price
+      timeUnit
       duration
     }
   }

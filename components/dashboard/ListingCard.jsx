@@ -14,7 +14,7 @@ const ListingCard = ({ list }) => {
   const [previewImages, setPreviewImages] = useState("");
   const selectFile = useRef();
   const [name, setName] = useState("")
-  const [duration, setDuration] = useState("")
+  const [duration, setDuration] = useState(0)
   const [time, setTime] = useState('')
   const [modal, setModal] = useState(false)
 
@@ -58,7 +58,8 @@ const ListingCard = ({ list }) => {
     variables: {
       spaceId: list._id,
       name: name,
-      duration: `${duration} ${time}`,
+      duration: parseInt(duration),
+      timeUnit: time,
       price: parseFloat(price),
       currency: currency,
       image: previewImages,
@@ -127,11 +128,10 @@ const ListingCard = ({ list }) => {
                       <input onChange={(e) => setPrice(e.target.value)} className='p-3 rounded-lg border w-[55%]' type="number" placeholder='Price' />
                   </div>
                   <div className='lg:flex justify-between space-x-4'>
-                    <input onChange={(e) => setDuration(e.target.value)} className='p-3 w-full rounded-lg border' type="number" placeholder='duration' />
+                    <input onChange={(e) => setDuration(e.target.value)} className='p-3 w-full rounded-lg border' type="number" placeholder='eg 30(min) 1(hr)' />
                     <select onChange={(e) => setTime(e.target.value)} className='p-3 rounded-lg border w-full sm:mb-4'>
-                     <option value="">Select time</option>
-                      <option value="min">min</option>
-                      <option value="hrs">hr</option>
+                     <option value="">Select time Unit</option>
+                      <option value="Mins">Mins</option>
                     </select>
                   </div>
                   <div className='my-4'>

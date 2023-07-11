@@ -23,8 +23,9 @@ export const cartSlice = createSlice({
     addTickets: (state, action) => {
       if (state.tickets.length === 0) {
         state.tickets.push(action.payload)
-      } else if (state.tickets[0].spaceId === action.payload.spaceId) {
-        state.tickets.push(action.payload)
+      } else if (state.tickets[0].activityId === action.payload.activityId) {
+        const ticketIndex = state.tickets.findIndex(item => item.activityId === action.payload.activityId)
+        state.tickets[ticketIndex] = action.payload
       } else {
         return
       }
@@ -35,13 +36,33 @@ export const cartSlice = createSlice({
     },
 
     addDate: (state, action) => {
-      state.value[action.payload.index].date = action.payload.date
+      const ticketIndex = state.tickets.findIndex(item => item.activityId === action.payload.activityId)
+      state.tickets[ticketIndex].date = action.payload.date
     },
-    addTime: (state, action) => {
-      state.value[action.payload.index].time = action.payload.time
+
+    addStartTime: (state, action) => {
+      const ticketIndex = state.tickets.findIndex(item => item.activityId === action.payload.activityId)
+      state.tickets[ticketIndex].startTime = action.payload.time
+    },
+
+    addEndTime: (state, action) => {
+      const ticketIndex = state.tickets.findIndex(item => item.activityId === action.payload.activityId)
+      state.tickets[ticketIndex].endTime = action.payload.time
+    },
+
+    updateDuration: (state, action) => {
+      const ticketIndex = state.tickets.findIndex(item => item.activityId === action.payload.activityId)
+      state.tickets[ticketIndex].duration = action.payload.durationVal
+    },
+
+    updateTotal: (state, action) => {
+      const ticketIndex = state.tickets.findIndex(item => item.activityId === action.payload.activityId)
+      state.tickets[ticketIndex].total = action.payload.total
     },
 
     setCount: (state, action) => {
+      const ticketIndex = state.tickets.findIndex(item => item.activityId === action.payload.activityId)
+      state.tickets[ticketIndex].count = action.payload.count
       state.value[action.payload.index].count = action.payload.count
     },
     
@@ -70,7 +91,10 @@ export const { removeCart } = cartSlice.actions;
 export const { clearCart } = cartSlice.actions;
 export const { clearTickets } = cartSlice.actions;
 export const { addDate } = cartSlice.actions;
-export const { addTime } = cartSlice.actions;
+export const { addStartTime } = cartSlice.actions;
+export const { addEndTime } = cartSlice.actions;
+export const { updateTotal } = cartSlice.actions;
+export const { updateDuration } = cartSlice.actions;
 export const { setCount } = cartSlice.actions;
 export const selectCart = (state) => state.cart.value;
 export const selectTickets = (state) => state.cart.tickets

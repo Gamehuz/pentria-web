@@ -105,7 +105,7 @@ function SocialAuth() {
   return (
     <div>
       {contextHolder}
-      <div className="grid grid-cols-2 place-items-center w-1/2 m-auto">
+      <div className="grid grid-cols-2 place-items-center lg:w-1/2 m-auto">
                   <button onClick={() => callGoogle()} className="flex justify-center w-[120px] py-2.5 border rounded-lg hover:bg-gray-50 duration-150 active:bg-gray-100">
                     <svg className="w-5 h-5" viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg">
                       <g clipPath="url(#clip0_17_40)">

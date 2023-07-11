@@ -10,7 +10,7 @@ import Link from 'next/link';
 import { ADD_FAVOURITE } from '@/apollo/guest';
 import { message } from 'antd';
 import { useDispatch } from 'react-redux';
-import { addCart } from '@/store/slices/cartSlice';
+import { addCart, addTickets } from '@/store/slices/cartSlice';
 import { calcAvgRating } from '@/util/helper';
 
 
@@ -67,8 +67,9 @@ const Space = () => {
     },
   })
 
-  const addToCart = (activity: { duration: React.ReactNode; name: React.ReactNode; currency: React.ReactNode; price: React.ReactNode; image: string | undefined; }) => {
-    dispatch(addCart({ ...activity, count: 1, spaceId: query.page, date: "", time: "" }))
+  const addToCart = (activity: { duration: React.ReactNode; name: React.ReactNode; timeUnit: string, _id: string, currency: React.ReactNode; price: React.ReactNode; image: string | undefined; }) => {
+    dispatch(addCart({ ...activity, count: 1, spaceId: query.page, date: "",}))
+    dispatch(addTickets({activityId: activity._id, name: activity.name, count: 1, spaceId: query.page, timeUnit: activity.timeUnit, price: activity.price, duration: activity.duration }))
     messageApi.open({
       type: 'success',
       content: 'Added to cart',
@@ -187,13 +188,15 @@ const Space = () => {
                 space.activities.map((activity: {
                   duration: ReactNode;
                   name: ReactNode;
+                  timeUnit: string;
+                  _id: string,
                   currency: ReactNode;
                   price: ReactNode; image: string | undefined;
                 }, index: React.Key | null | undefined,) => (
                   <div key={index} className='flex justify-between'>
                     <img className='w-[40%] h-32' src={activity.image} alt="" />
                     <div className='w-1/2 my-auto'>
-                      <p className='text-[#D78D06] font-bold'>{activity.currency} {activity.price} / <span className='text-xs'>{activity.duration}</span></p>
+                      <p className='text-[#D78D06] font-bold'>{activity.currency} {activity.price} / <span className='text-xs'>{activity.duration} {activity.timeUnit}</span></p>
                       <h4 className='font-bold my-2'>{activity.name}</h4>
                       <button onClick={() => addToCart(activity)} className='p-3 bg-primaryColor text-white rounded-md'>Add to cart</button>
                     </div>

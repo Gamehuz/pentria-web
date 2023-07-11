@@ -1,5 +1,6 @@
 import { Table } from 'flowbite-react';
 import { useRouter } from 'next/router'
+import Link from 'next/link';
 import { GET_HISTORY } from '@/apollo/guest';
 import VendorLayout from '@/layout/VendorLayout';
 import { useQuery } from '@apollo/client';
@@ -73,6 +74,9 @@ const History = () => {
                 <Table.HeadCell>
                   Status
                 </Table.HeadCell>
+                <Table.HeadCell>
+                  Action
+                </Table.HeadCell>
                 {/* <Table.HeadCell>
                   Date
                 </Table.HeadCell> */}
@@ -95,6 +99,11 @@ const History = () => {
                     </Table.Cell>
                     <Table.Cell>
                       {list.status}
+                    </Table.Cell>
+                    <Table.Cell>
+                      <Link href={`/receipt?reference=${list.tx_ref}`}>
+                        View
+                      </Link>
                     </Table.Cell>
                   </Table.Row>
                 </>

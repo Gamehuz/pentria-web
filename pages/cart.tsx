@@ -1,13 +1,13 @@
 import FrontLayout from '@/layout/FrontLayout';
 import React, { ReactNode, useEffect, useState } from 'react';
 import { useSelector } from 'react-redux';
-import { addTime, selectCart, setCount, selectTickets } from "@/store/slices/cartSlice.js"
+import { selectCart, setCount, selectTickets } from "@/store/slices/cartSlice.js"
 import { useDispatch } from 'react-redux';
 import { clearCart, removeCart, addDate, addTickets, clearTickets } from '@/store/slices/cartSlice';
 import { SINGLE_SPACE, DISCOUNT, CREATE_BOOKING } from '@/apollo/spaces';
 import { useQuery, useMutation } from '@apollo/client';
 import { selectUser } from '@/store/slices/userSlice';
-import { DatePicker, message } from 'antd';
+import { message } from 'antd';
 import MyDatePicker from '@/components/DatePicker';
 import TimePicker from '@/components/TimePicker';
 import { CHECKOUT_TOTAL } from '@/types';
@@ -28,25 +28,61 @@ const Cart = () => {
     discountPercentage: 0,
     discountAmount: 0,
     total: 0,
-})
+  })
+
   const [messageApi, contextHolder] = message.useMessage();
+
+
   const clear = () => {
     dispatch(clearCart([]))
+    dispatch(clearTickets([]))
   }
   const remove = (num: React.Key | null | undefined) => {
     dispatch(removeCart(num))
   }
 
-  const setDate = (date: string, index: any) => {
-    dispatch(addDate({ date, index }))
+  const setDate = (date: string, activityId: any) => {
+    dispatch(addDate({ date, activityId }))
   }
 
-  const setTime = (time: string, index: any) => {
-    dispatch(addTime({ time, index }))
+  const setCounter = (count: string, index:any, activityId: any) => {
+    dispatch(setCount({ count, index, activityId }))
   }
 
-  const setCounter = (count: string, index: any) => {
-    dispatch(setCount({ count, index }))
+  const generateTimeArray = (duration:any) => {
+    const startTime = '9:00';
+    const timeArray = [{
+      label: "09:00",
+      value: "09:00",
+    },]
+
+    let lengthOfLoop = 2
+    if (duration === 15) {
+      lengthOfLoop = 45
+    } else if (duration === 30) {
+      lengthOfLoop = 23
+    }
+  
+    for (let i = 1; i < lengthOfLoop; i++) {
+      const previousTime = startTime;
+      const [hours, minutes] = previousTime.split(':');
+      let newHours = parseInt(hours, 10);
+      let newMinutes = parseInt(minutes, 10) + (i * duration);
+    if (newMinutes >= 60) {
+      newHours += Math.floor(newMinutes / 60);
+      newMinutes %= 60;
+    }
+
+    const formattedTime = {
+      label: `${String(newHours).padStart(2, '0')}:${String(newMinutes).padStart(2, '0')}`,
+      value: `${String(newHours).padStart(2, '0')}:${String(newMinutes).padStart(2, '0')}`
+    };
+
+      // console.log(formattedTime)
+      timeArray.push(formattedTime);
+    }
+  
+    return timeArray;
   }
 
   const [CalculateDiscount, { loading }] = useMutation(DISCOUNT, {
@@ -72,6 +108,7 @@ const Cart = () => {
         type: 'error',
         content: error.message,
       });
+      setBtn(false)
     }
   })
 
@@ -98,6 +135,7 @@ const Cart = () => {
         type: 'error',
         content: error.message,
       });
+      setBtn(false)
     }
   })
 
@@ -114,23 +152,6 @@ const Cart = () => {
 
   const getDiscount = async () => {
     setBtn(true)
-    dispatch(clearTickets([]))
-    const values = cart.map(((item: any) => {
-      const payload = {
-        activityId: item._id,
-        count: parseInt(item.count),
-        date: item.date,
-        duration: item.duration,
-        name: item.name,
-        price: item.price,
-        spaceId: item.spaceId,
-        time: item.time,
-      }
-
-      dispatch(addTickets(payload))
-
-      return payload
-    }))
     
     await CalculateDiscount()
   }
@@ -159,7 +180,7 @@ const Cart = () => {
             price: ReactNode;
             duration: ReactNode;
             counters: number;
-            time: string;
+            timeUnit: string;
             date: string;
             _id: string;
             name: ReactNode; image: string | undefined;
@@ -169,10 +190,11 @@ const Cart = () => {
                 <div className='flex'>
                   <img src={item.image} className='w-[40%] rounded-lg' alt="" />
                   <div className='my-auto ml-6'>
-                    <p className='text-[#D78D06] font-bold'>{item.currency} {item.price} / <span className='text-xs'>{item.duration}</span></p>
+                    <p className='text-[#D78D06] font-bold'>{item.currency} {item.price} / <span className='text-xs'>{item.duration}{item.timeUnit.toLowerCase()}</span></p>
                     <p className='font-bold text-xl'>{space.name}</p>
                     <p className='text-xs text-gray-500'>{space.location}</p>
                     <h1 className='text-lg font-bold my-3'>{item.name}</h1>
+                    {/* <h1 className='text-lg font-bold my-3'>{item.timeUnit}</h1> */}
                   </div>
                 </div>
                 <button onClick={() => remove(index)} className='p-3 sm:my-3 border text-primaryColor px-6 my-auto rounded-md border-primaryColor flex'>
@@ -182,14 +204,15 @@ const Cart = () => {
               </div>
               <div className='lg:flex mt-6 justify-between'>
                 {/* <input onChange={(e) => setDate(e.target.value, index)} value={item.date} type="date" className='p-3 border rounded-md ' /> */}
-                <MyDatePicker onDayClick={(e:string) => setDate(e, index)} />
+                <MyDatePicker onDayClick={(e:string) => setDate(e, item._id)} />
                 {/* <input type="time" onChange={(e) => setTime(e.target.value, index)} value={item.time} className='p-3 border rounded-md' /> */}
-                <TimePicker onTimeClick={(e:string) => setTime(e, index)} />
+
+                <TimePicker activityId={item._id} duration={item.duration} price={item.price} timeList={generateTimeArray(item.duration)} />
               </div>
               <div className='mt-5'>
                 <label htmlFor="">Number of tickets</label>
                 <br />
-                <input value={item.count} onChange={(e) => setCounter(e.target.value, index)} className='p-3 border rounded-md w-[14%]' type="number" />
+                <input value={item.count} onChange={(e) => setCounter(e.target.value, index, item._id)} className='p-3 border rounded-md w-[14%]' type="number" />
               </div>
             </div>
           ))
@@ -244,14 +267,14 @@ const Cart = () => {
                         </tr>
                       </thead>
                       <tbody>
-                        {cart.map((cartItem: any, index: number) =>
+                        {tickets.map((ticketsItem: any, index: number) =>
                           <tr key={index}>
                             <td>{index + 1}</td>
-                            <td>{cartItem.name}</td>
-                            <td>{cartItem.count}</td>
-                            <td>{cartItem.date}</td>
-                            <td>{cartItem.time}</td>
-                            <td>{cartItem.duration}</td>
+                            <td>{ticketsItem.name}</td>
+                            <td>{ticketsItem.count}</td>
+                            <td>{ticketsItem.date}</td>
+                            <td>{ticketsItem.startTime} - {ticketsItem.endTime}</td>
+                            <td>{ticketsItem.duration} {ticketsItem.timeUnit.toLowerCase()}</td>
                           </tr>
                         )}
                       </tbody>
