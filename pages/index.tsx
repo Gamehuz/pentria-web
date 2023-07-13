@@ -74,7 +74,7 @@ export default function Home() {
                 </div>
               </Link>
             </div>
-            <div className='flex justify-between flex-wrap'>
+            <div className='flex lg:space-x-14 flex-wrap'>
               {
                 exploreList.slice(0, 3).map((item, idx) => (
                   <Card space={item} key={idx} />

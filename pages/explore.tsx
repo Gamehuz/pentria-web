@@ -154,7 +154,7 @@ const Explore = () => {
                 <button className="bg-primaryColor px-6 py-3 rounded-md text-sm sm:w-full text-white" onClick={() => clearFilter()}>Clear</button>
               </div>
             </div>
-            <div className='flex flex-wrap mt-6 space-x-14'>
+            <div className='flex flex-wrap mt-6 lg:space-x-14'>
               {
                 listing.map((space: any, index: React.Key | null | undefined) => (
                   <Card space={space} key={index} />
