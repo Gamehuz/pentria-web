@@ -59,9 +59,6 @@ const Signup = () => {
         lastName,
         email,
         phone,
-        address,
-        city,
-        state,
         password,
         ...(query.page === "vendor" && {
           bName,
@@ -154,7 +151,7 @@ const Signup = () => {
                 <div className='lg:flex justify-between'>
                   <div className='lg:w-[45%]'>
                     <label className="font-medium">
-                      First Name
+                      First name
                     </label>
                     <input
                       type="text"
@@ -165,7 +162,7 @@ const Signup = () => {
                   </div>
                   <div className='lg:w-[45%]'>
                     <label className="font-medium">
-                      Last Name
+                      Last name
                     </label>
                     <input
                       type="text"
@@ -199,7 +196,7 @@ const Signup = () => {
                     />
                   </div>
                 </div>
-                <div>
+                {/* <div>
                   <label className="font-medium">
                     Address
                   </label>
@@ -210,7 +207,7 @@ const Signup = () => {
                     onChange={(e) => setAddress(e.target.value)}
                   />
                 </div>
-               <States changeState={getState}  changeCity={changeCity}/>
+               <States changeState={getState}  changeCity={changeCity}/> */}
                 <div className='lg:flex justify-between'>
                   <div className='lg:w-[45%]'>
                     <label className="font-medium">

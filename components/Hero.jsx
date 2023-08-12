@@ -36,9 +36,9 @@ const Hero = () => {
       <div className='lg:flex justify-between'>
         <div>
           <div className='text-primaryColor text-[48px] sm:text-center sm:uppercase font-extrabold ml-10'>
-            <h1 >Enter the </h1>
+            <h1 >Book Your</h1>
             <div className="md:flex">
-              <span className="circle-play h-[115px] w-[300px]  text-center"> {'PLAY >>'} </span>
+              <span className="circle-play h-[115px] w-[300px]  text-center"> {'Space >>'} </span>
               <img className="hidden lg:block lg:relative top-[190px] lg:-top-5 left-[30px] lg:left-[-340px] w-[300px]" src="/images/play.png" alt="" />
             </div>
           </div>
