@@ -40,6 +40,21 @@ export interface Activity {
   price:    number;
 }
 
+export interface ITicket {
+  _id: string;
+  spaceId: string;
+  activityId: string;
+  name: string;
+  date: string;
+  duration: string;
+  count: number;
+  price: number;
+  total: number;
+  startTime: string;
+  endTime: string;
+}
+
+
 export interface Author {
   _id:         string;
   accountType: string;

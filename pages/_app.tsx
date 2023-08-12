@@ -13,14 +13,14 @@ import { PersistGate } from 'redux-persist/integration/react';
 const token = getCookie('token')
 
 const client = new ApolloClient({
-  uri: 'https://pentria-apiv1-4w2bw.ondigitalocean.app/graphql',
+  uri: 'http://localhost:8000/graphql',
   cache: new InMemoryCache(),
   headers: {
     ...(token !== undefined ? { Authorization: `Bearer ${token}` } : {})
   },
 });
 
-axios.defaults.baseURL = 'https://pentria-apiv1-4w2bw.ondigitalocean.app/graphql';
+axios.defaults.baseURL = 'http://localhost:8000/graphql';
 axios.defaults.headers.common['Authorization'] = "Bearer" + token;
 
 export default function App({ Component, pageProps }: AppProps): JSX.Element {

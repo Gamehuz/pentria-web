@@ -7,7 +7,7 @@ import QRCode from "react-qr-code";
 import { GET_RECEIPT } from '@/apollo/spaces';
 
 import FrontLayout from '@/layout/FrontLayout';
-import { Activity } from '@/types';
+import { Activity, ITicket } from '@/types';
 
 function Receipt() {
   const { query } = useRouter();
@@ -67,7 +67,7 @@ function Receipt() {
             </Table.Head>
             <Table.Body className="divide-y">
 
-              { booking.tickets.map((ticket: Activity) => (
+              { booking.tickets.map((ticket: ITicket) => (
                 <>
                   <Table.Row key={ticket._id}>
                     <Table.Cell>
@@ -83,7 +83,7 @@ function Receipt() {
                       {ticket.price}
                     </Table.Cell>
                     <Table.Cell>
-                      {ticket.duration}
+                      {ticket.startTime} - {ticket.endTime}
                     </Table.Cell>
                   </Table.Row>
                 </>

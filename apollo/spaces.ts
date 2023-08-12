@@ -159,13 +159,14 @@ query($txRef: String) {
     }
     specialRequest
     tickets {
-      name
       _id
-      count
+      name
       date
+      startTime
+      endTime
       duration
+      count
       price
-      time
     }
   }
 }
