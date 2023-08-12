@@ -113,8 +113,12 @@ const History = () => {
         
               </Table.Body>
             </Table>
-          </div> : <div className='text-center text-3xl mt-28'>
-            There is no History</div>}
+          </div> : <div className='text-center text-xl mt-28 w-1/2 m-auto'>
+          <p>Welcome to your dashboard! Begin your journey by clicking the "Explore" button below to initiate the process of booking spaces and events. Your adventure awaits!</p>
+          <button onClick={() => router.push('/explore')} className='p-3 mt-4 px-10 border border-primaryColor sm:w-full sm:mt-4 text-primaryColor rounded-md'>
+            Explore
+          </button>
+          </div>}
         </div>}
       </main>
     </VendorLayout>
