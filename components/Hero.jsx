@@ -93,7 +93,7 @@ const Hero = () => {
             value={filter.facility}
             onChange={(e) => handleFilter(e)}
           >
-            <option hidden>Faciity</option>
+            <option hidden>Facility</option>
               { facilityList.map(item => 
               <option key={item} value={item}>
                 {item}
@@ -103,7 +103,7 @@ const Hero = () => {
           </select>
         </div>
         <div className="lg:w-44 my-auto">
-          <button className="bg-primaryColor px-6 py-3 rounded-md text-sm sm:w-full text-white" onClick={() => explore()}>Get Tickets</button>
+          <button className="bg-primaryColor px-6 py-3 rounded-md text-sm sm:w-full text-white" onClick={() => explore()}>Get Spaces</button>
         </div>
       </div>
     </div>

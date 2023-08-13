@@ -6,5 +6,5 @@ export const facilityList = [
   'Sports Field',
   'Lodging',
   'Arts/Music',
-  'Other'
+  'Event/Hall'
 ]
