@@ -54,6 +54,9 @@ export default function Home() {
   const [exploreList, setExploreList] = useState([])
 
   useQuery(GET_SPACES, {
+    variables: {
+      approved: true
+    },
     onCompleted: (data) => {
       console.log(data);
       setExploreList(data.spaces)

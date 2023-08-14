@@ -20,7 +20,10 @@ const Explore = () => {
   const [filterType, setFilterType] = useState<any>("")
   const [priceRange, setRange] = useState<number>(0)
 
-  useQuery(GET_SPACES, {
+  useQuery(GET_SPACES,  {
+    variables: {
+      approved: true
+    },
     onCompleted: (data) => {
       setListing(data.spaces)
       setBackupListing(data.spaces)

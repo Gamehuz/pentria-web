@@ -1,46 +1,51 @@
 import { gql } from '@apollo/client';
 
 export const GET_SPACES = gql`
-query spaces {
-  spaces {
+query Spaces($page: Int, $limit: Int, $approved: Boolean, $filter: String) {
+  spaces(page: $page, limit: $limit, approved: $approved, filter: $filter) {
     _id
-    ac
+    name
+    image
+    location
+    facilityType
+    category
     approved
     beds
-    category
-    cleaningSupplies
-    createdAt
-    currency
-    description
-    facilityType
-    image
-    kidFriendly
-    kitchen
-    location
-    name
-    outdoorSpace
-    parking
-    petFriendly
-    policies
+    restRoom
     pool
-    price
+    outdoorSpace
+    kitchen
+    ac
+    videoGames
+    petFriendly
+    cleaningSupplies
+    kidFriendly
     workspace
     wifi
-    videoGames
+    parking
+    description
+    policies
+    activities {
+      _id
+      image
+      name
+      currency
+      price
+      timeUnit
+      duration
+    }
+    createdAt
     updatedAt
-    __typename
+    author {
+      _id
+    }
     reviews {
       _id
-      comment
-      createdAt
-      rating
       user
-    }
-    author {
-      firstName
-      lastName
-      _id
-      email
+      comment
+      rating
+      createdAt
+      updatedAt
     }
   }
 }
