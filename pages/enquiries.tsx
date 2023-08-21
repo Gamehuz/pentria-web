@@ -1,12 +1,13 @@
 import FaqsCard from '@/components/FaqsCard';
 import FrontLayout from '@/layout/FrontLayout';
-import React from 'react';
+import { useState } from 'react';
+import { message } from 'antd';
 type FaqType = {
   q: string;
   a: string;
 }[];
 
-const enquiries = () => {
+const Enquiries = () => {
   const faqsList: FaqType = [
     {
       q: "How can I reserve playtime in one-click?",
@@ -34,8 +35,46 @@ const enquiries = () => {
     },
   ]
 
+  const [messageApi, contextHolder] = message.useMessage();
+  const [name, setName] = useState('')
+  const [email, setEmail] = useState('')
+  const [subject, setSubject] = useState('')
+  const [msg, setMsg] = useState('')
+  const [loading, setLoading] = useState(false)
+
+  const sendMail = async (e:any) => {
+    setLoading(true)
+    e.preventDefault()
+    if (!name.length || !email.length || !subject.length || !msg.length) {
+      messageApi.open({
+        type: 'error',
+        content: 'Fill the form',
+      });
+      setLoading(false)
+      return
+    }
+
+    const payload = {
+      name,
+      email,
+      subject: `Pentria - ${subject}`,
+      message: msg
+    }
+
+    const response = await fetch('https://formsubmit.co/ajax/gamehauzltd@gmail.com', {
+        method: 'POST', // *GET, POST, PUT, DELETE, etc.
+        headers: {
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify(payload) // body data type must match "Content-Type" header
+      });
+      console.log(response)
+      setLoading(false)
+  }
+
   return (
     <FrontLayout>
+      {contextHolder}
       <main className='lg:p-20 sm:px-4 sm:py-10'>
         <div className='lg:flex justify-between'>
           <div className='lg:w-1/2'>
@@ -48,12 +87,41 @@ const enquiries = () => {
               <img src="/images/email_major.png" className='w-8 h-8' alt="" />
               <p className='my-auto ml-4'>hello@gamehauz.com</p>
             </div>
-            <div className='flex my-6'>
-              <img src="/images/location_major.png" className='w-8 h-8' alt="" />
-              <p className='my-auto ml-4'>2 Okuta Ave., 500102, Port Harcourt, Nigeria </p>
-            </div>
           </div>
-          <img src="/images/contact.png" className='lg:w-[40%]' alt="" />
+          <div className='lg:w-1/2 text-primaryColor'>
+            <h1 className='text-[30px] font-bold'>Send us a Message</h1>
+            <p className='text-[20px]'>Please fill in the form below to get in touch with us.</p>
+            <form>
+            <input
+                type="text"
+                placeholder='Full name'
+                required
+                className="w-full mt-2 px-3 py-2 text-gray-500 bg-transparent outline-none border focus:border-indigo-600 shadow-sm rounded-lg"
+                onChange={(e) => setName(e.target.value)}
+              />
+              <br />
+              <input
+                type="email"
+                placeholder='Email Address'
+                required
+                className="w-full mt-2 px-3 py-2 text-gray-500 bg-transparent outline-none border focus:border-indigo-600 shadow-sm rounded-lg"
+                onChange={(e) => setEmail(e.target.value)}
+              />
+              <br />
+              <input
+                type="text"
+                placeholder='Subject'
+                required
+                className="w-full mt-2 px-3 py-2 text-gray-500 bg-transparent outline-none border focus:border-indigo-600 shadow-sm rounded-lg"
+                onChange={(e) => setSubject(e.target.value)}
+              />
+              <br />
+              <textarea className="w-full mt-2 px-3 py-2 text-gray-500 bg-transparent outline-none border focus:border-indigo-600 shadow-sm rounded-lg" name="message" id="1" cols={10} rows={10} placeholder='Message......' onChange={(e) => setMsg(e.target.value)} ></textarea>
+
+              <button disabled={loading} onClick={(e) => sendMail(e)} className='w-full text-white bg-primaryColor rounded-lg py-4'>{loading ? 'Sending....' : 'Send'}</button>
+            </form>
+          </div>
+          
         </div>
         <div className='mt-20'>
           <h1 className='text-center text-4xl font-bold text-primaryColor'>Frequently Asked Questions (FAQs)</h1>
@@ -76,4 +144,4 @@ const enquiries = () => {
   );
 };
 
-export default enquiries;
+export default Enquiries;

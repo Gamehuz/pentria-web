@@ -52,6 +52,11 @@ const about = () => {
             </div>
             <div className='lg:w-[20%]  w-[40%] text-center'>
               <img className='h-32 w-32 m-auto' src="https://cdn-icons-png.flaticon.com/512/1946/1946429.png" alt="" />
+              <h3 className='font-bold mt-4 text-xl'>AGI, Mayflowers K</h3>
+              <p className='text-sm'>CFO</p>
+            </div>
+            <div className='lg:w-[20%]  w-[40%] text-center'>
+              <img className='h-32 w-32 m-auto' src="https://cdn-icons-png.flaticon.com/512/1946/1946429.png" alt="" />
               <h3 className='font-bold mt-4 text-xl'>Kingsley Sunday</h3>
               <p className='text-sm'>Product designer</p>
             </div>
