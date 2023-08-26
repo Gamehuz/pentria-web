@@ -8,7 +8,8 @@ import { deleteCookie } from 'cookies-next';
 import Link from 'next/link';
 import SocialAuth from '@/components/SocialAuth';
 
-const Login = () => {
+function Reset() {
+
   const [email, setEmail] = useState("")
   const [password, setPassword] = useState("")
   const [messageApi, contextHolder] = message.useMessage();
@@ -53,14 +54,7 @@ const Login = () => {
     <>
       {contextHolder}
       <main>
-        <div className='lg:flex'>
-          <div className='sm:hidden h-screen w-1/2 p-10 bg-primaryColor text-white'>
-          <Link className='text-white' href={"/"}>{'<'} Return to Homepage</Link>
-            <h1 className=' text-4xl my-4'>Hello, Welcome Back </h1>
-            <p>Login with your correct details to enjoy
-              our premium services</p>
-            <img src="/images/auth.png" className='my-10' alt="" />
-          </div>
+        <div className='lg:flex justify-center'>
 
           <div className='lg:mx-20 lg:w-1/2 my-auto'>
             <div className='text-center my-4'>
@@ -69,7 +63,6 @@ const Login = () => {
             </div>
             <div className="w-full space-y-6 text-gray-600 sm:max-w-md">
               <div className="p-4 py-6 space-y-8 sm:p-6 sm:rounded-lg">
-                <SocialAuth />
                 <div>
                   <label className="font-medium">
                     Email
@@ -108,9 +101,6 @@ const Login = () => {
 
                     }
                   </div>
-                  <div className='mt-3'>
-                    <Link className='text-primaryColor text-sm' href={"/auth/forgotten"}>Forgot password</Link>
-                  </div>
                 </div>
                 <button
                   className="w-full px-4 py-2 text-white font-medium bg-primaryColor rounded-lg"
@@ -128,7 +118,7 @@ const Login = () => {
         </div>
       </main>
     </>
-  );
-};
+  )
+}
 
-export default Login;
+export default Reset

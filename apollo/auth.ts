@@ -28,6 +28,18 @@ export const SOCIAL_AUTH = gql`
   }
 `
 
+export const REQUEST_REST = gql`
+  mutation ResetPasswordRequest($email: String!) {
+    resetPasswordRequest(email: $email)
+  }
+`
+
+export const RESET_PASSWORD = gql`
+  mutation ResetPassword($otp: Float!, $password: String!) {
+    resetPassword(otp: $otp, password: $password)
+  }
+`
+
 export const GET_USER = gql`
   query User{
     user {
