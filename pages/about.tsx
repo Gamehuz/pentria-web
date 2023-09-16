@@ -36,27 +36,27 @@ const about = () => {
           <h1 className='text-center text-primaryColor font-bold text-3xl mb-10'>Meet the Team</h1>
           <div className='flex flex-wrap justify-between'>
             <div className='lg:w-[20%]  w-[40%] text-center'>
-              <img className='h-32 w-32 m-auto' src="https://cdn-icons-png.flaticon.com/512/1946/1946429.png" alt="" />
+              <img className='h-32 w-32 m-auto rounded-md' src="/images/chidi.png" alt="" />
               <h3 className='font-bold mt-4 text-xl'>Chidi Nkwocha</h3>
               <p className='text-sm'>CEO/Product lead</p>
             </div>
             <div className='lg:w-[20%] w-[40%] text-center'>
-              <img className='h-32 w-32 m-auto' src="https://cdn-icons-png.flaticon.com/512/1946/1946429.png" alt="" />
+              <img className='h-32 w-32 m-auto rounded-md' src="/images/fab.png" alt="" />
               <h3 className='font-bold mt-4 text-xl'>Fabian Ohaeri </h3>
               <p className='text-sm'>COO/Marketing lead</p>
             </div>
             <div className='lg:w-[20%]  w-[40%] text-center'>
-              <img className='h-32 w-32 m-auto' src="https://cdn-icons-png.flaticon.com/512/1946/1946429.png" alt="" />
+              <img className='h-32 w-32 m-auto rounded-md' src="/images/adams.png" alt="" />
               <h3 className='font-bold mt-4 text-xl'>Great Adams</h3>
               <p className='text-sm'>CTO/Full-stack developer </p>
             </div>
             <div className='lg:w-[20%]  w-[40%] text-center'>
-              <img className='h-32 w-32 m-auto' src="https://cdn-icons-png.flaticon.com/512/1946/1946429.png" alt="" />
+              <img className='h-32 w-32 m-auto rounded-md' src="/images/agi.png" alt="" />
               <h3 className='font-bold mt-4 text-xl'>AGI, Mayflowers K</h3>
               <p className='text-sm'>CFO</p>
             </div>
             <div className='lg:w-[20%]  w-[40%] text-center'>
-              <img className='h-32 w-32 m-auto' src="https://cdn-icons-png.flaticon.com/512/1946/1946429.png" alt="" />
+              <img className='h-32 w-32 m-auto rounded-md' src="/images/king.png" alt="" />
               <h3 className='font-bold mt-4 text-xl'>Kingsley Sunday</h3>
               <p className='text-sm'>Product designer</p>
             </div>
