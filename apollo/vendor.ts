@@ -69,6 +69,7 @@ export const EARNINGS = gql`
       amount
       bookingId
       status
+      tx_ref
       customer
       payment
       currency

@@ -128,6 +128,10 @@ const Space = () => {
                 <p>{space.beds}</p>
               </div>
               <div>
+                <p>Rest room</p>
+                <p>{space.restRoom ? 'Yes' : 'No'}</p>
+              </div>
+              <div>
                 <p>Pool</p>
                 <p>{space.pool ? 'Yes' : 'No'}</p>
               </div>
@@ -194,7 +198,7 @@ const Space = () => {
                   price: ReactNode; image: string | undefined;
                 }, index: React.Key | null | undefined,) => (
                   <div key={index} className='flex justify-between'>
-                    <img className='w-[40%] h-32' src={activity.image} alt="" />
+                    <img className='w-[40%] h-32 rounded-md' src={activity.image} alt="" />
                     <div className='w-1/2 my-auto'>
                       <p className='text-[#D78D06] font-bold'>{activity.currency} {activity.price} / <span className='text-xs'>{activity.duration} {activity.timeUnit}</span></p>
                       <h4 className='font-bold my-2'>{activity.name}</h4>

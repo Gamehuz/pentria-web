@@ -8,8 +8,12 @@ const FooterNav = () => {
         <div>
           <img src="/images/Pentria.png" alt="" />
           <div className='flex justify-between w-20 mt-6'>
-            <img src="/images/link.png" alt="" />
-            <img src="/images/twitter.svg" alt="" />
+            <a href="https://www.linkedin.com/company/recspacesapp/" target="_blank" rel="noopener noreferrer">
+              <img src="/images/link.png" alt="" />
+            </a>
+            <a href="https://twitter.com/pentriaapp" target="_blank" rel="noopener noreferrer">
+              <img src="/images/twitter.svg" alt="" />
+            </a>
           </div>
         </div>
         <div>

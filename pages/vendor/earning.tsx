@@ -7,6 +7,7 @@ import { useSelector } from 'react-redux';
 import { selectUser } from "@/store/slices/userSlice.js"
 import { message } from 'antd';
 import Withdraw from '@/components/dashboard/Withdraw';
+import Link from 'next/link';
 
 const Earning = () => {
   const [messageApi, contextHolder] = message.useMessage();
@@ -116,6 +117,9 @@ const Earning = () => {
                   payment
                 </Table.HeadCell>
                 <Table.HeadCell>
+                  View
+                </Table.HeadCell>
+                <Table.HeadCell>
                   Action
                 </Table.HeadCell>
               </Table.Head>
@@ -134,6 +138,14 @@ const Earning = () => {
                     </Table.Cell>
                     <Table.Cell>
                       {earning.payment}
+                    </Table.Cell>
+                    <Table.Cell>
+                      {earning.payment}
+                    </Table.Cell>
+                    <Table.Cell>
+                      <Link href={`/receipt?reference=${earning.tx_ref}`}>
+                        View
+                      </Link>
                     </Table.Cell>
                     <Table.Cell>
                     <select className='rounded-xl mt-1' name="" id={earning.bookingId} onChange={(e) => updateStatus(e.target.value, earning.bookingId)} >
