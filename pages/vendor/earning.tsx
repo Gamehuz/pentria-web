@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { Table } from 'flowbite-react';
-import { BALANCE, CANCEL_BOOKING, CONFIRM_BOOKING, EARNINGS } from '@/apollo/vendor';
+import { CANCEL_BOOKING, CONFIRM_BOOKING, EARNINGS } from '@/apollo/vendor';
 import VendorLayout from '@/layout/VendorLayout';
 import { useQuery, useMutation } from '@apollo/client';
 import { useSelector } from 'react-redux';
@@ -13,7 +13,10 @@ const Earning = () => {
   const [messageApi, contextHolder] = message.useMessage();
   const [earnings, setEarnings] = useState<any>([]);
   const user = useSelector(selectUser)
-  const [bookingId, setId] = useState('')
+  const [bookingId, setId] = useState({
+    id: '',
+    option: ''
+  })
 
   useQuery(EARNINGS, {
     variables: {
@@ -27,19 +30,13 @@ const Earning = () => {
 
   const [ConfirmBooking, { }] = useMutation(CONFIRM_BOOKING, {
     variables: {
-      confirmBookingId: bookingId
+      confirmBookingId: bookingId.id
     },
     onCompleted: (data) => {
       messageApi.open({
         type: 'success',
         content: `Booking status updated `,
       });
-
-      // const index = earnings.findIndex( (item:any) => item.bookingId === bookingId)
-      // const bookings = earnings
-      // const updatedEarnings = bookings[index].status = data.confirmBooking.status
-      // console.log(data.confirmBooking.status, index)
-      // setEarnings(updatedEarnings)
       window.location.reload()
     },
     onError: (error) => {
@@ -53,7 +50,7 @@ const Earning = () => {
 
   const [CancleBooking, { }] = useMutation(CANCEL_BOOKING, {
     variables: {
-      cancleBookingId: bookingId
+      cancleBookingId: bookingId.id
     },
     onCompleted: (data) => {
       messageApi.open({
@@ -72,14 +69,23 @@ const Earning = () => {
   })
 
   const updateStatus = (value:string, id: string) => {
-    console.log(value, id)
-    setId(id)
-    if (value === 'Used') {
-      ConfirmBooking()
-      return
-    }
-    CancleBooking()
+    setId({
+      id,
+      option: value
+    })
   }
+
+  useEffect(() =>{
+    if (bookingId.id) {
+      if (bookingId.option === 'Used') {
+        ConfirmBooking()
+        return
+      }
+      if (bookingId.option === 'Cancelled') {
+          CancleBooking()
+      }
+    }
+  }, [bookingId])
   return (
     <VendorLayout>
       {contextHolder}
@@ -101,7 +107,7 @@ const Earning = () => {
               Print Statement
             </button>
           </div>
-          <div className="sm:w-2/3 overflow-scroll lg:overflow-hidden">
+          <div className="sm:w-2/3 overflow-scroll lg:overflow-hidden mt-10">
             <Table striped>
               <Table.Head>
                 <Table.HeadCell>
@@ -135,9 +141,6 @@ const Earning = () => {
                     </Table.Cell>
                     <Table.Cell>
                        {earning.status}
-                    </Table.Cell>
-                    <Table.Cell>
-                      {earning.payment}
                     </Table.Cell>
                     <Table.Cell>
                       {earning.payment}

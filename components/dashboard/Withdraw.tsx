@@ -1,8 +1,9 @@
 import { useQuery, useMutation } from '@apollo/client';
 import { useEffect, useState } from 'react';
-import { Modal, Button, TextInput } from 'flowbite-react';
+import { Button, TextInput } from 'flowbite-react';
 
-import { BALANCE } from '@/apollo/vendor';
+
+import { BALANCE, WITHDRAW_REQUEST } from '@/apollo/vendor';
 import { message } from 'antd';
 
 function Withdraw() {
@@ -11,6 +12,7 @@ function Withdraw() {
   const props = { openModal, setOpenModal };
   const [bal, setBal] = useState(0)
   const [request, setAmount] = useState(0)
+  const [disable, setAble] = useState(false)
   const [messageApi, contextHolder] = message.useMessage();
 
 
@@ -22,9 +24,25 @@ function Withdraw() {
     },
   })
 
-  const handleChange = (e: any) => {
-    setAmount(e.target.value)
-  }
+  const [requestWithdrawal, { loading }] = useMutation(WITHDRAW_REQUEST, {
+    variables: {
+      amount: request,
+    },
+    onCompleted: (data) => {
+      console.log(data)
+      messageApi.open({
+        type: 'success',
+        content: 'Withdrawal request created successfully!',
+      });
+    },
+    onError: (error) => {
+      messageApi.open({
+        type: 'error',
+        content: error.message,
+      });
+    }
+  })
+
   const sentRequest = () => {
     if (request > bal) {
       messageApi.open({
@@ -34,15 +52,17 @@ function Withdraw() {
       return
     }
 
-    if (request < 50) {
+    if (request < 1000) {
       messageApi.open({
         type: 'error',
-        content: `Min amount is NGN 50`,
+        content: `Min amount is NGN 1000`,
       });
-      return 
+      return
     }
-
-    console.log('request sent')
+    const newBal = bal - request
+    setBal(newBal)
+    setAble(true)
+    requestWithdrawal()
   }
   return (
     <div>
@@ -84,7 +104,7 @@ function Withdraw() {
                   <input type="number" value={request} className='mb-5 mt-2 rounded-xl' onChange={(e) => setAmount(parseInt(e.target.value))} />
                 </form>
                 <div className="flex justify-center gap-4">
-                  <Button color="success" onClick={() => sentRequest()}>
+                  <Button disabled={disable} color="success" onClick={() => sentRequest()}>
                     Send Withdrawal request
                   </Button>
                   <Button color="gray" onClick={() => setModal(false)}>

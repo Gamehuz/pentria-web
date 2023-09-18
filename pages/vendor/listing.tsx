@@ -2,7 +2,7 @@ import { GET_LISTINGS } from '@/apollo/vendor';
 import ListingCard from '@/components/dashboard/ListingCard.jsx';
 import ListingModal from '@/components/dashboard/ListingModal.jsx';
 import VendorLayout from '@/layout/VendorLayout';
-import { useLazyQuery, useQuery } from '@apollo/client';
+import { useQuery } from '@apollo/client';
 import React, { useState } from 'react';
 import { useDispatch } from 'react-redux';
 import { setUser } from '@/store/slices/userSlice';

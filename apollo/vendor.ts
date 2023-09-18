@@ -62,7 +62,6 @@ export const DELETE_SPACE = gql`
 export const EARNINGS = gql`
   query BookingSold($vendorId: ID) {
     bookingSold(vendorId: $vendorId) {
-      _id
       name
       author
       created
@@ -97,4 +96,48 @@ export const CANCEL_BOOKING = gql`
     status
   }
 }
+`
+
+export const WITHDRAW_REQUEST = gql`
+  mutation WithdrawRequest($amount: Float!) {
+    requestWithdrawal(amount: $amount) {
+      _id
+      amount
+      userId {
+        _id
+      }
+      account_bank
+      account_number
+      account_name
+      bank_name
+      status
+      tx_ref
+      createdAt
+      updatedAt
+    }
+}
+`
+
+export const USER_WITHDRAWALS = gql`
+  query UserWithdraws($userId: ID!, $page: Float!, $limit: Float!) {
+    userWithdraws(userId: $userId, page: $page, limit: $limit) {
+      withdrawals {
+        _id
+        amount
+        userId {
+          _id
+        }
+        account_bank
+        account_number
+        account_name
+        bank_name
+        status
+        tx_ref
+        createdAt
+        updatedAt
+      }
+      pages
+      count
+    }
+  }
 `

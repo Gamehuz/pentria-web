@@ -50,11 +50,11 @@ const about = () => {
               <h3 className='font-bold mt-4 text-xl'>Great Adams</h3>
               <p className='text-sm'>CTO/Full-stack developer </p>
             </div>
-            <div className='lg:w-[20%]  w-[40%] text-center'>
+            {/* <div className='lg:w-[20%]  w-[40%] text-center'>
               <img className='h-32 w-32 m-auto rounded-md' src="/images/agi.png" alt="" />
               <h3 className='font-bold mt-4 text-xl'>AGI, Mayflowers K</h3>
               <p className='text-sm'>CFO</p>
-            </div>
+            </div> */}
             <div className='lg:w-[20%]  w-[40%] text-center'>
               <img className='h-32 w-32 m-auto rounded-md' src="/images/king.png" alt="" />
               <h3 className='font-bold mt-4 text-xl'>Kingsley Sunday</h3>

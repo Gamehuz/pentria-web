@@ -1,17 +1,52 @@
-import { useQuery, useMutation } from '@apollo/client';
+import { useLazyQuery, useMutation } from '@apollo/client';
 import { useEffect, useState } from 'react';
-import { Modal, Button } from 'flowbite-react';
+import { Pagination, Table } from 'flowbite-react';
 
 import VendorLayout from '@/layout/VendorLayout';
-import { BALANCE } from '@/apollo/vendor';
+import { USER_WITHDRAWALS } from '@/apollo/vendor';
+import { useSelector } from 'react-redux';
+import { selectUser } from "@/store/slices/userSlice.js"
 import { message } from 'antd';
 import Withdraw from '@/components/dashboard/Withdraw';
 
+export interface IWithdraw {
+  _id?: any;
+  amount: number;
+  userId: string;
+  account_bank: number;
+  bank_name: string;
+  status: string;
+  tx_ref: string;
+  account_number: string;
+  account_name: string;
+  deletedAt?: string;
+  createdAt: string;
+  updatedAt?: string;
+}
+
 const Withdrawal = () => {
   
+  const user = useSelector(selectUser)
   const [messageApi, contextHolder] = message.useMessage();
-  
+  const [currentPage, setCurrentPage] = useState(1);
+  const [totalPages, setPages] = useState(0)
+  const [withdrawals, setWithdrawals] = useState<IWithdraw[]>()
+  const onPageChange = (page: number) => setCurrentPage(page);
 
+  const [userWithdraws, { loading }] = useLazyQuery(USER_WITHDRAWALS, {
+    variables: { userId: user._id, page: currentPage, limit: 10 },
+    onCompleted: (data) => {
+      setWithdrawals(data.userWithdraws.withdrawals)
+      const pages = parseInt(data.userWithdraws.pages) === 0 ? 1 : parseInt(data.userWithdraws.pages)
+      setPages(pages)
+    }
+  })
+
+  useEffect(() => {
+    if (currentPage) {
+      userWithdraws()
+    }
+  }, [currentPage])
   
 
   return (
@@ -30,33 +65,80 @@ const Withdrawal = () => {
               className="w-full py-3 pl-12 pr-4 text-gray-500 border rounded-md outline-none bg-gray-50 focus:bg-white focus:border-indigo-600"
             />
           </div>
-          {/* <button className='p-3 border border-primaryColor px-10 sm:w-full sm:mt-4 text-primaryColor rounded-md'>
-            Print Statement
-          </button> */}
         </div>
 
-        <table className="table-auto w-full mt-6">
-          <thead className='bg-gray-300'>
-            <tr>
-              <td className='p-2'>Date</td>
+        <div className='p-8 sm:w-2/3 overflow-scroll lg:overflow-hidden'>
+        <Table striped>
+        <Table.Head>
+          <Table.HeadCell>
+            Bank
+          </Table.HeadCell>
+          <Table.HeadCell>
+            account name
+          </Table.HeadCell>
+          <Table.HeadCell>
+            account number
+          </Table.HeadCell>
+          <Table.HeadCell>
+            Amount
+          </Table.HeadCell>
+          <Table.HeadCell>
+            payment
+          </Table.HeadCell>
+          <Table.HeadCell>
+          tx ref
+          </Table.HeadCell>
+          <Table.HeadCell>
+            Date
+          </Table.HeadCell>
+        </Table.Head>
 
-              <td>Total</td>
-              <td>Status</td>
-              <td>Action</td>
-            </tr>
-          </thead>
-          <tbody>
-            {/* <tr>
-              <td className='p-2'>12/04/2023</td>
-              <td>NGN 6,000</td>
-              <td>Confirmed</td>
-              <td>
-                <img src="/images/trash.png" alt="" />
-              </td>
-            </tr> */}
-          </tbody>
-        </table>
+        <Table.Body className="divide-y">
 
+          {withdrawals && withdrawals.map((item: IWithdraw, i:number) => (
+            <>
+              <Table.Row key={i}>
+                <Table.Cell>
+                  {item.bank_name}
+                </Table.Cell>
+                <Table.Cell>
+                  {item.account_name}
+                </Table.Cell>
+                <Table.Cell>
+                  {item.account_number}
+                </Table.Cell>
+                <Table.Cell>
+                  NGN {item.amount}
+                </Table.Cell>
+                <Table.Cell className={item.status === 'success' ? 'text-green-600': 'text-red-600'}>
+                  {item.status}
+                </Table.Cell>
+                <Table.Cell>
+                  {item.tx_ref}
+                </Table.Cell>
+                <Table.Cell>
+                  {new Date(item.createdAt).toDateString()}
+                </Table.Cell>
+              </Table.Row>
+            </>
+          ))
+
+          }
+
+        </Table.Body>
+
+        </Table>
+        </div>
+
+
+        <div className='m-auto w-52'>
+          <Pagination
+            
+            currentPage={currentPage}
+            onPageChange={page=>{setCurrentPage(page)}}
+            totalPages={totalPages}
+          />
+        </div>
 
       </main>
     </VendorLayout>
